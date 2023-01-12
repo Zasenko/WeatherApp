@@ -16,6 +16,16 @@ class LoginViewControllerRootView: UIView {
         lable.text = "WEATHER APP"
         lable.font = .boldSystemFont(ofSize: 40)
         lable.textAlignment = .center
+        lable.numberOfLines = 1
+        return lable
+    }()
+    
+    let errorLable: UILabel = {
+        let lable = UILabel()
+        lable.font = .boldSystemFont(ofSize: 25)
+        lable.textAlignment = .center
+        lable.textColor = .red
+        lable.numberOfLines = 0
         return lable
     }()
     
@@ -69,6 +79,7 @@ extension LoginViewControllerRootView {
     
     private func addSubViews() {
         addSubview(appNameLable)
+        addSubview(errorLable)
         addSubview(loginTextField)
         addSubview(passwordTextField)
         addSubview(logInButton)
@@ -80,6 +91,7 @@ extension LoginViewControllerRootView {
         createLoginTextFieldConstraint()
         createPasswordTextFieldConstraint()
         createlogInButtonConstraint()
+        createErrorLableConstraint()
     }
     
     private func createAppNameLableConstraint() {
@@ -89,9 +101,16 @@ extension LoginViewControllerRootView {
         appNameLable.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
     }
     
+    private func createErrorLableConstraint() {
+        errorLable.translatesAutoresizingMaskIntoConstraints = false
+        errorLable.topAnchor.constraint(equalTo: appNameLable.bottomAnchor, constant: 50).isActive = true
+        errorLable.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        errorLable.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+    }
+    
     private func createLoginTextFieldConstraint() {
         loginTextField.translatesAutoresizingMaskIntoConstraints = false
-        loginTextField.topAnchor.constraint(equalTo: appNameLable.bottomAnchor, constant: 50).isActive = true
+        loginTextField.topAnchor.constraint(equalTo: errorLable.bottomAnchor, constant: 30).isActive = true
         loginTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30).isActive = true
         loginTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30).isActive = true
     }

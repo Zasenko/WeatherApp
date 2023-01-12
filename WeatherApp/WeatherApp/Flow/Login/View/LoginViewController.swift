@@ -11,7 +11,11 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    var rootView: LoginViewControllerRootView { return self.view as! LoginViewControllerRootView }
+    var presenter: LoginViewPresenterProtocol!
+    
+    // MARK: - Private properties
+    
+    private var rootView: LoginViewControllerRootView { return self.view as! LoginViewControllerRootView }
     
     // MARK: - Inits
     
@@ -48,5 +52,12 @@ extension LoginViewController {
     // MARK: - @Objc func
     
     @objc func buttonTaped(sender: UIButton) {
+        presenter.loginButtonTapped(login: rootView.loginTextField.text, password: rootView.passwordTextField.text)
+    }
+}
+
+extension LoginViewController: LoginViewProtocol {
+    func showLoginError(error: String) {
+        rootView.errorLable.text = error
     }
 }
