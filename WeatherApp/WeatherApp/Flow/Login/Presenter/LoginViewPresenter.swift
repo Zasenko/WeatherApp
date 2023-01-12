@@ -17,21 +17,28 @@ protocol LoginViewPresenterProtocol: AnyObject {
 
 class LoginViewPresenter: LoginViewPresenterProtocol {
     
-    private let model = LoginModel()
+    // MARK: - Properties
+    
     weak var view: LoginViewProtocol?
+    
+    // MARK: - Private properties
+    
+    private let model = LoginModel()
+    
+    // MARK: - Inits
     
     required init(view: LoginViewProtocol) {
         self.view = view
     }
     
+    // MARK: - Func
+    
     func loginButtonTapped(login: String?, password: String?) {
-        
         switch model.isLoginPassWordCorrect(login: login, password: password) {
-            
         case .success(_):
             view?.showLoginError(error: "введен правильный пароль")
         case .failure(let error):
-            view?.showLoginError(error: "введен неправильный пароль \(error)")
+            view?.showLoginError(error: error.rawValue)
         }
     }
 }

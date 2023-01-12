@@ -7,11 +7,14 @@
 
 import Foundation
 
-enum LoginModelErrors: Error {
-    case emptyLogin, emptyPassword
+enum LoginModelErrors: String, Error {
+    case emptyLogin = "Enter your login please"
+    case emptyPassword = "Enter your password please"
 }
 
 struct LoginModel {
+    
+    // MARK: - Func
     
     func isLoginPassWordCorrect(login: String?, password: String?) -> Result<Bool,LoginModelErrors> {
         
