@@ -35,6 +35,7 @@ class LoginViewControllerRootView: UIView {
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.placeholder = "login"
+        textField.clearButtonMode = .always
         return textField
     }()
     
@@ -45,6 +46,8 @@ class LoginViewControllerRootView: UIView {
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor.red.cgColor
         textField.placeholder = "password"
+        textField.clearButtonMode = .always
+        textField.isSecureTextEntry = true
         return textField
     }()
     

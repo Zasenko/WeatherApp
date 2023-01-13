@@ -58,7 +58,8 @@ extension LoginViewController {
 extension LoginViewController: LoginViewProtocol {
     func loginSuccess() {
         rootView.errorLable.text = nil
-        navigationController?.pushViewController(MainScreenViewController(), animated: true)
+        rootView.loginTextField.text = nil
+        rootView.passwordTextField.text = nil
     }
     
     func showLoginError(error: String) {
