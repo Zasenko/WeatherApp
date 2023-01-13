@@ -9,20 +9,18 @@ import Foundation
 
 protocol LoginViewProtocol: AnyObject {
     func showLoginError(error: String)
+    func loginSuccess()
 }
 
 protocol LoginViewPresenterProtocol: AnyObject {
     func loginButtonTapped(login: String?, password: String?)
 }
 
-class LoginViewPresenter: LoginViewPresenterProtocol {
-    
-    // MARK: - Properties
-    
-    weak var view: LoginViewProtocol?
+class LoginViewPresenter {
     
     // MARK: - Private properties
     
+    weak private var view: LoginViewProtocol?
     private let model = LoginModel()
     
     // MARK: - Inits
@@ -30,13 +28,16 @@ class LoginViewPresenter: LoginViewPresenterProtocol {
     required init(view: LoginViewProtocol) {
         self.view = view
     }
+}
+
+extension LoginViewPresenter: LoginViewPresenterProtocol {
     
     // MARK: - Func
     
     func loginButtonTapped(login: String?, password: String?) {
         switch model.isLoginPassWordCorrect(login: login, password: password) {
         case .success(_):
-            view?.showLoginError(error: "введен правильный пароль")
+            view?.loginSuccess()
         case .failure(let error):
             view?.showLoginError(error: error.rawValue)
         }

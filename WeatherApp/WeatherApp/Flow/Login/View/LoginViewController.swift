@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private var rootView: LoginViewControllerRootView { return self.view as! LoginViewControllerRootView }
+    private var rootView = LoginViewControllerRootView(frame: UIScreen.main.bounds)
     
     // MARK: - Inits
     
@@ -30,13 +30,12 @@ class LoginViewController: UIViewController {
     // MARK: - Life func
     
     override func loadView() {
-        self.view = LoginViewControllerRootView(frame: UIScreen.main.bounds)
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addTargets()
-        
     }
 }
 extension LoginViewController {
@@ -57,6 +56,11 @@ extension LoginViewController {
 }
 
 extension LoginViewController: LoginViewProtocol {
+    func loginSuccess() {
+        rootView.errorLable.text = nil
+        navigationController?.pushViewController(MainScreenViewController(), animated: true)
+    }
+    
     func showLoginError(error: String) {
         rootView.errorLable.text = error
     }

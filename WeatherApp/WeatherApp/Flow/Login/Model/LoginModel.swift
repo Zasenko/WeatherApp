@@ -18,19 +18,10 @@ struct LoginModel {
     
     func isLoginPassWordCorrect(login: String?, password: String?) -> Result<Bool,LoginModelErrors> {
         
-        guard let login = login else {
+        guard let login = login, !login.isEmpty else {
             return .failure(LoginModelErrors.emptyLogin)
         }
-        
-        guard let password = password else {
-            return .failure(LoginModelErrors.emptyPassword)
-        }
-        
-        guard !login.isEmpty else {
-            return .failure(LoginModelErrors.emptyLogin)
-        }
-        
-        guard !password.isEmpty else {
+        guard let password = password, !password.isEmpty else {
             return .failure(LoginModelErrors.emptyPassword)
         }
         return .success(true)

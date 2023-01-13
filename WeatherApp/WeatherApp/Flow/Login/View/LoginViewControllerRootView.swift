@@ -62,7 +62,7 @@ class LoginViewControllerRootView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .orange
         logInButton.layer.cornerRadius = 10
         addSubViews()
         setupConstraints()
@@ -86,7 +86,6 @@ extension LoginViewControllerRootView {
     }
     
     private func setupConstraints() {
-        self.translatesAutoresizingMaskIntoConstraints = false
         createAppNameLableConstraint()
         createLoginTextFieldConstraint()
         createPasswordTextFieldConstraint()
