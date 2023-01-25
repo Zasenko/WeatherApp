@@ -9,8 +9,12 @@ import UIKit
 
 class CityViewController: UIViewController {
     
-    let lable = UILabel(frame: CGRect(x: 100, y: 200, width: 200, height: 50))
-
+    // MARK: - Private properties
+    
+    private let rootView = CityRootView(frame: UIScreen.main.bounds)
+    
+    // MARK: - Inits
+    
     init(name: String) {
         super.init(nibName: nil, bundle: nil)
     }
@@ -20,11 +24,11 @@ class CityViewController: UIViewController {
     }
     
     override func loadView() {
+        self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .orange
-        lable.backgroundColor = .green
     }
 }

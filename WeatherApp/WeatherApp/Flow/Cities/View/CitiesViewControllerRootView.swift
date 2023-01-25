@@ -16,6 +16,7 @@ class CitiesViewControllerRootView: UIView {
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
+        tableView.backgroundColor = .red
         return tableView
     }()
     

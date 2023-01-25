@@ -9,12 +9,18 @@ import UIKit
 
 class CitiesViewController: UIViewController {
     
+    // MARK: - Properties
     
-    var data: [String] = ["Москва", "Иркутск", "Вена"]
-    var data2: [String] = ["15", "79", "28"]
+    var presenter: CitiesViewPresenterProtocol!
+    var data: [String] = ["Москва", "Иркутск", "Вена", "Иркутск", "Вена", "Иркутск", "Вена", "Иркутск", "Вена", "Иркутск", "Вена"]
+    var data2: [String] = ["15", "79", "28", "79", "28", "79", "28", "79", "28", "79", "28", "79", "28"]
+    
+    // MARK: - Private properties
     
     private let rootView = CitiesViewControllerRootView(frame: UIScreen.main.bounds)
 
+    // MARK: - Inits
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,16 +29,23 @@ class CitiesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life func
+    
     override func loadView() {
         self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //navigationController?.title = "Cities"
+        self.navigationController?.navigationItem.title = "Test"
+           self.navigationController?.navigationBar.barTintColor = .black
+        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddCityButtonTaped(sender:)))
+        self.navigationItem.rightBarButtonItem  = button1
+        
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
         rootView.citiesTableView.register(CityViewCell.self, forCellReuseIdentifier: CityViewCell.identifier)
-        rootView.citiesTableView.nav
     }
 }
 
@@ -45,8 +58,7 @@ extension CitiesViewController {
     
     // MARK: - @Objc func
     
-    @objc func buttonTaped(sender: UIButton) {
-        print("UIiiiiiiiiiii")
+    @objc func AddCityButtonTaped(sender: UIButton) {
     }
 }
 
@@ -67,4 +79,13 @@ extension CitiesViewController: UITableViewDataSource {
         cell.setupCell(cityName: data[indexPath.row], temp: data2[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.cellTaped(name: data[indexPath.row])
+    }
+}
+
+
+extension CitiesViewController: CitiesViewProtocol {
+    
 }

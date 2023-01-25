@@ -20,7 +20,7 @@ class LoginViewPresenter {
     
     // MARK: - Properties
     
-    var router: RouterProtocol?
+    var router: MainRouterProtocol?
     
     // MARK: - Private properties
     
@@ -29,7 +29,7 @@ class LoginViewPresenter {
     
     // MARK: - Inits
     
-    required init(view: LoginViewProtocol, router: RouterProtocol) {
+    required init(view: LoginViewProtocol, router: MainRouterProtocol) {
         self.view = view
         self.router = router
     }
