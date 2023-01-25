@@ -27,7 +27,4 @@ class ModulBilder: ModulBilderProtocol {
      //   view.presenter = presenter
         return view
     }
-
-    
-    
 }

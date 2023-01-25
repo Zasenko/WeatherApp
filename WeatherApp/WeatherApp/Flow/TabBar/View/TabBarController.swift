@@ -33,8 +33,10 @@ class TabBarController: UITabBarController {//}, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let tabOne = TabOneViewController()
-        let tabOneBarItem = UITabBarItem(title: "Погода", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+        
+        // Create Tab one
+        let tabOne = CitiesViewController()
+        let tabOneBarItem = UITabBarItem(title: "Cities", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         tabOne.tabBarItem = tabOneBarItem
         
         
@@ -52,18 +54,6 @@ class TabBarController: UITabBarController {//}, UITabBarControllerDelegate {
     //        func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
     //            print("Selected \(viewController.title!)")
     //        }
-}
-
-class TabOneViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blue
-        self.title = "Города"
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
 }
 
 

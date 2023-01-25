@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private var rootView = LoginViewControllerRootView(frame: UIScreen.main.bounds)
+    private let rootView = LoginViewControllerRootView(frame: UIScreen.main.bounds)
     
     // MARK: - Inits
     
