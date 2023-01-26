@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let navigationController = UINavigationController()
         let builder = ModulBilder()
-        let router = Router(navigationController: navigationController, modulBilder: builder)
+        let router = MainRouter(navigationController: navigationController, modulBilder: builder)
         router.initialLoginViewController()
 
         window?.rootViewController = navigationController

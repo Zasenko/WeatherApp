@@ -7,18 +7,13 @@
 
 import UIKit
 
-protocol AbstractRouterProtocol {
-    var navigationController:  UINavigationController? { get set }
-    var modulBilder: ModulBilderProtocol? { get set }
-}
-
-protocol RouterProtocol: AbstractRouterProtocol {
+protocol MainRouterProtocol: AbstractRouterProtocol {
     func initialLoginViewController()
     func showTabBarController()
     func popToRoot()
 }
 
-class Router: RouterProtocol {
+class MainRouter: MainRouterProtocol {
     
     var navigationController: UINavigationController?
     var modulBilder: ModulBilderProtocol?
@@ -29,7 +24,7 @@ class Router: RouterProtocol {
     }
 }
 
-extension Router {
+extension MainRouter {
     
     func initialLoginViewController() {
         if let navigationController = navigationController {

@@ -7,10 +7,15 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {//}, UITabBarControllerDelegate {
+class TabBarController: UITabBarController {
+    
+    // MARK: - Properties
+    
+    var presenter: TabBarPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
         navigationItem.setHidesBackButton(true, animated: true)
         
         tabBar.backgroundColor = .lightGray
@@ -33,38 +38,10 @@ class TabBarController: UITabBarController {//}, UITabBarControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let tabOne = TabOneViewController()
-        let tabOneBarItem = UITabBarItem(title: "Погода", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-        tabOne.tabBarItem = tabOneBarItem
-        
-        
-        // Create Tab two
-        let tabTwo = TabTwoViewController()
-        let tabTwoBarItem2 = UITabBarItem(title: "Настройки", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
-        
-        tabTwo.tabBarItem = tabTwoBarItem2
-        
-        
-        self.viewControllers = [tabOne, tabTwo]
+        self.viewControllers = presenter.createTabBar()
     }
-    
-    //        // UITabBarControllerDelegate method
-    //        func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-    //            print("Selected \(viewController.title!)")
-    //        }
 }
 
-class TabOneViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blue
-        self.title = "Города"
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-}
 
 
 class TabTwoViewController: UIViewController {
