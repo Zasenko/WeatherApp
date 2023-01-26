@@ -13,7 +13,6 @@ class CityRootView: UIView {
     
     let appNameLable: UILabel = {
         let lable = UILabel()
-        lable.text = "WEATHER APP"
         lable.font = .boldSystemFont(ofSize: 40)
         lable.textAlignment = .center
         lable.numberOfLines = 1

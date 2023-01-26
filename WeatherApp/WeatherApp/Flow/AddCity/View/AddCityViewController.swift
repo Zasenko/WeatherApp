@@ -1,34 +1,28 @@
 //
-//  CitiesViewController.swift
+//  AddCityViewController.swift
 //  WeatherApp
 //
-//  Created by Dmitry Zasenko on 25.01.23.
+//  Created by Dmitry Zasenko on 26.01.23.
 //
 
 import UIKit
 
-class CitiesViewController: UIViewController {
+class AddCityViewController: UIViewController {
     
-    // MARK: - Properties
+    var data: [String] = ["иркутск", "новороссийск", "Иркутск", "Вена", "Милан"]
+    var data2: [String] = ["17", "19", "-17", "-19", "0"]
     
-    var presenter: CitiesViewPresenterProtocol!
-    var data: [String] = ["Стамбул", "Vienna Vienna Vienna Vienna Vienna", "Иркутск", "Вена", "Милан"]
-    var data2: [String] = ["14", "79", "-17", "79", "28"]
-    
-    // MARK: - Private properties
-    
-    private let rootView = CitiesViewControllerRootView(frame: UIScreen.main.bounds)
-
-    // MARK: - Inits
+    private let rootView = AddCityRootView(frame: UIScreen.main.bounds)
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        self.title = "Bla bla"
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life func
     
     override func loadView() {
@@ -42,26 +36,28 @@ class CitiesViewController: UIViewController {
     }
 }
 
-extension CitiesViewController {
+extension AddCityViewController {
     
-    // MARK: - @Objc func
+     // MARK: - @Objc func
     
     @objc func AddCityButtonTaped(sender: UIButton) {
-        presenter.addButtonTapped()
+     //   presenter.addButtonTapped()
+        print("oooooooo")
     }
     
     // MARK: - Private func
     
     private func createNavigationBar() {
         self.title = "Cities"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.barTintColor = .systemTeal
-
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
-        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddCityButtonTaped(sender:)))
-        self.navigationItem.rightBarButtonItem  = button1
+        navigationItem.titleView = rootView.searchBar
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.barTintColor = .systemTeal
+//
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        
+//        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddCityButtonTaped(sender:)))
+//        self.navigationItem.rightBarButtonItem  = button1
     }
     
     private func createCitiesTableView() {
@@ -70,13 +66,9 @@ extension CitiesViewController {
         rootView.citiesTableView.register(CityViewCell.self, forCellReuseIdentifier: CityViewCell.identifier)
     }
 }
+extension AddCityViewController: UITableViewDelegate {}
 
-// MARK: - TableViewDelegate
-
-extension CitiesViewController: UITableViewDelegate {
-}
-
-extension CitiesViewController: UITableViewDataSource {
+extension AddCityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         data.count
     }
@@ -90,10 +82,6 @@ extension CitiesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.cellTaped(name: data[indexPath.row])
+     //   presenter.cellTaped(name: data[indexPath.row])
     }
-}
-
-
-extension CitiesViewController: CitiesViewProtocol {
 }

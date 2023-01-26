@@ -17,6 +17,8 @@ class CityViewController: UIViewController {
     
     init(name: String) {
         super.init(nibName: nil, bundle: nil)
+        rootView.appNameLable.text = name
+        self.title = name
     }
     
     required init?(coder: NSCoder) {
@@ -30,5 +32,10 @@ class CityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .orange
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.barTintColor = .systemTeal
+
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }
