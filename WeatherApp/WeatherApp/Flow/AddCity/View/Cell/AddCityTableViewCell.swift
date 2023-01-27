@@ -1,15 +1,15 @@
 //
-//  CityViewCell.swift
+//  AddCityTableViewCell.swift
 //  WeatherApp
 //
-//  Created by Dmitry Zasenko on 25.01.23.
+//  Created by Dmitry Zasenko on 26.01.23.
 //
 
 import UIKit
 
-class CityViewCell: UITableViewCell {
-    
-    static let identifier = "CityViewCell"
+class AddCityTableViewCell: UITableViewCell {
+
+    static let identifier = "AddCityTableViewCell"
     
     private let stackview = UIStackView(arrangedSubviews: [])
     
@@ -22,20 +22,16 @@ class CityViewCell: UITableViewCell {
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
-    
-    private let temp: UILabel = {
-        let lable = UILabel()
-        lable.font = .systemFont(ofSize: 30)
-        lable.textColor = .red
-        lable.numberOfLines = 1
-        lable.backgroundColor = .clear
-        lable.translatesAutoresizingMaskIntoConstraints = false
-        return lable
+
+    let addCityButton: UIButton = {
+        var button = UIButton()
+        button.setTitle("Add", for: .normal)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        return button
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .white
         addSubViews()
         setupConstraints()
     }
@@ -43,34 +39,33 @@ class CityViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-
 }
 
-extension CityViewCell {
+extension AddCityTableViewCell {
     
-    func setupCell(cityName: String, temp: String) {
+    func setupCell(cityName: String) {
         self.cityName.text = cityName
-        self.temp.text = temp
     }
     
     private func addSubViews() {
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.addArrangedSubview(cityName)
-        stackview.addArrangedSubview(temp)
+        stackview.addArrangedSubview(addCityButton)
+        stackview.backgroundColor = .orange
         addSubview(stackview)
     }
     
     private func setupConstraints() {
         stackview.spacing = 20
+        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackview.heightAnchor.constraint(equalToConstant: 70).isActive = true
         stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor).isActive = true
     }
     
-    
+//    func setupCell(cityName: String) {
+//        self.cityName.text = cityName
+//    }
+//
 }

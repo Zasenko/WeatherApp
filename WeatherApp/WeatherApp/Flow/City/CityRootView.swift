@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CityRootView: UIView {
+final class CityRootView: UIView {
 
     //MARK: - SubView
     

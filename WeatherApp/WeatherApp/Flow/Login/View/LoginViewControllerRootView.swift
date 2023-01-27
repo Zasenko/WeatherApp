@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewControllerRootView: UIView {
+final class LoginViewControllerRootView: UIView {
     
     //MARK: - SubViews
     

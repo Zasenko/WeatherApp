@@ -45,7 +45,7 @@ extension CitiesRouter {
         if let navigationController = navigationController {
             guard let viewController = modulBilder?.cteateAddCityModul(router: self) else { return }
             let navController = UINavigationController(rootViewController: viewController)
-            navController.modalPresentationStyle = .fullScreen
+            navController.modalPresentationStyle = .formSheet
             navigationController.present(navController, animated: true)
         }
     }

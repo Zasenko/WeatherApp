@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddCityRootView: UIView {
+final class AddCityRootView: UIView {
 
     
     // MARK: - SubViews
@@ -49,7 +49,6 @@ extension AddCityRootView {
     
     //MARK: - Private Functions
 
-    
     private func addSubViews() {
         addSubview(citiesTableView)
     }

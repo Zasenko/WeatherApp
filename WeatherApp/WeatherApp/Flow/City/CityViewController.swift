@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CityViewController: UIViewController {
+final class CityViewController: UIViewController {
     
     // MARK: - Private properties
     
@@ -25,6 +25,8 @@ class CityViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life func
+    
     override func loadView() {
         self.view = rootView
     }
@@ -32,10 +34,8 @@ class CityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .orange
-        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.barTintColor = .systemTeal
-
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }

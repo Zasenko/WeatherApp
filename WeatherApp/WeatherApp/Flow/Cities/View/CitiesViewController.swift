@@ -67,7 +67,7 @@ extension CitiesViewController {
     private func createCitiesTableView() {
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-        rootView.citiesTableView.register(CityViewCell.self, forCellReuseIdentifier: CityViewCell.identifier)
+        rootView.citiesTableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
     }
 }
 
@@ -82,7 +82,7 @@ extension CitiesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityViewCell.identifier, for: indexPath) as? CityViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as? CityTableViewCell else {
             return UITableViewCell()
         }
         cell.setupCell(cityName: data[indexPath.row], temp: data2[indexPath.row])

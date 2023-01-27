@@ -48,10 +48,10 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController {
-     //   let router = router
+        let router = router
         let view = AddCityViewController()
-       // let presenter = CitiesViewPresenter(view: view, router: router)
-       // view.presenter = presenter
+        let presenter = AddCityPresenter(view: view, router: router)
+        view.presenter = presenter
         return view
     }
 }

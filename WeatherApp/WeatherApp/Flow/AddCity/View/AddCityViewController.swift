@@ -7,16 +7,21 @@
 
 import UIKit
 
-class AddCityViewController: UIViewController {
+final class AddCityViewController: UIViewController {
     
-    var data: [String] = ["иркутск", "новороссийск", "Иркутск", "Вена", "Милан"]
-    var data2: [String] = ["17", "19", "-17", "-19", "0"]
+    // MARK: - Properties
+    
+    var data: [String] = ["Иваново", "Новороссийск", "Иркутск", "Вена", "Милан", "Лондон"]
+    var presenter: AddCityPresenterProtocol!
+    
+    // MARK: - Provate Properties
     
     private let rootView = AddCityRootView(frame: UIScreen.main.bounds)
     
+    //MARK: - Inits
+    
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.title = "Bla bla"
     }
     
     required init?(coder: NSCoder) {
@@ -31,41 +36,85 @@ class AddCityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Add City"
         createNavigationBar()
-        createCitiesTableView()
+        createAddCitiesTableView()
+        addTargets()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
 extension AddCityViewController {
     
-     // MARK: - @Objc func
+    // MARK: - Objc functions
     
-    @objc func AddCityButtonTaped(sender: UIButton) {
-     //   presenter.addButtonTapped()
-        print("oooooooo")
+    @objc func keyboardWasShown(notification: Notification) {
+            // Получаем размер клавиатуры
+            let info = notification.userInfo! as NSDictionary
+            let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
+            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
+            // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
+        rootView.citiesTableView.contentInset = contentInsets
+        rootView.citiesTableView.scrollIndicatorInsets = contentInsets
+        }
+    
+    @objc func keyboardWillBeHidden(notification: Notification) {
+        let contentInsets = UIEdgeInsets.zero
+        rootView.citiesTableView.contentInset = contentInsets
+    }
+    
+    @objc func hideKeyboard() {
+        rootView.citiesTableView.endEditing(true)
     }
     
     // MARK: - Private func
     
-    private func createNavigationBar() {
-        self.title = "Cities"
-        navigationItem.titleView = rootView.searchBar
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationController?.navigationBar.barTintColor = .systemTeal
-//
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-//        
-//        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddCityButtonTaped(sender:)))
-//        self.navigationItem.rightBarButtonItem  = button1
+    private func addTargets() {
+        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
     }
     
-    private func createCitiesTableView() {
+    private func createNavigationBar() {
+        navigationItem.titleView = rootView.searchBar
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barTintColor = .systemTeal
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    }
+    
+    private func createAddCitiesTableView() {
+        rootView.searchBar.delegate = self
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-        rootView.citiesTableView.register(CityViewCell.self, forCellReuseIdentifier: CityViewCell.identifier)
+        rootView.citiesTableView.register(AddCityTableViewCell.self, forCellReuseIdentifier: AddCityTableViewCell.identifier)
     }
 }
+
+// MARK: - ViewProtocol
+
+extension AddCityViewController: AddCityViewProtocol {}
+
+// MARK: - UISearchBarDelegate
+
+extension AddCityViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+    }
+}
+
+// MARK: - UITableViewDelegate
+
 extension AddCityViewController: UITableViewDelegate {}
 
 extension AddCityViewController: UITableViewDataSource {
@@ -74,14 +123,14 @@ extension AddCityViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityViewCell.identifier, for: indexPath) as? CityViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddCityTableViewCell.identifier, for: indexPath) as? AddCityTableViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(cityName: data[indexPath.row], temp: data2[indexPath.row])
+        cell.setupCell(cityName: data[indexPath.row])
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     //   presenter.cellTaped(name: data[indexPath.row])
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//       presenter.cellTaped(name: data[indexPath.row])
+//    }
 }

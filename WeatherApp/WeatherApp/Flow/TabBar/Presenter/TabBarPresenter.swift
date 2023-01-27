@@ -11,7 +11,7 @@ protocol TabBarPresenterProtocol {
     func createTabBar() -> [UIViewController]
 }
 
-class TabBarPresenter {
+final class TabBarPresenter {
     
     // MARK: - Properties
     

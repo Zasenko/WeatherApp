@@ -15,7 +15,7 @@ protocol CitiesViewPresenterProtocol: AnyObject {
     func addButtonTapped()
 }
 
-class CitiesViewPresenter {
+final class CitiesViewPresenter {
     
     // MARK: - Properties
     
