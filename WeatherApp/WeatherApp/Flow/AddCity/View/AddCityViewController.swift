@@ -39,56 +39,57 @@ final class AddCityViewController: UIViewController {
         self.title = "Add City"
         createNavigationBar()
         createAddCitiesTableView()
-        addTargets()
+        addKeyboardTargets()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
 
 extension AddCityViewController {
     
     // MARK: - Objc functions
     
-//    @objc func keyboardWasShown(notification: Notification) {
-//            // Получаем размер клавиатуры
-//            let info = notification.userInfo! as NSDictionary
-//            let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
-//            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
-//            // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
-//        rootView.citiesTableView.contentInset = contentInsets
-//        rootView.citiesTableView.scrollIndicatorInsets = contentInsets
-//        }
-//
-//    @objc func keyboardWillBeHidden(notification: Notification) {
-//        let contentInsets = UIEdgeInsets.zero
-//        rootView.citiesTableView.contentInset = contentInsets
-//    }
-//
-//    @objc func hideKeyboard() {
-//        rootView.citiesTableView.endEditing(true)
-//    }
+    @objc func keyboardWasShown(notification: Notification) {
+        // Получаем размер клавиатуры
+        let info = notification.userInfo! as NSDictionary
+        let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
+        
+        // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
+        rootView.citiesTableView.contentInset = contentInsets
+        rootView.citiesTableView.scrollIndicatorInsets = contentInsets
+    }
+    
+    @objc func keyboardWillBeHidden(notification: Notification) {
+        let contentInsets = UIEdgeInsets.zero
+        rootView.citiesTableView.contentInset = contentInsets
+    }
+    
+    @objc func hideKeyboard() {
+        rootView.citiesTableView.endEditing(true)
+    }
     
     // MARK: - Private func
     
-    private func addTargets() {
-//        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-    //    rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
+    private func addKeyboardTargets() {
+        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
     }
     
     private func createNavigationBar() {
         navigationItem.titleView = rootView.searchBar
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.barTintColor = .systemTeal
+        navigationController?.navigationBar.barTintColor = .purple
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     
@@ -96,7 +97,6 @@ extension AddCityViewController {
         rootView.searchBar.delegate = self
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-        rootView.citiesTableView.register(AddCityTableViewCell.self, forCellReuseIdentifier: AddCityTableViewCell.identifier)
     }
 }
 
@@ -123,7 +123,7 @@ extension AddCityViewController: UITableViewDelegate {}
 
 extension AddCityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.data?.count ?? 0
+       presenter.data?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -135,10 +135,9 @@ extension AddCityViewController: UITableViewDataSource {
         }
         
         cell.setupCell(cityName: data)
+        cell.callback = {
+            cell.backgroundColor = .blue
+        }
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//       presenter.cellTaped(name: data[indexPath.row])
-//    }
 }

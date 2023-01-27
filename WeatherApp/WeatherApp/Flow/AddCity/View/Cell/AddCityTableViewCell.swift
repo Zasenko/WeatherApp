@@ -13,25 +13,26 @@ class AddCityTableViewCell: UITableViewCell {
     
     static let identifier = "AddCityTableViewCell"
     
+    // MARK: - Properties
+    
+    var callback: () -> ()  = { }
+    
     // MARK: - Private properties
     
-    private let stackview = UIStackView(arrangedSubviews: [])
-    
-    private let cityName: UILabel = {
-        let lable = UILabel()
-        lable.font = .boldSystemFont(ofSize: 20)
-        lable.numberOfLines = 0
-        lable.textAlignment = .left
-        lable.backgroundColor = .yellow
-        lable.translatesAutoresizingMaskIntoConstraints = false
-        return lable
+    private let addButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Add", for: .normal)
+        btn.backgroundColor = .systemPink
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        return btn
     }()
-
-    let addCityButton: UIButton = {
-        var button = UIButton()
-        button.setTitle("Add", for: .normal)
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        return button
+    
+    private let label: UILabel = {
+        let lbl = UILabel()
+        lbl.font = UIFont.systemFont(ofSize: 16)
+        lbl.textColor = .systemPink
+        lbl.numberOfLines = 0
+        return lbl
     }()
     
     // MARK: - Inits
@@ -39,7 +40,9 @@ class AddCityTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubViews()
+        addTargets()
         setupConstraints()
+
     }
     
     required init?(coder: NSCoder) {
@@ -52,23 +55,48 @@ extension AddCityTableViewCell {
     // MARK: - Functions
     
     func setupCell(cityName: String) {
-        self.cityName.text = cityName
+        label.text = cityName
     }
+
     
+    // MARK: - Objc Functions
+    
+    @objc func didTapButton() {
+        callback()
+    }
+
     // MARK: - Private functions
-    
+
     private func addSubViews() {
-        stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.addArrangedSubview(cityName)
-        stackview.addArrangedSubview(addCityButton)
-        stackview.backgroundColor = .orange
-        addSubview(stackview)
+        contentView.addSubview(addButton)
+        contentView.addSubview(label)
     }
+    
+    private func addTargets() {
+        addButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    }
+    
+    // MARK: - Constrsaints
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor).isActive = true
+        setupAddButtonConstraints()
+        setupLableConstraints()
+    }
+    
+    private func setupAddButtonConstraints() {
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
+        addButton.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 10).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+    }
+    
+    private func setupLableConstraints() {
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor).isActive = true
+        label.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 10).isActive = true
+        label.rightAnchor.constraint(equalTo: addButton.leftAnchor, constant: -10).isActive = true
+        label.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
     }
 }

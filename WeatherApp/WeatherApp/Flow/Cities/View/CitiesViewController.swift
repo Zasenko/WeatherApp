@@ -46,7 +46,7 @@ extension CitiesViewController {
     
     // MARK: - @Objc func
     
-    @objc func AddCityButtonTaped(sender: UIButton) {
+    @objc func addCityButtonTaped(sender: UIButton) {
         presenter.addButtonTapped()
     }
     
@@ -60,7 +60,7 @@ extension CitiesViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddCityButtonTaped(sender:)))
+        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCityButtonTaped(sender:)))
         self.navigationItem.rightBarButtonItem  = button1
     }
     
@@ -86,6 +86,8 @@ extension CitiesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.setupCell(cityName: data[indexPath.row], temp: data2[indexPath.row])
+        cell.accessoryType = .disclosureIndicator
+        cell.tintColor = .red
         return cell
     }
     

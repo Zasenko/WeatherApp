@@ -37,7 +37,7 @@ extension GeoCodingManager {
                     let name = i.name ?? ""
                     let country = i.country ?? ""
                     let region = i.administrativeArea ?? ""
-                    data.append("\(lon), \(lat), \n\(name),\(region) \(country)")
+                    data.append("\(lon), \(lat)\n\(name), \(region), \(country)")
                 }
             DispatchQueue.main.async {
                 complition(data)

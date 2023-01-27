@@ -23,10 +23,13 @@ final class AddCityRootView: UIView {
     
     let citiesTableView: UITableView = {
         var tableView = UITableView()
+        tableView.register(AddCityTableViewCell.self, forCellReuseIdentifier: AddCityTableViewCell.identifier)
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
         tableView.backgroundColor = .purple
+        tableView.showsVerticalScrollIndicator = true
+        tableView.allowsSelection = false
         return tableView
     }()
     
@@ -34,7 +37,6 @@ final class AddCityRootView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .systemGreen
         addSubViews()
         setupConstraints()
     }

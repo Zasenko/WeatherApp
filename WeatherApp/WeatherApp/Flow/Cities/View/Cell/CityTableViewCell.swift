@@ -43,6 +43,14 @@ class CityTableViewCell: UITableViewCell {
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
+    
+    private let addCityButton: UIButton = {
+        var button = UIButton(type: .custom)
+        button.setTitle("Add", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     // MARK: - Inits
     
