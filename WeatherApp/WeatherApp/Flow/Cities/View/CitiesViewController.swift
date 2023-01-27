@@ -12,8 +12,8 @@ class CitiesViewController: UIViewController {
     // MARK: - Properties
     
     var presenter: CitiesViewPresenterProtocol!
-    var data: [String] = ["Стамбул", "Vienna Vienna Vienna Vienna Vienna", "Иркутск", "Вена", "Милан"]
-    var data2: [String] = ["14", "79", "-17", "79", "28"]
+    var data: [String] = ["Стамбул", "Vienna вав ва Стамбул ва ч Стамбул Vienna вава Vienna а авава Vienna Vienna", "Иркутск", "Вена", "Милан", "Зачем вам этот бред , который вы хотите превратиь во что то новое?"]
+    var data2: [String] = ["14", "79", "-17", "79", "28", "8"]
     
     // MARK: - Private properties
     
@@ -46,7 +46,7 @@ extension CitiesViewController {
     
     // MARK: - @Objc func
     
-    @objc func AddCityButtonTaped(sender: UIButton) {
+    @objc func addCityButtonTaped(sender: UIButton) {
         presenter.addButtonTapped()
     }
     
@@ -60,7 +60,7 @@ extension CitiesViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddCityButtonTaped(sender:)))
+        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCityButtonTaped(sender:)))
         self.navigationItem.rightBarButtonItem  = button1
     }
     
@@ -86,6 +86,8 @@ extension CitiesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.setupCell(cityName: data[indexPath.row], temp: data2[indexPath.row])
+        cell.accessoryType = .disclosureIndicator
+        cell.tintColor = .red
         return cell
     }
     

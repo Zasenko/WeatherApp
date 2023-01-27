@@ -15,7 +15,7 @@ final class TabBarPresenter {
     
     // MARK: - Properties
     
-    var router: MainRouterProtocol?
+    let router: MainRouterProtocol?
     
     // MARK: - Inits
     

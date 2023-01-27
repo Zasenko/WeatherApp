@@ -14,20 +14,22 @@ final class AddCityRootView: UIView {
     
     let searchBar : UISearchBar = {
         var searchBar = UISearchBar()
-        searchBar.searchBarStyle = UISearchBar.Style.default
+        searchBar.searchBarStyle = .minimal
         searchBar.placeholder = " Search..."
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()       
         return searchBar
     }()
     
     let citiesTableView: UITableView = {
         var tableView = UITableView()
+        tableView.register(AddCityTableViewCell.self, forCellReuseIdentifier: AddCityTableViewCell.identifier)
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
         tableView.backgroundColor = .purple
+        tableView.showsVerticalScrollIndicator = true
+        tableView.allowsSelection = false
         return tableView
     }()
     
@@ -35,7 +37,6 @@ final class AddCityRootView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .systemGreen
         addSubViews()
         setupConstraints()
     }

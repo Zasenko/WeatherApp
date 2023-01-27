@@ -11,7 +11,7 @@ final class AddCityViewController: UIViewController {
     
     // MARK: - Properties
     
-    var data: [String] = ["Иваново", "Новороссийск", "Иркутск", "Вена", "Милан", "Лондон"]
+    var data: [String] = []
     var presenter: AddCityPresenterProtocol!
     
     // MARK: - Provate Properties
@@ -39,7 +39,7 @@ final class AddCityViewController: UIViewController {
         self.title = "Add City"
         createNavigationBar()
         createAddCitiesTableView()
-        addTargets()
+        addKeyboardTargets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,14 +60,15 @@ extension AddCityViewController {
     // MARK: - Objc functions
     
     @objc func keyboardWasShown(notification: Notification) {
-            // Получаем размер клавиатуры
-            let info = notification.userInfo! as NSDictionary
-            let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
-            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
-            // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
+        // Получаем размер клавиатуры
+        let info = notification.userInfo! as NSDictionary
+        let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
+        
+        // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
         rootView.citiesTableView.contentInset = contentInsets
         rootView.citiesTableView.scrollIndicatorInsets = contentInsets
-        }
+    }
     
     @objc func keyboardWillBeHidden(notification: Notification) {
         let contentInsets = UIEdgeInsets.zero
@@ -80,7 +81,7 @@ extension AddCityViewController {
     
     // MARK: - Private func
     
-    private func addTargets() {
+    private func addKeyboardTargets() {
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
     }
@@ -88,7 +89,7 @@ extension AddCityViewController {
     private func createNavigationBar() {
         navigationItem.titleView = rootView.searchBar
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.barTintColor = .systemTeal
+        navigationController?.navigationBar.barTintColor = .purple
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     
@@ -96,20 +97,23 @@ extension AddCityViewController {
         rootView.searchBar.delegate = self
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-        rootView.citiesTableView.register(AddCityTableViewCell.self, forCellReuseIdentifier: AddCityTableViewCell.identifier)
     }
 }
 
 // MARK: - ViewProtocol
 
-extension AddCityViewController: AddCityViewProtocol {}
+extension AddCityViewController: AddCityViewProtocol {
+    func showFindedLocations() {
+        rootView.citiesTableView.reloadData()
+    }
+}
 
 // MARK: - UISearchBarDelegate
 
 extension AddCityViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        presenter.searchLocationByName(name: searchText)
     }
 }
 
@@ -119,18 +123,21 @@ extension AddCityViewController: UITableViewDelegate {}
 
 extension AddCityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        data.count
+       presenter.data?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AddCityTableViewCell.identifier, for: indexPath) as? AddCityTableViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(cityName: data[indexPath.row])
+        guard let data = presenter.data?[indexPath.row] else {
+            return UITableViewCell()
+        }
+        
+        cell.setupCell(cityName: data)
+        cell.callback = {
+            cell.backgroundColor = .blue
+        }
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//       presenter.cellTaped(name: data[indexPath.row])
-//    }
 }

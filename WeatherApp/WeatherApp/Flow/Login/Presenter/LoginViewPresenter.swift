@@ -20,7 +20,7 @@ final class LoginViewPresenter {
     
     // MARK: - Properties
     
-    var router: MainRouterProtocol?
+    let router: MainRouterProtocol?
     
     // MARK: - Private properties
     
