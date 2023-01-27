@@ -19,7 +19,7 @@ final class CitiesViewPresenter {
     
     // MARK: - Properties
     
-    var router: CitiesRouterProtocol?
+    let router: CitiesRouterProtocol?
     
     // MARK: - Private properties
     

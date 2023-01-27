@@ -50,7 +50,8 @@ class ModulBilder: ModulBilderProtocol {
     func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController {
         let router = router
         let view = AddCityViewController()
-        let presenter = AddCityPresenter(view: view, router: router)
+        let geoCodingManager = GeoCodingManager()
+        let presenter = AddCityPresenter(view: view, router: router, geoCodingManager: geoCodingManager)
         view.presenter = presenter
         return view
     }

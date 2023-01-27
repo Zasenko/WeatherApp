@@ -12,8 +12,8 @@ class CitiesViewController: UIViewController {
     // MARK: - Properties
     
     var presenter: CitiesViewPresenterProtocol!
-    var data: [String] = ["Стамбул", "Vienna Vienna Vienna Vienna Vienna", "Иркутск", "Вена", "Милан"]
-    var data2: [String] = ["14", "79", "-17", "79", "28"]
+    var data: [String] = ["Стамбул", "Vienna вав ва Стамбул ва ч Стамбул Vienna вава Vienna а авава Vienna Vienna", "Иркутск", "Вена", "Милан", "Зачем вам этот бред , который вы хотите превратиь во что то новое?"]
+    var data2: [String] = ["14", "79", "-17", "79", "28", "8"]
     
     // MARK: - Private properties
     

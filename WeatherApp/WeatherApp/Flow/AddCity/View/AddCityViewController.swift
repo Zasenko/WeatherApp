@@ -11,7 +11,7 @@ final class AddCityViewController: UIViewController {
     
     // MARK: - Properties
     
-    var data: [String] = ["Иваново", "Новороссийск", "Иркутск", "Вена", "Милан", "Лондон"]
+    var data: [String] = []
     var presenter: AddCityPresenterProtocol!
     
     // MARK: - Provate Properties
@@ -42,47 +42,47 @@ final class AddCityViewController: UIViewController {
         addTargets()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
 }
 
 extension AddCityViewController {
     
     // MARK: - Objc functions
     
-    @objc func keyboardWasShown(notification: Notification) {
-            // Получаем размер клавиатуры
-            let info = notification.userInfo! as NSDictionary
-            let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
-            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
-            // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
-        rootView.citiesTableView.contentInset = contentInsets
-        rootView.citiesTableView.scrollIndicatorInsets = contentInsets
-        }
-    
-    @objc func keyboardWillBeHidden(notification: Notification) {
-        let contentInsets = UIEdgeInsets.zero
-        rootView.citiesTableView.contentInset = contentInsets
-    }
-    
-    @objc func hideKeyboard() {
-        rootView.citiesTableView.endEditing(true)
-    }
+//    @objc func keyboardWasShown(notification: Notification) {
+//            // Получаем размер клавиатуры
+//            let info = notification.userInfo! as NSDictionary
+//            let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
+//            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
+//            // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
+//        rootView.citiesTableView.contentInset = contentInsets
+//        rootView.citiesTableView.scrollIndicatorInsets = contentInsets
+//        }
+//
+//    @objc func keyboardWillBeHidden(notification: Notification) {
+//        let contentInsets = UIEdgeInsets.zero
+//        rootView.citiesTableView.contentInset = contentInsets
+//    }
+//
+//    @objc func hideKeyboard() {
+//        rootView.citiesTableView.endEditing(true)
+//    }
     
     // MARK: - Private func
     
     private func addTargets() {
-        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
+//        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+    //    rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
     }
     
     private func createNavigationBar() {
@@ -102,14 +102,18 @@ extension AddCityViewController {
 
 // MARK: - ViewProtocol
 
-extension AddCityViewController: AddCityViewProtocol {}
+extension AddCityViewController: AddCityViewProtocol {
+    func showFindedLocations() {
+        rootView.citiesTableView.reloadData()
+    }
+}
 
 // MARK: - UISearchBarDelegate
 
 extension AddCityViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        presenter.searchLocationByName(name: searchText)
     }
 }
 
@@ -119,14 +123,18 @@ extension AddCityViewController: UITableViewDelegate {}
 
 extension AddCityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        data.count
+        presenter.data?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AddCityTableViewCell.identifier, for: indexPath) as? AddCityTableViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(cityName: data[indexPath.row])
+        guard let data = presenter.data?[indexPath.row] else {
+            return UITableViewCell()
+        }
+        
+        cell.setupCell(cityName: data)
         return cell
     }
     

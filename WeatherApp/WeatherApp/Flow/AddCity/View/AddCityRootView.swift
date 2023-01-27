@@ -14,11 +14,10 @@ final class AddCityRootView: UIView {
     
     let searchBar : UISearchBar = {
         var searchBar = UISearchBar()
-        searchBar.searchBarStyle = UISearchBar.Style.default
+        searchBar.searchBarStyle = .minimal
         searchBar.placeholder = " Search..."
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()       
         return searchBar
     }()
     

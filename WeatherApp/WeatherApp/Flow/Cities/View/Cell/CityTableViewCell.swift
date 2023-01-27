@@ -15,12 +15,18 @@ class CityTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
     
-    private let stackview = UIStackView(arrangedSubviews: [])
+    private let stackview: UIStackView = {
+        let stackview = UIStackView(arrangedSubviews: [])
+        stackview.alignment = .center
+        stackview.spacing = 20
+        stackview.backgroundColor = .orange
+        return stackview
+    }()
     
     private let cityName: UILabel = {
         let lable = UILabel()
-        lable.font = .boldSystemFont(ofSize: 20)
-        lable.numberOfLines = 1
+        lable.font = .systemFont(ofSize: 20)
+        lable.numberOfLines = 0
         lable.textAlignment = .left
         lable.backgroundColor = .yellow
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +38,8 @@ class CityTableViewCell: UITableViewCell {
         lable.font = .systemFont(ofSize: 30)
         lable.textColor = .red
         lable.numberOfLines = 1
-        lable.backgroundColor = .clear
+        lable.textAlignment = .center
+        lable.backgroundColor = .blue
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
@@ -77,8 +84,11 @@ extension CityTableViewCell {
     }
     
     private func setupConstraints() {
-        stackview.spacing = 20
+        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor).isActive = true
+        
+        temp.widthAnchor.constraint(equalToConstant: 80).isActive = true
     }
 }

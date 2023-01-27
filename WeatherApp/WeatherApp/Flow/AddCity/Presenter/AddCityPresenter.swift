@@ -7,26 +7,46 @@
 
 import Foundation
 
-protocol AddCityViewProtocol: AnyObject {}
+protocol AddCityViewProtocol: AnyObject {
+    func showFindedLocations()
+}
 
-protocol AddCityPresenterProtocol: AnyObject {}
+protocol AddCityPresenterProtocol: AnyObject {
+    var data: [String]? {get set}
+    func searchLocationByName(name: String)
+}
  
 final class AddCityPresenter {
     
     // MARK: - Properties
     
-    var router: CitiesRouterProtocol?
-     
+    let router: CitiesRouterProtocol?
+    private let geoCodingManager: GeoCodingManager
+    
+    var data: [String]?
+    
     // MARK: - Private properties
     
     weak private var view: AddCityViewProtocol?
     
     // MARK: - Inits
     
-    required init(view: AddCityViewProtocol, router: CitiesRouterProtocol) {
+    required init(view: AddCityViewProtocol, router: CitiesRouterProtocol , geoCodingManager: GeoCodingManager) {
         self.view = view
         self.router = router
+        self.geoCodingManager = geoCodingManager
     }
 }
 
-extension AddCityPresenter: AddCityPresenterProtocol {}
+extension AddCityPresenter: AddCityPresenterProtocol {
+    func searchLocationByName(name: String) {
+        geoCodingManager.findCity(address: name) { [weak self] result in
+            guard let self = self else { return }
+            guard let result = result else { return }
+            DispatchQueue.main.async {
+                    self.data = result
+                    self.view?.showFindedLocations()
+            }
+        }
+    }
+}
