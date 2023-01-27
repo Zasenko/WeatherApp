@@ -7,38 +7,43 @@
 
 import UIKit
 
-class CityViewCell: UITableViewCell {
+class CityTableViewCell: UITableViewCell {
     
-    static let identifier = "CityViewCell"
+    // MARK: - Static Properties
+    
+    static let identifier = "CityTableViewCell"
+    
+    // MARK: - Private Properties
+    
+    private let stackview = UIStackView(arrangedSubviews: [])
     
     private let cityName: UILabel = {
         let lable = UILabel()
         lable.font = .boldSystemFont(ofSize: 20)
         lable.numberOfLines = 1
-        lable.backgroundColor = .clear
+        lable.textAlignment = .left
+        lable.backgroundColor = .yellow
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
     
     private let temp: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 20)
+        lable.font = .systemFont(ofSize: 30)
+        lable.textColor = .red
         lable.numberOfLines = 1
         lable.backgroundColor = .clear
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
 
+    // MARK: - Inits
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .systemGray6
+        backgroundColor = .white
         addSubViews()
         setupConstraints()
-    }
-
-    func setupCell(cityName: String, temp: String) {
-        self.cityName.text = cityName
-        self.temp.text = temp
     }
     
     required init?(coder: NSCoder) {
@@ -53,23 +58,27 @@ class CityViewCell: UITableViewCell {
 
 }
 
-extension CityViewCell {
+extension CityTableViewCell {
+    
+    // MARK: - Functions
+    
+    func setupCell(cityName: String, temp: String) {
+        self.cityName.text = cityName
+        self.temp.text = temp
+    }
+    
+    // MARK: - Private Functions
     
     private func addSubViews() {
-        addSubview(cityName)
-        addSubview(temp)
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.addArrangedSubview(cityName)
+        stackview.addArrangedSubview(temp)
+        addSubview(stackview)
     }
     
     private func setupConstraints() {
-        cityName.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        cityName.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        cityName.rightAnchor.constraint(equalTo: rightAnchor, constant: -50).isActive = true
-        cityName.leftAnchor.constraint(equalTo: leftAnchor, constant: 50).isActive = true
-        cityName.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        temp.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        temp.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        temp.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        temp.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        stackview.spacing = 20
+        stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
     }
 }

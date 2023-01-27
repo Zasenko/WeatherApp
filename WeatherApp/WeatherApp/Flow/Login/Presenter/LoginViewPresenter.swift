@@ -16,7 +16,7 @@ protocol LoginViewPresenterProtocol: AnyObject {
     func loginButtonTapped(login: String?, password: String?)
 }
 
-class LoginViewPresenter {
+final class LoginViewPresenter {
     
     // MARK: - Properties
     

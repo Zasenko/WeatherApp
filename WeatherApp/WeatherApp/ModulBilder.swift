@@ -12,6 +12,7 @@ protocol ModulBilderProtocol {
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController
     func cteateCityModul(router: CitiesRouterProtocol, name: String) -> UIViewController
+    func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController
 }
 
 class ModulBilder: ModulBilderProtocol {
@@ -39,10 +40,18 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateCityModul(router: CitiesRouterProtocol, name: String) -> UIViewController {
-        let router = router
+      //  let router = router
         let view = CityViewController(name: name)
        // let presenter = CitiesViewPresenter(view: view, router: router)
        // view.presenter = presenter
+        return view
+    }
+    
+    func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController {
+        let router = router
+        let view = AddCityViewController()
+        let presenter = AddCityPresenter(view: view, router: router)
+        view.presenter = presenter
         return view
     }
 }

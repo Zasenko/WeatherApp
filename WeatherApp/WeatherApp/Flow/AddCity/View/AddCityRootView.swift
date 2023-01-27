@@ -1,22 +1,33 @@
 //
-//  CitiesViewControllerRootView.swift
+//  AddCityRootView.swift
 //  WeatherApp
 //
-//  Created by Dmitry Zasenko on 25.01.23.
+//  Created by Dmitry Zasenko on 26.01.23.
 //
 
 import UIKit
 
-class CitiesViewControllerRootView: UIView {
+final class AddCityRootView: UIView {
+
     
     // MARK: - SubViews
+    
+    let searchBar : UISearchBar = {
+        var searchBar = UISearchBar()
+        searchBar.searchBarStyle = UISearchBar.Style.default
+        searchBar.placeholder = " Search..."
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()       
+        return searchBar
+    }()
     
     let citiesTableView: UITableView = {
         var tableView = UITableView()
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
-        tableView.backgroundColor = .brown
+        tableView.backgroundColor = .purple
         return tableView
     }()
     
@@ -24,7 +35,7 @@ class CitiesViewControllerRootView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .systemGreen
         addSubViews()
         setupConstraints()
     }
@@ -34,11 +45,10 @@ class CitiesViewControllerRootView: UIView {
     }
 }
 
-extension CitiesViewControllerRootView {
+extension AddCityRootView {
     
     //MARK: - Private Functions
 
-    
     private func addSubViews() {
         addSubview(citiesTableView)
     }

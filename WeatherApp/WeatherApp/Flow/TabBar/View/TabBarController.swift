@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     
     // MARK: - Properties
     
@@ -15,23 +15,24 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
-        navigationItem.setHidesBackButton(true, animated: true)
-        
-        tabBar.backgroundColor = .lightGray
-        //     self.delegate = self
+        tabBar.isTranslucent = false
+        tabBar.barTintColor = UIColor.systemTeal
+       
+        tabBar.backgroundColor = UIColor.systemTeal
         
         let tabBarAppearance = UITabBarAppearance()
         let tabBarItemAppearance = UITabBarItemAppearance()
         
+        tabBarAppearance.backgroundColor = .systemTeal
+        
         tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gray]
         tabBarItemAppearance.normal.iconColor = .gray
         
-        tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
-        tabBarItemAppearance.selected.iconColor = .red
+        tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        tabBarItemAppearance.selected.iconColor = .white
         
         tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
-        
+
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
     }
@@ -39,6 +40,7 @@ class TabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewControllers = presenter.createTabBar()
+        self.navigationController?.isNavigationBarHidden = true
     }
 }
 

@@ -12,9 +12,10 @@ protocol CitiesViewProtocol: AnyObject {
 
 protocol CitiesViewPresenterProtocol: AnyObject {
     func cellTaped(name: String)
+    func addButtonTapped()
 }
 
-class CitiesViewPresenter {
+final class CitiesViewPresenter {
     
     // MARK: - Properties
     
@@ -33,8 +34,12 @@ class CitiesViewPresenter {
 }
 
 extension CitiesViewPresenter: CitiesViewPresenterProtocol {
+    
     func cellTaped(name: String) {
         router?.showCityViewController(name: name)
     }
     
+    func addButtonTapped() {
+        router?.showAddCityViewController()
+    }
 }
