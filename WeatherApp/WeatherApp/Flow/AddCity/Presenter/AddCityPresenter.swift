@@ -16,6 +16,10 @@ protocol AddCityPresenterProtocol: AnyObject {
     func searchLocationByName(name: String)
     func addCityButtonTapped(city: GeoCodingCityModel)
 }
+
+protocol AddCityViewControllerProtocol: AnyObject {
+    func addedCity(city: GeoCodingCityModel)
+}
  
 final class AddCityPresenter {
     
@@ -28,7 +32,7 @@ final class AddCityPresenter {
     private let router: CitiesRouterProtocol?
     private let geoCodingManager: GeoCodingManager
     
-    weak private var delegate: AddCityViewControllerProtocol?
+    weak var delegate: AddCityViewControllerProtocol?
     
     // MARK: - Inits
     
@@ -36,6 +40,11 @@ final class AddCityPresenter {
         self.router = router
         self.delegate = delegate
         self.geoCodingManager = geoCodingManager
+    }
+    
+    func onDettach() {
+        self.view = .none
+        
     }
 }
 

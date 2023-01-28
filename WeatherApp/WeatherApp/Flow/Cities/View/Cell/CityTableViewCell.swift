@@ -46,16 +46,9 @@ class CityTableViewCell: UITableViewCell {
     
     let currentWeatherImage: UIImageView = {
         let theImageView = UIImageView()
+        theImageView.contentMode = .scaleAspectFit
         theImageView.translatesAutoresizingMaskIntoConstraints = false
         return theImageView
-    }()
-    
-    private let addCityButton: UIButton = {
-        var button = UIButton(type: .custom)
-        button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
 
     // MARK: - Inits
@@ -100,8 +93,8 @@ extension CityTableViewCell {
         
         temp.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
-        currentWeatherImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        currentWeatherImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        currentWeatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        currentWeatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
     }
 }

@@ -8,12 +8,11 @@
 import UIKit
 
 
-
 final class AddCityViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let presenter: AddCityPresenterProtocol
+    let presenter: AddCityPresenterProtocol
     
     // MARK: - Provate Properties
     

@@ -22,17 +22,17 @@ extension WeatherCodes {
     var image: UIImage {
         switch self {
         case .clearSky:
-            return UIImage(systemName: "sun.max.fill") ?? UIImage()
+            return UIImage(systemName: "sun.max.fill")?.withTintColor(.yellow) ?? UIImage()
         case .partlyCloudy:
             return UIImage(systemName: "cloud.sun.fill") ?? UIImage()
         case .cloudy:
-            return UIImage(systemName: "cloud.fill") ?? UIImage()
+            return UIImage(systemName: "cloud.fill")?.withTintColor(.gray) ?? UIImage()
         case .rain:
-            return UIImage(systemName: "cloud.rain.fill") ?? UIImage()
+            return UIImage(systemName: "cloud.rain.fill")?.withTintColor(.blue) ?? UIImage()
         case .snow:
-            return UIImage(systemName: "cloud.snow.fill") ?? UIImage()
+            return UIImage(systemName: "cloud.snow.fill")?.withTintColor(.blue) ?? UIImage()
         case .unknown :
-            return UIImage(systemName: "tornado") ?? UIImage()
+            return UIImage()
         }
     }
 }

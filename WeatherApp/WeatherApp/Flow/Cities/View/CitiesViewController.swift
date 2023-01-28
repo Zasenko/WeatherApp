@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol AddCityViewControllerProtocol: AnyObject {
-    func addedCity(city: GeoCodingCityModel)
-}
-
 class CitiesViewController: UIViewController {
     
     // MARK: - Properties
