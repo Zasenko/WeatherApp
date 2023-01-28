@@ -7,11 +7,13 @@
 
 import UIKit
 
+
+
 final class AddCityViewController: UIViewController {
     
     // MARK: - Properties
     
-    var data: [String] = []
+    //var data: [String] = []
     var presenter: AddCityPresenterProtocol!
     
     // MARK: - Provate Properties
@@ -39,52 +41,12 @@ final class AddCityViewController: UIViewController {
         self.title = "Add City"
         createNavigationBar()
         createAddCitiesTableView()
-        addKeyboardTargets()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
 extension AddCityViewController {
     
-    // MARK: - Objc functions
-    
-    @objc func keyboardWasShown(notification: Notification) {
-        // Получаем размер клавиатуры
-        let info = notification.userInfo! as NSDictionary
-        let kbSize = (info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
-        
-        // Добавляем отступ внизу UIScrollView, равный размеру клавиатуры
-        rootView.citiesTableView.contentInset = contentInsets
-        rootView.citiesTableView.scrollIndicatorInsets = contentInsets
-    }
-    
-    @objc func keyboardWillBeHidden(notification: Notification) {
-        let contentInsets = UIEdgeInsets.zero
-        rootView.citiesTableView.contentInset = contentInsets
-    }
-    
-    @objc func hideKeyboard() {
-        rootView.citiesTableView.endEditing(true)
-    }
-    
     // MARK: - Private func
-    
-    private func addKeyboardTargets() {
-        let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        rootView.citiesTableView.addGestureRecognizer(hideKeyboardGesture)
-    }
     
     private func createNavigationBar() {
         navigationItem.titleView = rootView.searchBar
@@ -108,7 +70,7 @@ extension AddCityViewController: AddCityViewProtocol {
     }
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: - SearchBarDelegate
 
 extension AddCityViewController: UISearchBarDelegate {
     
@@ -123,20 +85,20 @@ extension AddCityViewController: UITableViewDelegate {}
 
 extension AddCityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       presenter.data?.count ?? 0
+        (presenter.city != nil) ? 1 : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AddCityTableViewCell.identifier, for: indexPath) as? AddCityTableViewCell else {
             return UITableViewCell()
         }
-        guard let data = presenter.data?[indexPath.row] else {
+        guard let city = presenter.city else {
             return UITableViewCell()
         }
         
-        cell.setupCell(cityName: data)
+        cell.setupCell(cityName: "\(city.name), \(city.country)")
         cell.callback = {
-            cell.backgroundColor = .blue
+            self.presenter.addCityButtonTapped(city: city)
         }
         return cell
     }

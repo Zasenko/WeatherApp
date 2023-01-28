@@ -15,7 +15,7 @@ class AddCityTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    var callback: () -> ()  = { }
+    var callback: () -> () = {}
     
     // MARK: - Private properties
     
@@ -57,11 +57,10 @@ extension AddCityTableViewCell {
     func setupCell(cityName: String) {
         label.text = cityName
     }
-
     
     // MARK: - Objc Functions
     
-    @objc func didTapButton() {
+    @objc func didTapButton(sender: UIButton) {
         callback()
     }
 
@@ -73,7 +72,7 @@ extension AddCityTableViewCell {
     }
     
     private func addTargets() {
-        addButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(didTapButton(sender:)), for: .touchUpInside)
     }
     
     // MARK: - Constrsaints

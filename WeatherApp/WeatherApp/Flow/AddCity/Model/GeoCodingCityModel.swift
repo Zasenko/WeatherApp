@@ -6,26 +6,19 @@
 //
 
 import Foundation
+import CoreLocation
 
-struct City: Codable {
-    
-    enum CodingKeys: String, CodingKey {
-        case error
-        case latitude
-        case longitude
-        case currentWeather = "current_weather"
-    }
-    
-    let error: Bool?
-    let latitude: Float
-    let longitude: Float
-    let currentWeather: Weather?
+struct GeoCodingCityModel {
+    let coordinate: CLLocationCoordinate2D
+    let name: String
+    let country: String
 }
 
 struct Weather: Codable {
     let temperature: Float
     let weathercode: UInt
 }
+
 
 ///WMO Weather interpretation codes (WW)
 ///Code    Description

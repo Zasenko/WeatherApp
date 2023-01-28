@@ -7,13 +7,15 @@
 
 import UIKit
 
+protocol AddCityViewControllerProtocol: AnyObject {
+    func addedCity(city: GeoCodingCityModel)
+}
+
 class CitiesViewController: UIViewController {
     
     // MARK: - Properties
     
     var presenter: CitiesViewPresenterProtocol!
-    var data: [String] = ["Стамбул", "Vienna вав ва Стамбул ва ч Стамбул Vienna вава Vienna а авава Vienna Vienna", "Иркутск", "Вена", "Милан", "Зачем вам этот бред , который вы хотите превратиь во что то новое?"]
-    var data2: [String] = ["14", "79", "-17", "79", "28", "8"]
     
     // MARK: - Private properties
     
@@ -71,31 +73,39 @@ extension CitiesViewController {
     }
 }
 
+extension CitiesViewController: AddCityViewControllerProtocol {
+    func addedCity(city: GeoCodingCityModel) {
+        presenter.addNewCity(city: city)
+    }
+}
+
 // MARK: - TableViewDelegate
 
-extension CitiesViewController: UITableViewDelegate {
-}
+extension CitiesViewController: UITableViewDelegate {}
 
 extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        data.count
+        presenter.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as? CityTableViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(cityName: data[indexPath.row], temp: data2[indexPath.row])
+        cell.setupCell(cityName: presenter.cities[indexPath.row].name, temp: presenter.cities[indexPath.row].country)
         cell.accessoryType = .disclosureIndicator
         cell.tintColor = .red
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.cellTaped(name: data[indexPath.row])
+        presenter.cellTaped(name: presenter.cities[indexPath.row].name)
     }
 }
 
 
 extension CitiesViewController: CitiesViewProtocol {
+    func reloadTableView() {
+        rootView.citiesTableView.reloadData()
+    }
 }
