@@ -18,7 +18,7 @@ extension GeoCodingManager {
 
     // MARK: - Functions
     
-    func findCity(address: String, complition: @escaping ([String]?) -> Void) {
+    func findCity(address: String, complition: @escaping (GeoCodingCityModel?) -> Void) {
         
         geocoder.geocodeAddressString(address, completionHandler: { placemarks, error in
             if (error != nil) {
@@ -26,23 +26,19 @@ extension GeoCodingManager {
                 return
             }
             
-            guard let placemarks = placemarks else {
+            guard let placemark = placemarks?.first,
+                  let coordinate = placemark.location?.coordinate,
+                  let name = placemark.name,
+                  let country = placemark.country
+            else {
                 complition(nil)
                 return
             }
-            var data = [String]()
-                for i in placemarks {
-                    let lat = String(format: "%.04f", (i.location?.coordinate.longitude ?? 0.0)!)
-                    let lon = String(format: "%.04f", (i.location?.coordinate.latitude ?? 0.0)!)
-                    let name = i.name ?? ""
-                    let country = i.country ?? ""
-                    let region = i.administrativeArea ?? ""
-                    data.append("\(lon), \(lat)\n\(name), \(region), \(country)")
-                }
+
+            let city = GeoCodingCityModel(coordinate: coordinate, name: name, country: country)
             DispatchQueue.main.async {
-                complition(data)
+                complition(city)
             }
-            
         })
     }
 }

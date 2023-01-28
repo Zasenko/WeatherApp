@@ -12,8 +12,9 @@ protocol AddCityViewProtocol: AnyObject {
 }
 
 protocol AddCityPresenterProtocol: AnyObject {
-    var data: [String]? {get set}
+    var city: GeoCodingCityModel? { get set }
     func searchLocationByName(name: String)
+    func addCityButtonTapped(city: GeoCodingCityModel)
 }
  
 final class AddCityPresenter {
@@ -23,30 +24,37 @@ final class AddCityPresenter {
     let router: CitiesRouterProtocol?
     private let geoCodingManager: GeoCodingManager
     
-    var data: [String]?
+    var city: GeoCodingCityModel?
     
     // MARK: - Private properties
     
     weak private var view: AddCityViewProtocol?
+    weak private var delegate: AddCityViewControllerProtocol?
     
     // MARK: - Inits
     
-    required init(view: AddCityViewProtocol, router: CitiesRouterProtocol , geoCodingManager: GeoCodingManager) {
+    required init(view: AddCityViewProtocol, router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager, delegate: AddCityViewControllerProtocol) {
         self.view = view
         self.router = router
+        self.delegate = delegate
         self.geoCodingManager = geoCodingManager
     }
 }
 
 extension AddCityPresenter: AddCityPresenterProtocol {
+    
     func searchLocationByName(name: String) {
         geoCodingManager.findCity(address: name) { [weak self] result in
             guard let self = self else { return }
             guard let result = result else { return }
             DispatchQueue.main.async {
-                    self.data = result
+                    self.city = result
                     self.view?.showFindedLocations()
             }
         }
+    }
+    
+    func addCityButtonTapped(city: GeoCodingCityModel) {
+        delegate?.addedCity(city: city)
     }
 }
