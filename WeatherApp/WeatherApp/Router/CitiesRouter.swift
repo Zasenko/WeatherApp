@@ -43,7 +43,8 @@ extension CitiesRouter {
     
     func showAddCityViewController() {
         if let navigationController = navigationController {
-            guard let viewController = modulBilder?.cteateAddCityModul(router: self) else { return }
+            guard let addCityVC = navigationController.topViewController as? AddCityViewControllerProtocol else { return }
+            guard let viewController = modulBilder?.cteateAddCityModul(router: self, delegate: addCityVC) else { return }
             let navController = UINavigationController(rootViewController: viewController)
             navController.modalPresentationStyle = .formSheet
             navigationController.present(navController, animated: true)

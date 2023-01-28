@@ -8,11 +8,14 @@
 import Foundation
 
 protocol CitiesViewProtocol: AnyObject {
+    func reloadTableView()
 }
 
 protocol CitiesViewPresenterProtocol: AnyObject {
+    var cities: [GeoCodingCityModel] { get set }
     func cellTaped(name: String)
     func addButtonTapped()
+    func addNewCity(city: GeoCodingCityModel)
 }
 
 final class CitiesViewPresenter {
@@ -20,6 +23,7 @@ final class CitiesViewPresenter {
     // MARK: - Properties
     
     let router: CitiesRouterProtocol?
+    var cities: [GeoCodingCityModel] = []
     
     // MARK: - Private properties
     
@@ -34,12 +38,17 @@ final class CitiesViewPresenter {
 }
 
 extension CitiesViewPresenter: CitiesViewPresenterProtocol {
-    
+
     func cellTaped(name: String) {
         router?.showCityViewController(name: name)
     }
     
     func addButtonTapped() {
         router?.showAddCityViewController()
+    }
+    
+    func addNewCity(city: GeoCodingCityModel) {
+        cities.append(city)
+        view?.reloadTableView()
     }
 }
