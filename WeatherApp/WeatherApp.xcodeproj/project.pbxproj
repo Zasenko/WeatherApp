@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F393EC72983D747005D0483 /* GeoCodingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F393EC62983D747005D0483 /* GeoCodingManager.swift */; };
 		0F393ECC2983FFB6005D0483 /* GeoCodingCityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F393ECB2983FFB6005D0483 /* GeoCodingCityModel.swift */; };
+		0F6C5B1329854399009B4A17 /* WeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */; };
 		0F80F8E22982CCCF0091BD71 /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F80F8E12982CCCF0091BD71 /* AddCityViewController.swift */; };
 		0F80F8E62982D6E10091BD71 /* AddCityRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F80F8E52982D6E10091BD71 /* AddCityRootView.swift */; };
 		0F80F8E92982E4200091BD71 /* AddCityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F80F8E82982E4200091BD71 /* AddCityPresenter.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		0F393EC62983D747005D0483 /* GeoCodingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingManager.swift; sourceTree = "<group>"; };
 		0F393ECB2983FFB6005D0483 /* GeoCodingCityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingCityModel.swift; sourceTree = "<group>"; };
+		0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkManager.swift; sourceTree = "<group>"; };
 		0F80F8E12982CCCF0091BD71 /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		0F80F8E52982D6E10091BD71 /* AddCityRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityRootView.swift; sourceTree = "<group>"; };
 		0F80F8E82982E4200091BD71 /* AddCityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityPresenter.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		0F393EC52983D736005D0483 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				0F6C5B1129854379009B4A17 /* NetworkManager */,
 				0F393EC62983D747005D0483 /* GeoCodingManager.swift */,
 			);
 			path = Managers;
@@ -110,18 +113,19 @@
 			path = ModulBilder;
 			sourceTree = "<group>";
 		};
-		0F393EC92983FF9F005D0483 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		0F393ECA2983FFA6005D0483 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0F6C5B1129854379009B4A17 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */,
+			);
+			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 		0F80F8DF2982CCA50091BD71 /* AddCity */ = {
@@ -277,7 +281,6 @@
 		0FAC9C47298183A600FF8D73 /* City */ = {
 			isa = PBXGroup;
 			children = (
-				0F393EC92983FF9F005D0483 /* Model */,
 				0F393ECA2983FFA6005D0483 /* Presenter */,
 				0F393EC22983C0D5005D0483 /* View */,
 			);
@@ -414,6 +417,7 @@
 				0FAC9C422981458E00FF8D73 /* CitiesViewController.swift in Sources */,
 				0F80F8E92982E4200091BD71 /* AddCityPresenter.swift in Sources */,
 				0F80F8E62982D6E10091BD71 /* AddCityRootView.swift in Sources */,
+				0F6C5B1329854399009B4A17 /* WeatherNetworkManager.swift in Sources */,
 				0FAC9C562981925900FF8D73 /* TabBarPresenter.swift in Sources */,
 				0FD085932971C8E2009F3DC7 /* ModulBilder.swift in Sources */,
 				0FD0858129702FAE009F3DC7 /* LoginModel.swift in Sources */,

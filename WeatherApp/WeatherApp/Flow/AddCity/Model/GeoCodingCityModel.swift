@@ -7,18 +7,48 @@
 
 import Foundation
 import CoreLocation
+import UIKit
+
+enum WeatherCodes {
+    case clearSky
+    case partlyCloudy
+    case cloudy
+    case rain
+    case snow
+    case unknown
+}
+
+extension WeatherCodes {
+    var image: UIImage {
+        switch self {
+        case .clearSky:
+            return UIImage(systemName: "sun.max.fill") ?? UIImage()
+        case .partlyCloudy:
+            return UIImage(systemName: "cloud.sun.fill") ?? UIImage()
+        case .cloudy:
+            return UIImage(systemName: "cloud.fill") ?? UIImage()
+        case .rain:
+            return UIImage(systemName: "cloud.rain.fill") ?? UIImage()
+        case .snow:
+            return UIImage(systemName: "cloud.snow.fill") ?? UIImage()
+        case .unknown :
+            return UIImage(systemName: "tornado") ?? UIImage()
+        }
+    }
+}
 
 struct GeoCodingCityModel {
     let coordinate: CLLocationCoordinate2D
     let name: String
     let country: String
+    
+    var currentWeather: CityWeather?
 }
 
-struct Weather: Codable {
-    let temperature: Float
-    let weathercode: UInt
+struct CityWeather {
+    let temperature: Double
+    let weathercode: WeatherCodes
 }
-
 
 ///WMO Weather interpretation codes (WW)
 ///Code    Description

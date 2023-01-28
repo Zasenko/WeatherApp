@@ -35,7 +35,8 @@ class ModulBilder: ModulBilderProtocol {
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController {
         let router = router
         let view = CitiesViewController()
-        let presenter = CitiesViewPresenter(view: view, router: router)
+        let networkManager = WeatherNetworkManager()
+        let presenter = CitiesViewPresenter(view: view, router: router, networkManager: networkManager)
         view.presenter = presenter
         return view
     }
@@ -51,11 +52,10 @@ class ModulBilder: ModulBilderProtocol {
     
     func cteateAddCityModul(router: CitiesRouterProtocol, delegate: AddCityViewControllerProtocol) -> UIViewController {
         
-        let router = router
-        let view = AddCityViewController()
         let geoCodingManager = GeoCodingManager()
-        let presenter = AddCityPresenter(view: view, router: router, geoCodingManager: geoCodingManager, delegate: delegate)
-        view.presenter = presenter
+        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, delegate: delegate)
+        let view = AddCityViewController(presenter: presenter)
+        presenter.view = view
         return view
     }
 }

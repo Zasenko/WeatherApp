@@ -92,7 +92,16 @@ extension CitiesViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as? CityTableViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(cityName: presenter.cities[indexPath.row].name, temp: presenter.cities[indexPath.row].country)
+
+        let city = presenter.cities[indexPath.row]
+        var string = ""
+        var img = UIImage()
+        if let currentWeather = city.currentWeather {
+            string = String(currentWeather.temperature)
+            img = currentWeather.weathercode.image
+        }
+        
+        cell.setupCell(cityName: city.name, temp: string, currentWeatherImage: img)
         cell.accessoryType = .disclosureIndicator
         cell.tintColor = .red
         return cell

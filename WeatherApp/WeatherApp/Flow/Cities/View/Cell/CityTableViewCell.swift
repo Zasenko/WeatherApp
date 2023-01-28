@@ -19,7 +19,7 @@ class CityTableViewCell: UITableViewCell {
         let stackview = UIStackView(arrangedSubviews: [])
         stackview.alignment = .center
         stackview.spacing = 20
-        stackview.backgroundColor = .orange
+       // stackview.backgroundColor = .orange
         return stackview
     }()
     
@@ -28,7 +28,7 @@ class CityTableViewCell: UITableViewCell {
         lable.font = .systemFont(ofSize: 20)
         lable.numberOfLines = 0
         lable.textAlignment = .left
-        lable.backgroundColor = .yellow
+       // lable.backgroundColor = .yellow
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
@@ -39,9 +39,15 @@ class CityTableViewCell: UITableViewCell {
         lable.textColor = .red
         lable.numberOfLines = 1
         lable.textAlignment = .center
-        lable.backgroundColor = .blue
+        //lable.backgroundColor = .blue
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
+    }()
+    
+    let currentWeatherImage: UIImageView = {
+        let theImageView = UIImageView()
+        theImageView.translatesAutoresizingMaskIntoConstraints = false
+        return theImageView
     }()
     
     private let addCityButton: UIButton = {
@@ -64,22 +70,16 @@ class CityTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-
 }
 
 extension CityTableViewCell {
     
     // MARK: - Functions
     
-    func setupCell(cityName: String, temp: String) {
+    func setupCell(cityName: String, temp: String, currentWeatherImage: UIImage) {
         self.cityName.text = cityName
         self.temp.text = temp
+        self.currentWeatherImage.image = currentWeatherImage
     }
     
     // MARK: - Private Functions
@@ -88,6 +88,7 @@ extension CityTableViewCell {
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.addArrangedSubview(cityName)
         stackview.addArrangedSubview(temp)
+        stackview.addArrangedSubview(currentWeatherImage)
         addSubview(stackview)
     }
     
@@ -95,8 +96,12 @@ extension CityTableViewCell {
         stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor,constant: -20).isActive = true
         
         temp.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        currentWeatherImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        currentWeatherImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
     }
 }

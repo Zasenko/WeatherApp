@@ -20,21 +20,19 @@ protocol AddCityPresenterProtocol: AnyObject {
 final class AddCityPresenter {
     
     // MARK: - Properties
-    
-    let router: CitiesRouterProtocol?
-    private let geoCodingManager: GeoCodingManager
-    
+    weak var view: AddCityViewProtocol?
     var city: GeoCodingCityModel?
     
     // MARK: - Private properties
     
-    weak private var view: AddCityViewProtocol?
+    private let router: CitiesRouterProtocol?
+    private let geoCodingManager: GeoCodingManager
+    
     weak private var delegate: AddCityViewControllerProtocol?
     
     // MARK: - Inits
     
-    required init(view: AddCityViewProtocol, router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager, delegate: AddCityViewControllerProtocol) {
-        self.view = view
+    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager, delegate: AddCityViewControllerProtocol) {
         self.router = router
         self.delegate = delegate
         self.geoCodingManager = geoCodingManager
