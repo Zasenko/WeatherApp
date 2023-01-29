@@ -43,18 +43,3 @@ final class TabBarController: UITabBarController {
         self.navigationController?.isNavigationBarHidden = true
     }
 }
-
-
-
-class TabTwoViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor.gray
-        self.title = "Настройки"
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-}

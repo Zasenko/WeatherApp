@@ -12,30 +12,77 @@ protocol CitiesViewProtocol: AnyObject {
 }
 
 protocol CitiesViewPresenterProtocol: AnyObject {
-    var cities: [GeoCodingCityModel] { get set }
+    var cities: [CityModel] { get set }
     func cellTaped(name: String)
     func addButtonTapped()
-    func addNewCity(city: GeoCodingCityModel)
+}
+
+protocol CitiesViewPresenterDelegate: AnyObject {
+    func addCity(city: CityModel)
 }
 
 final class CitiesViewPresenter {
     
     // MARK: - Properties
-    
-    let networkManager: WeatherNetworkManagerProtocol?
-    let router: CitiesRouterProtocol?
-    var cities: [GeoCodingCityModel] = []
+    weak var view: CitiesViewProtocol?
+    var cities: [CityModel] = []
     
     // MARK: - Private properties
     
-    weak private var view: CitiesViewProtocol?
+    private let networkManager: WeatherNetworkManagerProtocol
+    private let router: CitiesRouterProtocol?
     
     // MARK: - Inits
     
-    required init(view: CitiesViewProtocol, router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol) {
-        self.view = view
+    required init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol) {
         self.router = router
         self.networkManager = networkManager
+    }
+}
+
+extension CitiesViewPresenter {
+    
+    private func addedCity(city: CityModel) {
+                var city = city
+                networkManager.fetchCurrentWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude), complition: { [weak self] result in
+                    guard let self = self else {return}
+        
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let location):
+                            if let currentWeathe = location.currentWeather {
+                                var weatherCode: WeatherCodes {
+                                    switch currentWeathe.weathercode {
+                                    case 0:
+                                        return .clearSky
+                                    case 2:
+                                        return .partlyCloudy
+                                    case 3:
+                                        return .cloudy
+                                    case 61, 63, 65, 80, 81, 82:
+                                        return .rain
+                                    case 71, 73, 75:
+                                        return .snow
+                                    default:
+                                        return .unknown
+                                    }
+                                }
+                                let cityWeather = CityWeather(temperature: currentWeathe.temperature, weathercode: weatherCode)
+                                city.currentWeather = cityWeather
+                            }
+                            self.cities.append(city)
+                            self.view?.reloadTableView()
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
+                })
+    }
+}
+
+extension CitiesViewPresenter: CitiesViewPresenterDelegate {
+    func addCity(city: CityModel) {
+        addedCity(city: city)
     }
 }
 
@@ -46,53 +93,6 @@ extension CitiesViewPresenter: CitiesViewPresenterProtocol {
     }
     
     func addButtonTapped() {
-        router?.showAddCityViewController()
-    }
-    
-    func addNewCity(city: GeoCodingCityModel) {
-        
-        var city = city
-        
-        networkManager?.fetchCurrentWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude), complition: { [weak self] result in
-            guard let self = self else {return}
-            
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let location):
-                    if let currentWeathe = location.currentWeather {
-                        var weatherCode: WeatherCodes {
-                            switch currentWeathe.weathercode {
-                            case 0:
-                                return .clearSky
-                            case 2:
-                                return .partlyCloudy
-                            case 3:
-                                return .cloudy
-                            case 61, 63, 65, 80, 81, 82:
-                                return .rain
-                            case 71, 73, 75:
-                                return .snow
-                            default:
-                                return .unknown
-                            }
-                        }
-                        var cityWeather = CityWeather(temperature: currentWeathe.temperature, weathercode: weatherCode)
-                        city.currentWeather = cityWeather
-                    }
-                    
-                    
-                   // city.currentWeather = location.currentWeather
-                    
-                    
-                    self.cities.append(city)
-                    self.view?.reloadTableView()
-                case .failure(let error):
-                    print(error)
-                }
-            }
-            
-            
-    
-        })
+        router?.showAddCityViewController(delegate: self)
     }
 }

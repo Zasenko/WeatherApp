@@ -11,6 +11,7 @@ import CoreLocation
 class GeoCodingManager {
     
     // MARK: - Private properties
+    
     private let geocoder = CLGeocoder()
 }
 
@@ -18,7 +19,7 @@ extension GeoCodingManager {
 
     // MARK: - Functions
     
-    func findCity(address: String, complition: @escaping (GeoCodingCityModel?) -> Void) {
+    func findCity(address: String, complition: @escaping (CityModel?) -> Void) {
         
         geocoder.geocodeAddressString(address, completionHandler: { placemarks, error in
             if (error != nil) {
@@ -35,7 +36,7 @@ extension GeoCodingManager {
                 return
             }
 
-            let city = GeoCodingCityModel(coordinate: coordinate, name: name, country: country)
+            let city = CityModel(coordinate: coordinate, name: name, country: country)
             DispatchQueue.main.async {
                 complition(city)
             }

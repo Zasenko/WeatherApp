@@ -48,6 +48,7 @@ extension AddCityViewController {
     // MARK: - Private func
     
     private func createNavigationBar() {
+        rootView.searchBar.delegate = self
         navigationItem.titleView = rootView.searchBar
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.barTintColor = .purple
@@ -55,7 +56,6 @@ extension AddCityViewController {
     }
     
     private func createAddCitiesTableView() {
-        rootView.searchBar.delegate = self
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
     }
@@ -96,7 +96,8 @@ extension AddCityViewController: UITableViewDataSource {
         }
         
         cell.setupCell(cityName: "\(city.name), \(city.country)")
-        cell.callback = {
+        cell.callback = { [weak self] in
+            guard let self = self else { return }
             self.presenter.addCityButtonTapped(city: city)
         }
         return cell

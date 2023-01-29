@@ -95,6 +95,5 @@ extension CityTableViewCell {
         
         currentWeatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
         currentWeatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
     }
 }

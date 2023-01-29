@@ -11,7 +11,7 @@ class CitiesViewController: UIViewController {
     
     // MARK: - Properties
     
-    var presenter: CitiesViewPresenterProtocol!
+    private let presenter: CitiesViewPresenterProtocol
     
     // MARK: - Private properties
     
@@ -19,7 +19,8 @@ class CitiesViewController: UIViewController {
 
     // MARK: - Inits
     
-    init() {
+    init(presenter: CitiesViewPresenterProtocol) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -65,13 +66,6 @@ extension CitiesViewController {
     private func createCitiesTableView() {
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-        rootView.citiesTableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
-    }
-}
-
-extension CitiesViewController: AddCityViewControllerProtocol {
-    func addedCity(city: GeoCodingCityModel) {
-        presenter.addNewCity(city: city)
     }
 }
 
@@ -81,17 +75,17 @@ extension CitiesViewController: UITableViewDelegate {}
 
 extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.cities.count
+        self.presenter.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as? CityTableViewCell else {
             return UITableViewCell()
         }
-
         let city = presenter.cities[indexPath.row]
         var string = ""
         var img = UIImage()
+        
         if let currentWeather = city.currentWeather {
             string = String(currentWeather.temperature)
             img = currentWeather.weathercode.image
@@ -104,13 +98,12 @@ extension CitiesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.cellTaped(name: presenter.cities[indexPath.row].name)
+        self.presenter.cellTaped(name: presenter.cities[indexPath.row].name)
     }
 }
 
-
 extension CitiesViewController: CitiesViewProtocol {
     func reloadTableView() {
-        rootView.citiesTableView.reloadData()
+        self.rootView.citiesTableView.reloadData()
     }
 }

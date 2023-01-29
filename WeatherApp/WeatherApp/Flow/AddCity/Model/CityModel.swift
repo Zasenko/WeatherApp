@@ -37,7 +37,7 @@ extension WeatherCodes {
     }
 }
 
-struct GeoCodingCityModel {
+struct CityModel {
     let coordinate: CLLocationCoordinate2D
     let name: String
     let country: String

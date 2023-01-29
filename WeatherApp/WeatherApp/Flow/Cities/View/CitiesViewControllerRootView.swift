@@ -17,6 +17,7 @@ class CitiesViewControllerRootView: UIView {
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
         tableView.backgroundColor = .brown
+        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
         return tableView
     }()
     
@@ -41,7 +42,6 @@ extension CitiesViewControllerRootView {
     
     //MARK: - Private Functions
 
-    
     private func addSubViews() {
         addSubview(citiesTableView)
     }
