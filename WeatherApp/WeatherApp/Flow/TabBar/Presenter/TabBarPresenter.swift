@@ -25,22 +25,26 @@ final class TabBarPresenter {
 }
 
 extension TabBarPresenter: TabBarPresenterProtocol {
+    
     func createTabBar() -> [UIViewController] {
 
-        let navigationController = UINavigationController()
+        let weatherNavController = UINavigationController()
         if let builder = router?.modulBilder {
-            let router = CitiesRouter(navigationController: navigationController, modulBilder: builder)
+            let router = WeatherRouter(navigationController: weatherNavController, modulBilder: builder)
+            router.showWeatherViewController()
+        }
+        let tabOneBarItem = UITabBarItem(title: "Weather", image: UIImage(systemName: "location"), selectedImage: UIImage(systemName: "location.fill"))
+        weatherNavController.tabBarItem = tabOneBarItem
+
+        let citiesNavController = UINavigationController()
+        if let builder = router?.modulBilder {
+            let router = CitiesRouter(navigationController: citiesNavController, modulBilder: builder)
             router.initialCitiesViewController()
         }
-  
-        let tabOneBarItem = UITabBarItem(title: "Cities", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-        navigationController.tabBarItem = tabOneBarItem
-        navigationController.navigationBar.largeContentTitle = "Cities"
         
-        
-        let view = TabTwoViewController()
         let tabBarItem = UITabBarItem(title: "Cities", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-        view.tabBarItem = tabBarItem
-        return [navigationController, view]
+        citiesNavController.tabBarItem = tabBarItem
+        
+        return [citiesNavController, weatherNavController]
     }
 }

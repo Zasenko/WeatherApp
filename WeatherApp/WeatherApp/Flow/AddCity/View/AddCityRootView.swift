@@ -8,7 +8,6 @@
 import UIKit
 
 final class AddCityRootView: UIView {
-
     
     // MARK: - SubViews
     

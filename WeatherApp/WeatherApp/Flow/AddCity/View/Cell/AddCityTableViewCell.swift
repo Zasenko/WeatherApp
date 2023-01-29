@@ -15,7 +15,7 @@ class AddCityTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    var callback: () -> () = {}
+    var callback: (() -> Void)?
     
     // MARK: - Private properties
     
@@ -29,8 +29,9 @@ class AddCityTableViewCell: UITableViewCell {
     
     private let label: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 16)
-        lbl.textColor = .systemPink
+        lbl.font = UIFont.systemFont(ofSize: 20)
+        lbl.textColor = .black
+        lbl.backgroundColor = .gray
         lbl.numberOfLines = 0
         return lbl
     }()
@@ -61,7 +62,7 @@ extension AddCityTableViewCell {
     // MARK: - Objc Functions
     
     @objc func didTapButton(sender: UIButton) {
-        callback()
+        self.callback?()
     }
 
     // MARK: - Private functions
@@ -84,18 +85,19 @@ extension AddCityTableViewCell {
     
     private func setupAddButtonConstraints() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
-        addButton.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 10).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
+        addButton.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+        addButton.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
+        addButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
     }
     
     private func setupLableConstraints() {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 10).isActive = true
         label.rightAnchor.constraint(equalTo: addButton.leftAnchor, constant: -10).isActive = true
-        label.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
+        label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        label.topAnchor.constraint(greaterThanOrEqualTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+        label.bottomAnchor.constraint(lessThanOrEqualTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
     }
 }
