@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class AddCityViewController: UIViewController {
     
     // MARK: - Properties

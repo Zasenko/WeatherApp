@@ -15,6 +15,7 @@ protocol CitiesViewPresenterProtocol: AnyObject {
     var cities: [CityModel] { get set }
     func cellTaped(name: String)
     func addButtonTapped()
+    func addNewCity(city: GeoCodingCityModel)
 }
 
 protocol CitiesViewPresenterDelegate: AnyObject {
@@ -24,6 +25,7 @@ protocol CitiesViewPresenterDelegate: AnyObject {
 final class CitiesViewPresenter {
     
     // MARK: - Properties
+
     weak var view: CitiesViewProtocol?
     var cities: [CityModel] = []
     
@@ -94,5 +96,10 @@ extension CitiesViewPresenter: CitiesViewPresenterProtocol {
     
     func addButtonTapped() {
         router?.showAddCityViewController(delegate: self)
+    }
+    
+    func addNewCity(city: GeoCodingCityModel) {
+        cities.append(city)
+        view?.reloadTableView()
     }
 }

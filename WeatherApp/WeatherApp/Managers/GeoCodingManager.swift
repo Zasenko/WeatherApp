@@ -20,7 +20,6 @@ extension GeoCodingManager {
     // MARK: - Functions
     
     func findCity(address: String, complition: @escaping (CityModel?) -> Void) {
-        
         geocoder.geocodeAddressString(address, completionHandler: { placemarks, error in
             if (error != nil) {
                 complition(nil)

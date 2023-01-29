@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol AddCityViewControllerProtocol: AnyObject {
+    func addedCity(city: GeoCodingCityModel)
+}
+
 class CitiesViewController: UIViewController {
     
     // MARK: - Properties
@@ -69,13 +73,19 @@ extension CitiesViewController {
     }
 }
 
+extension CitiesViewController: AddCityViewControllerProtocol {
+    func addedCity(city: GeoCodingCityModel) {
+        presenter.addNewCity(city: city)
+    }
+}
+
 // MARK: - TableViewDelegate
 
 extension CitiesViewController: UITableViewDelegate {}
 
 extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.presenter.cities.count
+        presenter.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -98,12 +108,12 @@ extension CitiesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.presenter.cellTaped(name: presenter.cities[indexPath.row].name)
+        presenter.cellTaped(name: presenter.cities[indexPath.row].name)
     }
 }
 
 extension CitiesViewController: CitiesViewProtocol {
     func reloadTableView() {
-        self.rootView.citiesTableView.reloadData()
+        rootView.citiesTableView.reloadData()
     }
 }

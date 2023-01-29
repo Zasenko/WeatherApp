@@ -403,7 +403,7 @@
 				0FAC9C4D29818CFA00FF8D73 /* CitiesViewPresenter.swift in Sources */,
 				0FAC2A00295DFCCD0074509F /* AppDelegate.swift in Sources */,
 				0FAC9C4F29818E7F00FF8D73 /* RouterProtocol.swift in Sources */,
-				0F393ECC2983FFB6005D0483 /* CityModel.swift in Sources */,
+				0F393ECC2983FFB6005D0483 /* GeoCodingCityModel.swift in Sources */,
 				0FD085912971C7C0009F3DC7 /* MainRouter.swift in Sources */,
 				0FAC2A02295DFCCD0074509F /* SceneDelegate.swift in Sources */,
 				0FAC9C5429818F3B00FF8D73 /* CitiesRouter.swift in Sources */,
