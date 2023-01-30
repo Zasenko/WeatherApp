@@ -11,13 +11,50 @@ final class CityRootView: UIView {
 
     //MARK: - SubView
     
-    let appNameLable: UILabel = {
+    let weatherImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
+        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100)))
+        imageView.preferredSymbolConfiguration = config
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    var temperatureLable: UILabel = {
         let lable = UILabel()
-        lable.font = .boldSystemFont(ofSize: 40)
+        lable.font = .boldSystemFont(ofSize: 100)
         lable.textAlignment = .center
         lable.numberOfLines = 1
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
+    }()
+    
+    let hourlyLable: UILabel = {
+        let lable = UILabel()
+        lable.font = .boldSystemFont(ofSize: 16)
+        lable.textAlignment = .center
+        lable.text = "Hourly"
+        lable.numberOfLines = 1
+        lable.textColor = .gray
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        return lable
+    }()
+    
+    let hourlyCollectionView: UICollectionView = {
+        let viewLayout = UICollectionViewFlowLayout()
+        viewLayout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        viewLayout.itemSize = CGSize(width: 150, height: 150)
+        viewLayout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
+        collectionView.backgroundColor = .darkGray
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(HourlyWeatherCell.self, forCellWithReuseIdentifier: HourlyWeatherCell.identifier)
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
     }()
     
     //MARK: - Inits
@@ -39,16 +76,30 @@ extension CityRootView {
     //MARK: - Private Functions
     
     private func addSubViews() {
-        addSubview(appNameLable)
+        addSubview(weatherImage)
+        addSubview(temperatureLable)
+        addSubview(hourlyLable)
+        addSubview(hourlyCollectionView)
     }
     
     private func setupConstraints() {
-        createAppNameLableConstraint()
-    }
-    
-    private func createAppNameLableConstraint() {
-        appNameLable.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
-        appNameLable.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        appNameLable.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        weatherImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        weatherImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        weatherImage.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        weatherImage.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        temperatureLable.topAnchor.constraint(equalTo: weatherImage.bottomAnchor, constant: 20).isActive = true
+        temperatureLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
+        temperatureLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
+        
+        hourlyLable.topAnchor.constraint(equalTo: temperatureLable.bottomAnchor, constant: 20).isActive = true
+        hourlyLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
+        hourlyLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
+        
+        hourlyCollectionView.topAnchor.constraint(equalTo: temperatureLable.bottomAnchor, constant: 10).isActive = true
+        hourlyCollectionView.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor, constant: 20).isActive = true
+        hourlyCollectionView.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
+        hourlyCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
     }
 }

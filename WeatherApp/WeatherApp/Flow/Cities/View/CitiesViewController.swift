@@ -92,22 +92,17 @@ extension CitiesViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier, for: indexPath) as? CityTableViewCell else {
             return UITableViewCell()
         }
+        
+        // TODO - получение готовых данных
+        
         let city = presenter.cities[indexPath.row]
-        var string = ""
-        var img = UIImage()
-        
-        if let currentWeather = city.currentWeather {
-            string = String(currentWeather.temperature)
-            img = currentWeather.weathercode.image
-        }
-        
-        cell.setupCell(cityName: city.name, temp: string, currentWeatherImage: img)
+        cell.setupCell(cityName: city.name, temp: String(city.currentWeather?.temperature ?? 0) , currentWeatherImage: city.currentWeather?.weathercode?.image ?? UIImage())
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.cellTaped(name: presenter.cities[indexPath.row].name)
+        presenter.cellTaped(indexPath: indexPath)
     }
 }
 

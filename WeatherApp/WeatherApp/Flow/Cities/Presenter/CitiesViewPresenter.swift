@@ -13,7 +13,7 @@ protocol CitiesViewProtocol: AnyObject {
 
 protocol CitiesViewPresenterProtocol: AnyObject {
     var cities: [CityModel] { get set }
-    func cellTaped(name: String)
+    func cellTaped(indexPath: IndexPath)
     func addButtonTapped()
     func addNewCity(city: CityModel)
 }
@@ -52,6 +52,9 @@ extension CitiesViewPresenter {
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let location):
+                            
+                            // TODO поллечение из модели
+                            
                             if let currentWeathe = location.currentWeather {
                                 var weatherCode: WeatherCodes {
                                     switch currentWeathe.weathercode {
@@ -84,8 +87,8 @@ extension CitiesViewPresenter {
 
 extension CitiesViewPresenter: CitiesViewPresenterProtocol {
 
-    func cellTaped(name: String) {
-        router?.showCityViewController(name: name)
+    func cellTaped(indexPath: IndexPath) {
+        router?.showCityViewController(city: cities[indexPath.row])
     }
     
     func addButtonTapped() {

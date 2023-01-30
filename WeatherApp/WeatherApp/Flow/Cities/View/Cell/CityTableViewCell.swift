@@ -45,10 +45,15 @@ class CityTableViewCell: UITableViewCell {
     }()
     
     let currentWeatherImage: UIImageView = {
-        let theImageView = UIImageView()
-        theImageView.contentMode = .scaleAspectFit
-        theImageView.translatesAutoresizingMaskIntoConstraints = false
-        return theImageView
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
+        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
+        imageView.preferredSymbolConfiguration = config
+        
+        return imageView
     }()
 
     // MARK: - Inits
