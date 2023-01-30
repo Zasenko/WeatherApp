@@ -35,7 +35,7 @@ final class AddCityPresenter {
     
     required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager) {
         self.router = router
-        self.delegate = delegate
+     //   self.delegate = delegate
         self.geoCodingManager = geoCodingManager
     }
 }

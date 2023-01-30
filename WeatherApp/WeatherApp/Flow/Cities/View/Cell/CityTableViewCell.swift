@@ -36,7 +36,7 @@ class CityTableViewCell: UITableViewCell {
     private let temp: UILabel = {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 30)
-        lable.textColor = .red
+        lable.textColor = .blue
         lable.numberOfLines = 1
         lable.textAlignment = .center
         //lable.backgroundColor = .blue

@@ -13,13 +13,22 @@ final class TabBarController: UITabBarController {
     
     var presenter: TabBarPresenterProtocol!
     
+    // MARK: - Life func
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.isTranslucent = false
-        tabBar.barTintColor = UIColor.systemTeal
-       
-        tabBar.backgroundColor = UIColor.systemTeal
-        
+        setupTabBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewControllers = presenter.createTabBar()
+        self.navigationController?.isNavigationBarHidden = true
+    }
+}
+
+extension TabBarController {
+    private func setupTabBar() {
         let tabBarAppearance = UITabBarAppearance()
         let tabBarItemAppearance = UITabBarItemAppearance()
         
@@ -35,11 +44,5 @@ final class TabBarController: UITabBarController {
 
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.viewControllers = presenter.createTabBar()
-        self.navigationController?.isNavigationBarHidden = true
     }
 }

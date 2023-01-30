@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddCityViewControllerProtocol: AnyObject {
-    func addedCity(city: GeoCodingCityModel)
+    func addedCity(city: CityModel)
 }
 
 class CitiesViewController: UIViewController {
@@ -74,7 +74,7 @@ extension CitiesViewController {
 }
 
 extension CitiesViewController: AddCityViewControllerProtocol {
-    func addedCity(city: GeoCodingCityModel) {
+    func addedCity(city: CityModel) {
         presenter.addNewCity(city: city)
     }
 }
@@ -103,7 +103,6 @@ extension CitiesViewController: UITableViewDataSource {
         
         cell.setupCell(cityName: city.name, temp: string, currentWeatherImage: img)
         cell.accessoryType = .disclosureIndicator
-        cell.tintColor = .red
         return cell
     }
     
