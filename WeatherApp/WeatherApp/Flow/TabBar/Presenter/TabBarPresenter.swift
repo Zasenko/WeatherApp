@@ -42,7 +42,7 @@ extension TabBarPresenter: TabBarPresenterProtocol {
             router.initialCitiesViewController()
         }
         
-        let tabBarItem = UITabBarItem(title: "Cities", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+        let tabBarItem = UITabBarItem(title: "Cities", image: UIImage(systemName: "list.bullet"), selectedImage: UIImage(systemName: "list.bullet"))
         citiesNavController.tabBarItem = tabBarItem
         
         return [citiesNavController, weatherNavController]

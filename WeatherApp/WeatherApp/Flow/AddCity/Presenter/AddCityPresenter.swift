@@ -21,7 +21,6 @@ final class AddCityPresenter {
     
     // MARK: - Properties
     
-
     weak var view: AddCityViewProtocol?
     weak var delegate: CitiesViewPresenterDelegate?
     var city: CityModel?
@@ -33,10 +32,10 @@ final class AddCityPresenter {
         
     // MARK: - Inits
     
-    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager) {
+    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager, delegate: CitiesViewPresenterDelegate) {
         self.router = router
-        self.delegate = delegate
         self.geoCodingManager = geoCodingManager
+        self.delegate = delegate
     }
 }
 

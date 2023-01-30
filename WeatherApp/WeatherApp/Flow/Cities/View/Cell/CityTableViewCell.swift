@@ -36,7 +36,7 @@ class CityTableViewCell: UITableViewCell {
     private let temp: UILabel = {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 30)
-        lable.textColor = .red
+        lable.textColor = .blue
         lable.numberOfLines = 1
         lable.textAlignment = .center
         //lable.backgroundColor = .blue
@@ -45,10 +45,15 @@ class CityTableViewCell: UITableViewCell {
     }()
     
     let currentWeatherImage: UIImageView = {
-        let theImageView = UIImageView()
-        theImageView.contentMode = .scaleAspectFit
-        theImageView.translatesAutoresizingMaskIntoConstraints = false
-        return theImageView
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
+        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
+        imageView.preferredSymbolConfiguration = config
+        
+        return imageView
     }()
 
     // MARK: - Inits
