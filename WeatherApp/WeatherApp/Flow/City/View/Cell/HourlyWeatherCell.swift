@@ -15,7 +15,7 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     // MARK: - Private Properties
     
-    let weatherImage: UIImageView = {
+    private let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,8 +29,8 @@ class HourlyWeatherCell: UICollectionViewCell {
     private let temperatureLabel: UILabel = {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 20)
-        lable.textColor = .blue
-        lable.backgroundColor = .red
+        lable.textColor = .white
+      //  lable.backgroundColor = .red
         lable.numberOfLines = 1
         lable.textAlignment = .center
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -39,10 +39,10 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     private let timeLable: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 15)
+        lable.font = .systemFont(ofSize: 14)
         lable.numberOfLines = 0
         lable.textAlignment = .left
-        lable.backgroundColor = .yellow
+        lable.textColor = .white
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
@@ -82,9 +82,9 @@ extension HourlyWeatherCell {
     // MARK: - Private Functions
     
     private func addSubViews() {
+        stackview.addArrangedSubview(timeLable)
         stackview.addArrangedSubview(weatherImage)
         stackview.addArrangedSubview(temperatureLabel)
-        stackview.addArrangedSubview(timeLable)
         addSubview(stackview)
     }
     

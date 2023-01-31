@@ -112,7 +112,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         urlComponents.queryItems = [
             URLQueryItem(name: "latitude", value: latitude),
             URLQueryItem(name: "longitude", value: longitude),
-            URLQueryItem(name: "hourly", value: "temperature_2m"),
+            URLQueryItem(name: "hourly", value: "temperature_2m,weathercode"),
             URLQueryItem(name: "daily", value: "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset"),
             URLQueryItem(name: "timezone", value: "GMT")
         ]
@@ -121,7 +121,6 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             complition(.failure(NetworkManagerErrors.bedUrl))
             return
         }
-        print(url)
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, _, error in

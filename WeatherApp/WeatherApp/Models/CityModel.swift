@@ -19,23 +19,22 @@ struct CityModel {
 }
 
 struct CityWeather {
-    var temperature: Double?
-    var weathercode: WeatherCodes?
+    var temperature: Double
+    var weathercode: WeatherCodes
 }
 
 struct HourlyWeatherModel {
-    var time: [String]?
-    var temperature: [Double]?
-    var weathercode: [WeatherCodes]?
+    var time: [Date]
+    var temperature: [Double]
+    var weathercode: [WeatherCodes]
 }
 
 struct DailyWeatherModel {
-
-    var time: [String]?
-    var weathercode: [Int]?
-    var temperatureMax: [Double]?
-    var temperatureMin: [Double]?
-    var sunrise: [String]?
-    var sunset: [String]?
+    var time: [Date]
+    var weathercode: [WeatherCodes]
+    var temperatureMax: [Double]
+    var temperatureMin: [Double]
+    var sunrise: [Date]
+    var sunset: [Date]
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F04856629895CCF004A3167 /* DailyWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F04856529895CCF004A3167 /* DailyWeatherCell.swift */; };
 		0F393EC72983D747005D0483 /* GeoCodingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F393EC62983D747005D0483 /* GeoCodingManager.swift */; };
 		0F393ECC2983FFB6005D0483 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F393ECB2983FFB6005D0483 /* CityModel.swift */; };
 		0F6C5B1329854399009B4A17 /* WeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F04856529895CCF004A3167 /* DailyWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherCell.swift; sourceTree = "<group>"; };
 		0F393EC62983D747005D0483 /* GeoCodingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingManager.swift; sourceTree = "<group>"; };
 		0F393ECB2983FFB6005D0483 /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
 		0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkManager.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				0F8DD69629883F4A00612F51 /* HourlyWeatherCell.swift */,
+				0F04856529895CCF004A3167 /* DailyWeatherCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				0F6C5B1329854399009B4A17 /* WeatherNetworkManager.swift in Sources */,
 				0FAC9C562981925900FF8D73 /* TabBarPresenter.swift in Sources */,
 				0FD085932971C8E2009F3DC7 /* ModulBilder.swift in Sources */,
+				0F04856629895CCF004A3167 /* DailyWeatherCell.swift in Sources */,
 				0FAC9C582981A9C300FF8D73 /* CityRootView.swift in Sources */,
 				0FAC9C46298164A000FF8D73 /* CityTableViewCell.swift in Sources */,
 				0FD085992971CBFF009F3DC7 /* TabBarController.swift in Sources */,

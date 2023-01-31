@@ -96,7 +96,7 @@ extension CitiesViewController: UITableViewDataSource {
         // TODO - получение готовых данных
         
         let city = presenter.cities[indexPath.row]
-        cell.setupCell(cityName: city.name, temp: String(city.currentWeather?.temperature ?? 0) , currentWeatherImage: city.currentWeather?.weathercode?.image ?? UIImage())
+        cell.setupCell(cityName: city.name, temp: String(city.currentWeather?.temperature ?? 0) , currentWeatherImage: city.currentWeather?.weathercode.image ?? UIImage())
         cell.accessoryType = .disclosureIndicator
         return cell
     }
