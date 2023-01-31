@@ -30,7 +30,7 @@ class HourlyWeatherCell: UICollectionViewCell {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 20)
         lable.textColor = .blue
-        lable.backgroundColor = .yellow
+        lable.backgroundColor = .red
         lable.numberOfLines = 1
         lable.textAlignment = .center
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -47,24 +47,26 @@ class HourlyWeatherCell: UICollectionViewCell {
         return lable
     }()
     
-    private let stackview = UIStackView()
+    private let stackview: UIStackView = {
+        let stackview = UIStackView()
+        stackview.axis = .vertical
+        stackview.alignment = .center
+        stackview.distribution = .fillEqually
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        return stackview
+    }()
     
-//    // MARK: - Inits
-//    
-//    override init(frame: CGRect) {
-//        <#code#>
-//    }
-//    
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        backgroundColor = .white
-//        addSubViews()
-//        setupConstraints()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    // MARK: - Inits
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension HourlyWeatherCell {
@@ -80,7 +82,6 @@ extension HourlyWeatherCell {
     // MARK: - Private Functions
     
     private func addSubViews() {
-        stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.addArrangedSubview(weatherImage)
         stackview.addArrangedSubview(temperatureLabel)
         stackview.addArrangedSubview(timeLable)
@@ -88,14 +89,9 @@ extension HourlyWeatherCell {
     }
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-        
-//        temp.widthAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        currentWeatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
-//        currentWeatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackview.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        stackview.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
     }
 }

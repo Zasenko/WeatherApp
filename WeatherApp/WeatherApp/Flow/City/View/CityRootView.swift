@@ -46,7 +46,7 @@ final class CityRootView: UIView {
     let hourlyCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         viewLayout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        viewLayout.itemSize = CGSize(width: 150, height: 150)
+        viewLayout.itemSize = CGSize(width: 50, height: 150)
         viewLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         collectionView.backgroundColor = .darkGray
@@ -97,9 +97,9 @@ extension CityRootView {
         hourlyLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
         
         hourlyCollectionView.topAnchor.constraint(equalTo: temperatureLable.bottomAnchor, constant: 10).isActive = true
-        hourlyCollectionView.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor, constant: 20).isActive = true
-        hourlyCollectionView.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
-        hourlyCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        hourlyCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        hourlyCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        hourlyCollectionView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
     }
 }

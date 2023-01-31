@@ -66,36 +66,74 @@ extension CityViewController: CityViewProtocol {
     }
 }
 
-extension CityViewController: UICollectionViewDataSource {}
-    
-extension CityViewController: UICollectionViewDelegate {
-    
+//extension CityViewController: UICollectionViewDataSource {}
+
+extension CityViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(presenter.getHourlyWeatherCount())
-        return presenter.getHourlyWeatherCount()
-        }
+        print(presenter.city.hourly?.temperature?.count ?? "-0-0-0-0-0-0")
+        return presenter.city.hourly?.temperature?.count ?? 0
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
+        guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
             return UICollectionViewCell()
         }
-        print(presenter.city)
-        // TODO - получение готовых данных
-        var temperatureString: String?
-        if let temperature = presenter.city.hourly?.temperature?[indexPath.row] {
-            temperatureString = String(temperature)
-        }
         
-        var timeString: String?
-        if let time = presenter.city.hourly?.time?[indexPath.row] {
-            timeString = String(time)
-        }
+        myCell.backgroundColor = UIColor.blue
         
-        var weathercodeImage: UIImage?
-        if let weathercode = presenter.city.hourly?.weathercode?[indexPath.row].image {
-            weathercodeImage = weathercode
-        }
-        cell.setupCell(time: timeString ?? "", temperature: temperatureString ?? "", image: weathercodeImage ?? UIImage())
-        return cell
+                var temperatureString: String?
+                if let temperature = presenter.city.hourly?.temperature?[indexPath.row] {
+                    temperatureString = String(temperature)
+                }
+        
+                var timeString: String?
+                if let time = presenter.city.hourly?.time?[indexPath.row] {
+                    timeString = String(time)
+                }
+        
+                var weathercodeImage: UIImage?
+                if let weathercode = presenter.city.hourly?.weathercode?[indexPath.row].image {
+                    weathercodeImage = weathercode
+                }
+        myCell.setupCell(time: timeString ?? "sads", temperature: temperatureString ?? "sdf", image: weathercodeImage ?? UIImage())
+        return myCell
     }
 }
+extension CityViewController: UICollectionViewDelegate {
+ 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       print("User tapped on item \(indexPath.row)")
+    }
+}
+//extension CityViewController: UICollectionViewDelegate {
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+////        print(presenter.getHourlyWeatherCount())
+////        return presenter.getHourlyWeatherCount()
+//        3
+//        }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
+//            return UICollectionViewCell()
+//        }
+//        print(presenter.city)
+//        // TODO - получение готовых данных
+//        var temperatureString: String?
+//        if let temperature = presenter.city.hourly?.temperature?[indexPath.row] {
+//            temperatureString = String(temperature)
+//        }
+//
+//        var timeString: String?
+//        if let time = presenter.city.hourly?.time?[indexPath.row] {
+//            timeString = String(time)
+//        }
+//
+//        var weathercodeImage: UIImage?
+//        if let weathercode = presenter.city.hourly?.weathercode?[indexPath.row].image {
+//            weathercodeImage = weathercode
+//        }
+//        cell.setupCell(time: timeString ?? "", temperature: temperatureString ?? "", image: weathercodeImage ?? UIImage())
+//        return cell
+//    }
+//}

@@ -121,6 +121,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             complition(.failure(NetworkManagerErrors.bedUrl))
             return
         }
+        print(url)
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, _, error in

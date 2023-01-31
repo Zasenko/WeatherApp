@@ -47,7 +47,7 @@ extension CityPresenter {
     func getWeatherInfo() {
         networkManager?.fetchWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude), complition: { [weak self] result in
                      guard let self = self else { return }
-            DispatchQueue.main.async {
+            DispatchQueue.main.sync {
                 switch result {
                 case .success(let weather):
                     print("--------------")

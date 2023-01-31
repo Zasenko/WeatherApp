@@ -81,6 +81,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A233C41298874590009BB6E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0F393ECB2983FFB6005D0483 /* CityModel.swift */,
+				0F8DD6902987A09600612F51 /* WeatherCodes.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		0F393EC22983C0D5005D0483 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,15 +98,6 @@
 				0F8DD69829883F4E00612F51 /* Cell */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		0F393EC42983D71E005D0483 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0F393ECB2983FFB6005D0483 /* CityModel.swift */,
-				0F8DD6902987A09600612F51 /* WeatherCodes.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		0F393EC52983D736005D0483 /* Managers */ = {
@@ -136,7 +136,6 @@
 		0F80F8DF2982CCA50091BD71 /* AddCity */ = {
 			isa = PBXGroup;
 			children = (
-				0F393EC42983D71E005D0483 /* Model */,
 				0F80F8E72982E4110091BD71 /* Presenter */,
 				0F80F8E02982CCBB0091BD71 /* View */,
 			);
@@ -216,6 +215,7 @@
 				0F393EC52983D736005D0483 /* Managers */,
 				0FAC9C5029818EF000FF8D73 /* Router */,
 				0F393EC82983D83E005D0483 /* ModulBilder */,
+				0A233C41298874590009BB6E /* Models */,
 				0FAC2A13295DFDCE0074509F /* Flow */,
 				0FAC2A08295DFCCD0074509F /* Assets.xcassets */,
 				0FAC2A0A295DFCCD0074509F /* LaunchScreen.storyboard */,
@@ -239,7 +239,6 @@
 		0FAC9C3D2981454500FF8D73 /* Cities */ = {
 			isa = PBXGroup;
 			children = (
-				0FAC9C402981455F00FF8D73 /* Model */,
 				0FAC9C3F2981455700FF8D73 /* Presenter */,
 				0FAC9C3E2981455200FF8D73 /* View */,
 			);
@@ -262,13 +261,6 @@
 				0FAC9C4C29818CFA00FF8D73 /* CitiesViewPresenter.swift */,
 			);
 			path = Presenter;
-			sourceTree = "<group>";
-		};
-		0FAC9C402981455F00FF8D73 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		0FAC9C47298183A600FF8D73 /* City */ = {
