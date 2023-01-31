@@ -21,8 +21,8 @@ struct WeatherDecodedModel: Codable {
 }
 
 struct Weather: Codable {
-    let temperature: Double?
-    let weathercode: Int?
+    let temperature: Double
+    let weathercode: Int
 }
 
 struct HourlyWeatherDecodedModel: Codable {
@@ -33,9 +33,9 @@ struct HourlyWeatherDecodedModel: Codable {
         case weathercode
     }
     
-    var time: [String]?
-    var temperature: [Double]?
-    var weathercode: [Int]?
+    var time: [String]
+    var temperature: [Double]
+    var weathercode: [Int]
 }
 
 struct DailyWeatherDecidedModel: Codable {
@@ -49,12 +49,12 @@ struct DailyWeatherDecidedModel: Codable {
         case sunset = "sunset"
     }
     
-    var time: [String]?
-    var weathercode: [Int]?
-    var temperatureMax: [Double]?
-    var temperatureMin: [Double]?
-    var sunrise: [String]?
-    var sunset: [String]?
+    var time: [String]
+    var weathercode: [Int]
+    var temperatureMax: [Double]
+    var temperatureMin: [Double]
+    var sunrise: [String]
+    var sunset: [String]
 }
 
 protocol WeatherNetworkManagerProtocol {

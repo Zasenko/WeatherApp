@@ -72,7 +72,7 @@ extension CitiesViewPresenter {
                                         return .unknown
                                     }
                                 }
-                                let cityWeather = CityWeather(temperature: currentWeathe.temperature ?? 0, weathercode: weatherCode)
+                                let cityWeather = CityWeather(temperature: currentWeathe.temperature , weathercode: weatherCode)
                                 city.currentWeather = cityWeather
                             }
                             self.cities.append(city)

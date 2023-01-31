@@ -52,7 +52,7 @@ final class CityViewController: UIViewController {
         rootView.hourlyCollectionView.dataSource = self
         
         rootView.dailyCollectionView.delegate = self
-        rootView.dailyCollectionView.delegate = self
+        rootView.dailyCollectionView.dataSource = self
     }
 }
 
@@ -64,6 +64,7 @@ extension CityViewController: CityViewProtocol {
         if let temperatur = presenter.city.currentWeather?.temperature {
             rootView.temperatureLable.text = "\(temperatur)"
         }
+        rootView.dailyCollectionView.reloadData()
         rootView.hourlyCollectionView.reloadData()
     }
 }
@@ -72,12 +73,11 @@ extension CityViewController: CityViewProtocol {
 
 extension CityViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == rootView.hourlyCollectionView {
-            return presenter.getHourlyWeatherCount()
-        } else {
-            return presenter.getDailyWeatherCount()
-        }
-        
+//        if collectionView == self.rootView.hourlyCollectionView {
+//            print(presenter.getHourlyWeatherCount())
+//            return presenter.getHourlyWeatherCount()
+//        }
+        return presenter.getDailyWeatherCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,7 +89,7 @@ extension CityViewController: UICollectionViewDataSource {
                     if let temperature = presenter.city.hourly?.temperature[indexPath.row] {
                         temperatureString = String(temperature)
                     }
-            
+
                     var timeString = ""
                     if let time = presenter.city.hourly?.time[indexPath.row] {
 
@@ -97,15 +97,14 @@ extension CityViewController: UICollectionViewDataSource {
                         dateFormatter.dateFormat = "HH:mm"
                         timeString = dateFormatter.string(from: time)
                     }
-            
+
                     var weathercodeImage: UIImage?
                     if let weathercode = presenter.city.hourly?.weathercode[indexPath.row].image {
                         weathercodeImage = weathercode
                     }
-            
+
             myCell.setupCell(time: timeString, temperature: temperatureString ?? "", image: weathercodeImage ?? UIImage())
             return myCell
-            
         } else {
             guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyWeatherCell.identifier, for: indexPath) as? DailyWeatherCell else {
                 return UICollectionViewCell()
@@ -146,10 +145,9 @@ extension CityViewController: UICollectionViewDataSource {
                 dateFormatter.dateFormat = "dd:mm"
                 dateString = dateFormatter.string(from: time)
             }
-            
+            print(dateString, weathercodeImage, sunriseString, sunsetString, minTemperatureString, maxTemperatureString)
             myCell.setupCell(date: dateString, image: weathercodeImage, maxMemperature: maxTemperatureString, minTemperature: minTemperatureString, sunrise: sunriseString, sunset: sunsetString)
             return myCell
-            
         }
     }
 }
