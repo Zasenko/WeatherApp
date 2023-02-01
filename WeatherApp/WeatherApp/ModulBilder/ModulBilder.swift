@@ -28,7 +28,8 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController {
-        let view = WeatherViewController()
+        let presenter = WeatherPresenter(networkManager: networkManager)
+        let view = WeatherViewController(presenter: presenter)
         return view
     }
     
