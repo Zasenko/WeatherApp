@@ -17,7 +17,8 @@ protocol ModulBilderProtocol {
 
 class ModulBilder: ModulBilderProtocol {
     
-    let networkManager = WeatherNetworkManager()
+    private let networkManager = WeatherNetworkManager()
+    private let geoCodingManager = GeoCodingManager()
     
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController {
         let router = router
@@ -28,8 +29,10 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController {
-        let presenter = WeatherPresenter(networkManager: networkManager)
+        let locationManager = LocationManager()
+        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager)
         let view = WeatherViewController(presenter: presenter)
+        presenter.view = view
         return view
     }
     
@@ -42,8 +45,6 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateAddCityModul(router: CitiesRouterProtocol, delegate: CitiesViewPresenterDelegate) -> UIViewController {
-        
-        let geoCodingManager = GeoCodingManager()
         let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, delegate: delegate)
         let view = AddCityViewController(presenter: presenter)
         presenter.view = view
