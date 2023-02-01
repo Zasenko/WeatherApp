@@ -8,8 +8,15 @@
 import Foundation
 
 protocol WeatherNetworkManagerProtocol {
-    func fetchCurrentWeatherByLocation(latitude: String, longitude: String, complition: @escaping (Result<WeatherDecodedModel, Error>) -> Void)
-    func fetchWeatherByLocation(latitude: String, longitude: String, complition: @escaping (Result<WeatherDecodedModel, Error>) -> Void)
+    func fetchCurrentWeatherByLocation(latitude: String,
+                                       longitude: String,
+                                       complition: @escaping(Result<WeatherDecodedModel, Error>) -> Void)
+    func fetchWeatherByLocation(latitude: String,
+                                longitude: String,
+                                complition: @escaping(Result<WeatherDecodedModel, Error>) -> Void)
+    func fetchFullWeatherByLocation(latitude: String,
+                                    longitude: String,
+                                    complition: @escaping(Result<WeatherDecodedModel, Error>) -> Void)
 }
 
 class WeatherNetworkManager: WeatherNetworkManagerProtocol {
@@ -32,7 +39,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             URLQueryItem(name: "longitude", value: longitude),
             URLQueryItem(name: "current_weather", value: "true")
         ]
-
+        
         guard let url = urlComponents.url else {
             complition(.failure(NetworkManagerErrors.bedUrl))
             return
@@ -53,7 +60,9 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         }.resume()
     }
     
-    func fetchWeatherByLocation(latitude: String, longitude: String, complition: @escaping (Result<WeatherDecodedModel, Error>) -> Void) {
+    func fetchWeatherByLocation(latitude: String,
+                                longitude: String,
+                                complition: @escaping(Result<WeatherDecodedModel, Error>) -> Void) {
         var urlComponents = URLComponents()
         urlComponents.host = host
         urlComponents.scheme = scheme
@@ -65,7 +74,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             URLQueryItem(name: "daily", value: "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset"),
             URLQueryItem(name: "timezone", value: "GMT")
         ]
-
+        
         guard let url = urlComponents.url else {
             complition(.failure(NetworkManagerErrors.bedUrl))
             return
@@ -86,7 +95,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         }.resume()
     }
     
-    func fetchFullWeatherByLocation(latitude: String, longitude: String, complition: @escaping (Result<WeatherDecodedModel, Error>) -> Void) {
+    func fetchFullWeatherByLocation(latitude: String, longitude: String, complition: @escaping(Result<WeatherDecodedModel, Error>) -> Void) {
         var urlComponents = URLComponents()
         urlComponents.host = host
         urlComponents.scheme = scheme

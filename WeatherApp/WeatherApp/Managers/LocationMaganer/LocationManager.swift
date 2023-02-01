@@ -8,16 +8,19 @@
 import CoreLocation
 
 protocol LocationManagerProtocol {
-    var callBack: ((CLLocation) -> Void)? { get set }
+    var delegate: LocationManagerDelegate? { get set}
     func getUserLocation()
 }
 
+protocol LocationManagerDelegate: AnyObject {
+    func reloadUserLocation(location: CLLocation)
+}
+
 final class LocationManager: NSObject {
-    
-    var callBack: ((CLLocation) -> Void)?
-    
+        
     private let locationManager = CLLocationManager()
     private var userLocation: CLLocation?
+    weak var delegate: LocationManagerDelegate?
         
     override init() {
         super.init()
@@ -59,7 +62,7 @@ extension LocationManager: CLLocationManagerDelegate {
         userLocation = location
         locationManager.stopUpdatingLocation()
         DispatchQueue.main.async {
-            self.callBack?(location)
+            self.delegate?.reloadUserLocation(location: location)
         }
     }
     

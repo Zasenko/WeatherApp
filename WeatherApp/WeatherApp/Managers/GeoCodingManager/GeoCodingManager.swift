@@ -8,11 +8,15 @@
 import CoreLocation
 
 protocol GeoCodingManagerProtocol {
-    func findCity(address: String, complition: @escaping (CityModel?) -> Void)
-    func findCity(coordinate: CLLocation, complition: @escaping (CityModel?) -> Void)
+    func findCity(address: String, complition: @escaping(CityModel?) -> Void)
+    func findCity(coordinate: CLLocation, complition: @escaping((Result<CityModel, Error>) -> Void))
 }
 
 class GeoCodingManager {
+    
+    private enum GeoCodingError: Error {
+        case nilPlacemark
+    }
     
     // MARK: - Private properties
     
@@ -23,11 +27,11 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
 
     // MARK: - Functions
     
-    func findCity(coordinate: CLLocation, complition: @escaping (CityModel?) -> Void) {
+    func findCity(coordinate: CLLocation, complition: @escaping ((Result<CityModel, Error>) -> Void)) {
         geocoder.cancelGeocode()
         geocoder.reverseGeocodeLocation(coordinate) { placemarks, error in
-            if (error != nil) {
-                complition(nil)
+            if let error = error {
+                complition(.failure(error))
                 return
             }
             
@@ -36,13 +40,13 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
                   let name = placemark.locality,
                   let country = placemark.country
             else {
-                complition(nil)
+                complition(.failure(GeoCodingError.nilPlacemark))
                 return
             }
             
             let city = CityModel(coordinate: coordinate, name: name, country: country, weather: Weathers())
             DispatchQueue.main.async {
-                complition(city)
+                complition(.success(city))
             }
         }
     }

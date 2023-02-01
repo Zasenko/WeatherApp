@@ -26,7 +26,7 @@ class WeatherViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = rootView
-        presenter.getLocation()
+        presenter.getWeather()
         
         rootView.hourlyCollectionView.delegate = self
         rootView.hourlyCollectionView.dataSource = self

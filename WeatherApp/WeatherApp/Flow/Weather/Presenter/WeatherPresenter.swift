@@ -14,7 +14,7 @@ protocol WeatherViewProtocol: AnyObject {
 }
 
 protocol WeatherPresenterProtocol: AnyObject {
-    func getLocation()
+    func getWeather()
 }
 
 class WeatherPresenter {
@@ -32,17 +32,20 @@ class WeatherPresenter {
         self.networkManager = networkManager
         self.geoCoder = geoCoder
         self.locationManager = locationManager
-        self.locationManager.callBack = { [weak self] result in
-            guard let self = self else { return }
-            self.getLocationInfo(coordinate: result)
-        }
+        self.locationManager.delegate = self
     }
     
 }
 
 extension WeatherPresenter: WeatherPresenterProtocol {
-    func getLocation() {
+    func getWeather() {
         getCoordinate()
+    }
+}
+
+extension WeatherPresenter: LocationManagerDelegate {
+    func reloadUserLocation(location: CLLocation) {
+        getLocationInfo(coordinate: location)
     }
 }
 
@@ -55,27 +58,37 @@ extension WeatherPresenter {
     }
     
     private func getLocationInfo(coordinate: CLLocation) {
-        geoCoder.findCity(coordinate: coordinate) { [weak self] place in
-            guard let self = self, let place = place else { return }
-            self.place = place
-            self.view?.changeLocation(place: place)
-            self.networkManager.fetchFullWeatherByLocation(latitude: String(place.coordinate.latitude),
-                                                           longitude: String(place.coordinate.longitude)) { [weak self] result in
-                guard let self = self else {return}
-                
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let weather):
-                        guard let place = self.place else { return }
+        geoCoder.findCity(coordinate: coordinate) { [weak self] result in
+            guard let self = self else { return}
+            DispatchQueue.main.async {
+                switch result {
+                case.success(let place):
+                    self.place = place
+                    self.view?.changeLocation(place: place)
+                    self.getWeather(coordinate: place.coordinate)
+                case.failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    private func getWeather(coordinate: CLLocationCoordinate2D) {
+        let latitude = String(coordinate.latitude)
+        let longitude = String(coordinate.longitude)
+        guard var place = self.place else { return }
+        networkManager.fetchFullWeatherByLocation(latitude: latitude, longitude: longitude) { [weak self] result in
+            guard let self = self else { return}
+                switch result {
+                case .success(let weather):
+                    DispatchQueue.main.async {
                         if place.weather.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
-                            
                             self.view?.changeWeather(place: place)
                         }
-                    case .failure(let error):
-                        debugPrint(error)
                     }
-                }
-                
+                case .failure(let error):
+                    debugPrint(error)
+
             }
         }
     }
