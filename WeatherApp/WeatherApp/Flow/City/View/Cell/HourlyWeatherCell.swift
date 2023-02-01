@@ -19,10 +19,6 @@ class HourlyWeatherCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
-//        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
-//        imageView.preferredSymbolConfiguration = config
         return imageView
     }()
     
@@ -30,7 +26,6 @@ class HourlyWeatherCell: UICollectionViewCell {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 20)
         lable.textColor = .white
-      //  lable.backgroundColor = .red
         lable.numberOfLines = 1
         lable.textAlignment = .center
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -93,5 +88,7 @@ extension HourlyWeatherCell {
         stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         stackview.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         stackview.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        
+        weatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }

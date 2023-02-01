@@ -14,16 +14,13 @@ final class CityRootView: UIView {
     let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
-        imageView.preferredSymbolConfiguration = config
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     var temperatureLable: UILabel = {
         let lable = UILabel()
-        lable.font = .boldSystemFont(ofSize: 150)
+        lable.font = .systemFont(ofSize: 100, weight: .medium)
         lable.textAlignment = .center
         lable.numberOfLines = 1
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +87,7 @@ final class CityRootView: UIView {
         super.init(frame: frame)
         let gradient = CAGradientLayer()
         gradient.frame = self.bounds
-        gradient.colors = [UIColor.white.cgColor, UIColor.systemBlue.cgColor]
+        gradient.colors = [UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00).cgColor, UIColor(red: 0.19, green: 0.26, blue: 0.52, alpha: 1.00).cgColor]
 
         self.layer.insertSublayer(gradient, at: 0)
         
@@ -120,7 +117,6 @@ extension CityRootView {
         
         weatherImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         weatherImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-      //  weatherImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
         weatherImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         temperatureLable.topAnchor.constraint(lessThanOrEqualTo: weatherImage.bottomAnchor).isActive = true

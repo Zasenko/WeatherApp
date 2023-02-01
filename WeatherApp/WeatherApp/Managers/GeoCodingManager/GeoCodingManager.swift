@@ -38,7 +38,7 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
                 return
             }
 
-            let city = CityModel(coordinate: coordinate, name: name, country: country)
+            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: Weathers())
             DispatchQueue.main.async {
                 complition(city)
             }

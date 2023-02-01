@@ -33,7 +33,7 @@ final class CitiesViewPresenter {
     
     private let networkManager: WeatherNetworkManagerProtocol
     private let router: CitiesRouterProtocol?
-    
+    private let dateFormatter = DateFormatter()
     // MARK: - Inits
     
     required init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol) {
@@ -52,30 +52,11 @@ extension CitiesViewPresenter {
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let location):
-                            
-                            // TODO поллечение из модели
-                            
                             if let currentWeathe = location.currentWeather {
-                                var weatherCode: WeatherCodes {
-                                    switch currentWeathe.weathercode {
-                                    case 0:
-                                        return .clearSky
-                                    case 2:
-                                        return .partlyCloudy
-                                    case 3:
-                                        return .cloudy
-                                    case 61, 63, 65, 80, 81, 82:
-                                        return .rain
-                                    case 71, 73, 75:
-                                        return .snow
-                                    default:
-                                        return .unknown
-                                    }
+                                if city.weather.changeData(currentWeather: currentWeathe, hourlyWeather: nil, dailyWeather: nil, dateFormatter: self.dateFormatter) {
+                                    self.cities.append(city)
                                 }
-                                let cityWeather = CityWeather(temperature: currentWeathe.temperature , weathercode: weatherCode)
-                                city.currentWeather = cityWeather
                             }
-                            self.cities.append(city)
                             self.view?.reloadTableView()
                         case .failure(let error):
                             print(error)

@@ -23,35 +23,35 @@ extension WeatherCodes {
     var image: UIImage {
         switch self {
         case .clearSky:
-            let image = UIImage(systemName: "sun.max.fill") ?? UIImage()
-            image.withTintColor(.yellow)
-            return image
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
+            let image = UIImage(systemName: "sun.max.fill", withConfiguration: conf)
+            return image ?? UIImage()
         case .mainlyClearSky:
-            let image = UIImage(systemName: "sun.min.fill") ?? UIImage()
-            image.withTintColor(.yellow)
-            return image
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
+            let image = UIImage(systemName: "sun.max.fill", withConfiguration: conf)
+            return image ?? UIImage()
         case .partlyCloudy:
-            let image =  UIImage(systemName: "cloud.sun.fill") ?? UIImage()
-            image.withTintColor(.red)
-            return image
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
+            let image = UIImage(systemName: "cloud.sun.fill", withConfiguration: conf)
+            return image ?? UIImage()
         case .cloudy:
-            let image =  UIImage(systemName: "cloud.fill") ?? UIImage()
+            let image =  UIImage(systemName: "cloud.fill")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.gray)
-            return image
+            return image ?? UIImage()
         case .fog:
-            let image =  UIImage(systemName: "cloud.fog.fill") ?? UIImage()
+            let image =  UIImage(systemName: "cloud.fog.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.gray)
             return image
         case .drizzle:
-            let image =  UIImage(systemName: "cloud.drizzle.fill") ?? UIImage()
+            let image =  UIImage(systemName: "cloud.drizzle.fill")?.withTintColor(.orange, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.gray)
             return image
         case .rain:
-            let image =  UIImage(systemName: "cloud.rain.fill") ?? UIImage()
+            let image =  UIImage(systemName: "cloud.rain.fill")?.withTintColor(.yellow, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.blue)
             return image
         case .snow:
-            let image =  UIImage(systemName: "cloud.snow.fill") ?? UIImage()
+            let image =  UIImage(systemName: "cloud.snow.fill")?.withTintColor(.blue, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.blue)
             return image
         case .unknown :

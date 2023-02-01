@@ -42,11 +42,11 @@ extension CityPresenter {
     // MARK: Functions
     
     func getHourlyWeatherCount() -> Int {
-        return city.hourly?.temperature.count ?? 0
+        return city.weather.hourly?.weathers.count ?? 0
     }
     
     func getDailyWeatherCount() -> Int {
-        return city.daily?.temperatureMax.count ?? 0
+        return city.weather.daily?.weathers.count ?? 0
     }
     
     // MARK: Private functions
@@ -57,7 +57,7 @@ extension CityPresenter {
             DispatchQueue.main.sync {
                 switch result {
                 case .success(let weather):
-                    if self.city.changeData(currentWeather: weather.currentWeather, hourly: weather.hourly, daily: weather.daily, dateFormatter: self.dateFormatter) {
+                    if self.city.weather.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
                         self.view?.reloadCity()
                     }
                 case .failure(let error):
@@ -68,6 +68,4 @@ extension CityPresenter {
     }
 }
 
-extension CityPresenter: CityPresenterProtocol {
-    
-}
+extension CityPresenter: CityPresenterProtocol {}
