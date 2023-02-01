@@ -73,10 +73,10 @@ extension CityViewController: CityViewProtocol {
 
 extension CityViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if collectionView == self.rootView.hourlyCollectionView {
-//            print(presenter.getHourlyWeatherCount())
-//            return presenter.getHourlyWeatherCount()
-//        }
+        if collectionView == self.rootView.hourlyCollectionView {
+            print(presenter.getHourlyWeatherCount())
+            return presenter.getHourlyWeatherCount()
+        }
         return presenter.getDailyWeatherCount()
     }
     
@@ -142,7 +142,7 @@ extension CityViewController: UICollectionViewDataSource {
             var dateString = ""
             if let time = presenter.city.daily?.time[indexPath.row] {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd:mm"
+                dateFormatter.dateFormat = "MM-dd"
                 dateString = dateFormatter.string(from: time)
             }
             print(dateString, weathercodeImage, sunriseString, sunsetString, minTemperatureString, maxTemperatureString)

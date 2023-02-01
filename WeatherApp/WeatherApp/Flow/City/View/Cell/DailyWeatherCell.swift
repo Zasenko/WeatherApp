@@ -19,16 +19,16 @@ class DailyWeatherCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
+        imageView.backgroundColor = .orange
         var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
-        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
+        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30)))
         imageView.preferredSymbolConfiguration = config
         return imageView
     }()
     
-    private let minTemperatureLabel: UILabel = {
+    private let maxTemperatureLabel: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 20)
+        lable.font = .boldSystemFont(ofSize: 20)
         lable.textColor = .white
         lable.numberOfLines = 1
         lable.textAlignment = .center
@@ -36,9 +36,9 @@ class DailyWeatherCell: UICollectionViewCell {
         return lable
     }()
     
-    private let maxTemperatureLabel: UILabel = {
+    private let minTemperatureLabel: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 20)
+        lable.font = .systemFont(ofSize: 17)
         lable.textColor = .white
         lable.numberOfLines = 1
         lable.textAlignment = .center
@@ -48,7 +48,7 @@ class DailyWeatherCell: UICollectionViewCell {
     
     private let sunriseLabel: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 20)
+        lable.font = .systemFont(ofSize: 17)
         lable.textColor = .white
         lable.numberOfLines = 1
         lable.textAlignment = .center
@@ -58,7 +58,7 @@ class DailyWeatherCell: UICollectionViewCell {
     
     private let sunsetLabel: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 20)
+        lable.font = .systemFont(ofSize: 17)
         lable.textColor = .white
         lable.numberOfLines = 1
         lable.textAlignment = .center
@@ -96,7 +96,8 @@ class DailyWeatherCell: UICollectionViewCell {
     
     private let sunStack: UIStackView = {
         let stackview = UIStackView()
-        stackview.axis = .vertical
+        stackview.axis = .horizontal
+        stackview.spacing = 10
         stackview.alignment = .center
         stackview.distribution = .fillEqually
         stackview.translatesAutoresizingMaskIntoConstraints = false
@@ -109,6 +110,7 @@ class DailyWeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubViews()
         setupConstraints()
+        backgroundColor = .green
     }
     
     required init?(coder: NSCoder) {
@@ -121,6 +123,7 @@ extension DailyWeatherCell {
     // MARK: - Functions
 
     func setupCell(date: String, image: UIImage, maxMemperature: String, minTemperature: String, sunrise: String, sunset: String) {
+        self.weatherImage.image = image
         minTemperatureLabel.text = minTemperature
         maxTemperatureLabel.text = maxMemperature
         sunsetLabel.text = sunset
@@ -134,12 +137,12 @@ extension DailyWeatherCell {
        
         tempetateureStack.addArrangedSubview(maxTemperatureLabel)
         tempetateureStack.addArrangedSubview(minTemperatureLabel)
-    
         
         sunStack.addArrangedSubview(sunriseLabel)
         sunStack.addArrangedSubview(sunsetLabel)
         
         stackview.addArrangedSubview(dateLable)
+        stackview.addArrangedSubview(weatherImage)
         stackview.addArrangedSubview(tempetateureStack)
         stackview.addArrangedSubview(sunStack)
     

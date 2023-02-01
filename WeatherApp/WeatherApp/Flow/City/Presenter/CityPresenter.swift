@@ -57,18 +57,9 @@ extension CityPresenter {
             DispatchQueue.main.sync {
                 switch result {
                 case .success(let weather):
-                        print(weather)
-                    
-                    
                     if self.city.changeData(currentWeather: weather.currentWeather, hourly: weather.hourly, daily: weather.daily, dateFormatter: self.dateFormatter) {
                         self.view?.reloadCity()
                     }
-                    
-                    
-                    
-//                    print(self.city)
-//
-//
                 case .failure(let error):
                     debugPrint(error)
                 }

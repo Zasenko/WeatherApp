@@ -20,9 +20,9 @@ class HourlyWeatherCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
-        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
-        imageView.preferredSymbolConfiguration = config
+//        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
+//        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
+//        imageView.preferredSymbolConfiguration = config
         return imageView
     }()
     

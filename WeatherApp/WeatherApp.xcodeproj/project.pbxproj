@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F04856629895CCF004A3167 /* DailyWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F04856529895CCF004A3167 /* DailyWeatherCell.swift */; };
+		0F048568298A66A1004A3167 /* WeatherDecodedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F048567298A66A1004A3167 /* WeatherDecodedModel.swift */; };
 		0F393EC72983D747005D0483 /* GeoCodingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F393EC62983D747005D0483 /* GeoCodingManager.swift */; };
 		0F393ECC2983FFB6005D0483 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F393ECB2983FFB6005D0483 /* CityModel.swift */; };
 		0F6C5B1329854399009B4A17 /* WeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		0F04856529895CCF004A3167 /* DailyWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherCell.swift; sourceTree = "<group>"; };
+		0F048567298A66A1004A3167 /* WeatherDecodedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDecodedModel.swift; sourceTree = "<group>"; };
 		0F393EC62983D747005D0483 /* GeoCodingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodingManager.swift; sourceTree = "<group>"; };
 		0F393ECB2983FFB6005D0483 /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
 		0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkManager.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 		0A233C41298874590009BB6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0F048567298A66A1004A3167 /* WeatherDecodedModel.swift */,
 				0F393ECB2983FFB6005D0483 /* CityModel.swift */,
 				0F8DD6902987A09600612F51 /* WeatherCodes.swift */,
 			);
@@ -415,6 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FAC9C442981464C00FF8D73 /* CitiesViewControllerRootView.swift in Sources */,
+				0F048568298A66A1004A3167 /* WeatherDecodedModel.swift in Sources */,
 				0F8DD69729883F4A00612F51 /* HourlyWeatherCell.swift in Sources */,
 				0FAC9C49298183D900FF8D73 /* CityViewController.swift in Sources */,
 				0F393EC72983D747005D0483 /* GeoCodingManager.swift in Sources */,

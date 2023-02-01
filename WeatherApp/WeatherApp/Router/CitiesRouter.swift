@@ -14,7 +14,6 @@ protocol CitiesRouterProtocol: AbstractRouterProtocol {
 }
 
 class CitiesRouter: CitiesRouterProtocol {
-    
     var navigationController: UINavigationController?
     var modulBilder: ModulBilderProtocol?
     
@@ -25,7 +24,6 @@ class CitiesRouter: CitiesRouterProtocol {
 }
 
 extension CitiesRouter {
-    
     func initialCitiesViewController() {
         if let navigationController = navigationController {
             guard let citiesVC = modulBilder?.cteateCitiesModul(router: self) else { return }
@@ -48,16 +46,5 @@ extension CitiesRouter {
             navController.modalPresentationStyle = .formSheet
             navigationController.present(navController, animated: true)
         }
-        
     }
-    
-//    func showAddCityViewController() {
-//        if let navigationController = navigationController {
-//            guard let addCityVC = navigationController.topViewController as? AddCityViewControllerProtocol else { return }
-//            gu+ard let viewController = modulBilder?.cteateAddCityModul(router: self, delegate: addCityVC) else { return }
-//            let navController = UINavigationController(rootViewController: viewController)
-//            navController.modalPresentationStyle = .formSheet
-//            navigationController.present(navController, animated: true)
-//        }
-//    }
 }

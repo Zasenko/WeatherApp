@@ -28,11 +28,11 @@ final class AddCityPresenter {
     // MARK: - Private properties
     
     private let router: CitiesRouterProtocol?
-    private let geoCodingManager: GeoCodingManager
+    private let geoCodingManager: GeoCodingManagerProtocol
         
     // MARK: - Inits
     
-    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManager, delegate: CitiesViewPresenterDelegate) {
+    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, delegate: CitiesViewPresenterDelegate) {
         self.router = router
         self.geoCodingManager = geoCodingManager
         self.delegate = delegate

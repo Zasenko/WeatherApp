@@ -13,9 +13,9 @@ final class CityRootView: UIView {
     
     let weatherImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         
-     var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
         imageView.preferredSymbolConfiguration = config
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -23,7 +23,7 @@ final class CityRootView: UIView {
     
     var temperatureLable: UILabel = {
         let lable = UILabel()
-        lable.font = .boldSystemFont(ofSize: 100)
+        lable.font = .boldSystemFont(ofSize: 150)
         lable.textAlignment = .center
         lable.numberOfLines = 1
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +76,7 @@ final class CityRootView: UIView {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         collectionView.backgroundColor = .red
-        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.register(DailyWeatherCell.self, forCellWithReuseIdentifier: DailyWeatherCell.identifier)
         
@@ -108,8 +108,8 @@ extension CityRootView {
     //MARK: - Private Functions
     
     private func addSubViews() {
+        addSubview(weatherImage)
         addSubview(temperatureLable)
-        temperatureLable.addSubview(weatherImage)
         addSubview(hourlyLable)
         addSubview(hourlyCollectionView)
         addSubview(dailyLable)
@@ -117,15 +117,15 @@ extension CityRootView {
     }
     
     private func setupConstraints() {
-
-        temperatureLable.topAnchor.constraint(lessThanOrEqualTo: self.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
+        
+        weatherImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        weatherImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+      //  weatherImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        weatherImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        temperatureLable.topAnchor.constraint(lessThanOrEqualTo: weatherImage.bottomAnchor).isActive = true
         temperatureLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
         temperatureLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
-        
-        weatherImage.topAnchor.constraint(equalTo: temperatureLable.topAnchor, constant: -50).isActive = true
-        weatherImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        weatherImage.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        weatherImage.heightAnchor.constraint(equalToConstant: 150).isActive = true
 
         hourlyLable.topAnchor.constraint(greaterThanOrEqualTo: temperatureLable.bottomAnchor, constant: 20).isActive = true
         hourlyLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
