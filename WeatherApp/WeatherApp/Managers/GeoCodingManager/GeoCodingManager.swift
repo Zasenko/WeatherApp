@@ -5,8 +5,11 @@
 //  Created by Dmitry Zasenko on 27.01.23.
 //
 
-import Foundation
 import CoreLocation
+
+protocol GeoCodingManagerProtocol {
+    func findCity(address: String, complition: @escaping (CityModel?) -> Void)
+}
 
 class GeoCodingManager {
     
@@ -15,7 +18,7 @@ class GeoCodingManager {
     private let geocoder = CLGeocoder()
 }
 
-extension GeoCodingManager {
+extension GeoCodingManager: GeoCodingManagerProtocol {
 
     // MARK: - Functions
     
@@ -35,7 +38,7 @@ extension GeoCodingManager {
                 return
             }
 
-            let city = CityModel(coordinate: coordinate, name: name, country: country)
+            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: Weathers())
             DispatchQueue.main.async {
                 complition(city)
             }

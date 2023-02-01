@@ -9,7 +9,6 @@ import UIKit
 
 protocol WeatherRouterProtocol: AbstractRouterProtocol {
     func showWeatherViewController()
-    func popToRoot()
 }
 
 class WeatherRouter {
@@ -29,8 +28,5 @@ extension WeatherRouter: WeatherRouterProtocol {
             guard let weatherVC = modulBilder?.cteateWeatherModul(router: self) else { return }
             navigationController.viewControllers = [weatherVC]
         }
-    }
-    
-    func popToRoot() {
     }
 }

@@ -24,7 +24,6 @@ class MainRouter: MainRouterProtocol {
 }
 
 extension MainRouter {
-    
     func showTabBarController() {
         if let navigationController = navigationController {
             guard let tabBarController = modulBilder?.cteateTabBarModul(router: self) else { return }
@@ -37,6 +36,4 @@ extension MainRouter {
             navigationController.popToRootViewController(animated: true)
         }
     }
-    
-    
 }

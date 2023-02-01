@@ -15,22 +15,17 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     // MARK: - Private Properties
     
-    let weatherImage: UIImageView = {
+    private let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
-        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
-        imageView.preferredSymbolConfiguration = config
         return imageView
     }()
     
     private let temperatureLabel: UILabel = {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 20)
-        lable.textColor = .blue
-        lable.backgroundColor = .yellow
+        lable.textColor = .white
         lable.numberOfLines = 1
         lable.textAlignment = .center
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -39,32 +34,34 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     private let timeLable: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 15)
+        lable.font = .systemFont(ofSize: 14)
         lable.numberOfLines = 0
         lable.textAlignment = .left
-        lable.backgroundColor = .yellow
+        lable.textColor = .white
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
     
-    private let stackview = UIStackView()
+    private let stackview: UIStackView = {
+        let stackview = UIStackView()
+        stackview.axis = .vertical
+        stackview.alignment = .center
+        stackview.distribution = .fillEqually
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        return stackview
+    }()
     
-//    // MARK: - Inits
-//    
-//    override init(frame: CGRect) {
-//        <#code#>
-//    }
-//    
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        backgroundColor = .white
-//        addSubViews()
-//        setupConstraints()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    // MARK: - Inits
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension HourlyWeatherCell {
@@ -80,22 +77,18 @@ extension HourlyWeatherCell {
     // MARK: - Private Functions
     
     private func addSubViews() {
-        stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.addArrangedSubview(timeLable)
         stackview.addArrangedSubview(weatherImage)
         stackview.addArrangedSubview(temperatureLabel)
-        stackview.addArrangedSubview(timeLable)
         addSubview(stackview)
     }
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
+        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackview.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        stackview.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-//        temp.widthAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        currentWeatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
-//        currentWeatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        weatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }

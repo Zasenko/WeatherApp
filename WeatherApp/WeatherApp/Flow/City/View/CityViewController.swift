@@ -43,59 +43,78 @@ final class CityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .orange
+        
+        self.title = presenter.city.name
         
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.barTintColor = .systemTeal
+   //     navigationController?.navigationBar.barTintColor = .systemTeal
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
         rootView.hourlyCollectionView.delegate = self
         rootView.hourlyCollectionView.dataSource = self
+        
+        rootView.dailyCollectionView.delegate = self
+        rootView.dailyCollectionView.dataSource = self
     }
 }
 
 extension CityViewController: CityViewProtocol {
     func reloadCity() {
-        if let image = presenter.city.currentWeather?.weathercode?.image {
-            rootView.weatherImage.image = image
+        if let weather = presenter.city.weather.currentWeather {
+            rootView.weatherImage.image = weather.weathercode.image
         }
-        if let temperatur = presenter.city.currentWeather?.temperature {
+        if let temperatur = presenter.city.weather.currentWeather?.temperature {
             rootView.temperatureLable.text = "\(temperatur)"
         }
+        rootView.dailyCollectionView.reloadData()
         rootView.hourlyCollectionView.reloadData()
     }
 }
 
-extension CityViewController: UICollectionViewDataSource {}
-    
-extension CityViewController: UICollectionViewDelegate {
-    
+extension CityViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(presenter.getHourlyWeatherCount())
-        return presenter.getHourlyWeatherCount()
+        if collectionView == self.rootView.hourlyCollectionView {
+            print(presenter.getHourlyWeatherCount())
+            return presenter.getHourlyWeatherCount()
         }
+        return presenter.getDailyWeatherCount()
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
-            return UICollectionViewCell()
+        if collectionView == rootView.hourlyCollectionView {
+            guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
+                return UICollectionViewCell()
+            }
+            if let hourlyWeather = presenter.city.weather.hourly?.weathers[indexPath.row] {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
+                myCell.setupCell(time: dateFormatter.string(from: hourlyWeather.time), temperature: String(hourlyWeather.temperature), image: hourlyWeather.weathercode.image)
+            }
+            return myCell
+        } else {
+            guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyWeatherCell.identifier, for: indexPath) as? DailyWeatherCell else {
+                return UICollectionViewCell()
+            }
+            if let dailyWeather = presenter.city.weather.daily?.weathers[indexPath.row] {
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM-dd"
+                
+                let date = dateFormatter.string(from: dailyWeather.date)
+                
+                let maxTemperatureString = String(dailyWeather.temperatureMax)
+                let minTemperatureString = String(dailyWeather.temperatureMin)
+                
+                dateFormatter.dateFormat = "dd:mm"
+                let sunsetString = dateFormatter.string(from: dailyWeather.sunset)
+                let sunriseString = dateFormatter.string(from: dailyWeather.sunrise)
+                
+                let image = dailyWeather.weathercode.image
+                
+                myCell.setupCell(date: date, image: image, maxMemperature: maxTemperatureString, minTemperature: minTemperatureString, sunrise: sunriseString, sunset: sunsetString)
+            }
+            return myCell
         }
-        print(presenter.city)
-        // TODO - получение готовых данных
-        var temperatureString: String?
-        if let temperature = presenter.city.hourly?.temperature?[indexPath.row] {
-            temperatureString = String(temperature)
-        }
-        
-        var timeString: String?
-        if let time = presenter.city.hourly?.time?[indexPath.row] {
-            timeString = String(time)
-        }
-        
-        var weathercodeImage: UIImage?
-        if let weathercode = presenter.city.hourly?.weathercode?[indexPath.row].image {
-            weathercodeImage = weathercode
-        }
-        cell.setupCell(time: timeString ?? "", temperature: temperatureString ?? "", image: weathercodeImage ?? UIImage())
-        return cell
     }
 }
+extension CityViewController: UICollectionViewDelegate {}
