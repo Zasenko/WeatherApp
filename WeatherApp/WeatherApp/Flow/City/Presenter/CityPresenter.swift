@@ -25,12 +25,12 @@ final class CityPresenter {
     
     // MARK: - Private properties
     
-    private let router: CitiesRouterProtocol?
-    private let networkManager: WeatherNetworkManagerProtocol?
+    private let router: CitiesRouterProtocol
+    private let networkManager: WeatherNetworkManagerProtocol
     
     // MARK: - Inits
     
-    init(router: CitiesRouterProtocol?, networkManager: WeatherNetworkManagerProtocol?, city: CityModel) {
+    init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, city: CityModel) {
         self.router = router
         self.networkManager = networkManager
         self.city = city
@@ -52,8 +52,8 @@ extension CityPresenter {
     // MARK: Private functions
     
     func getWeatherInfo() {
-        networkManager?.fetchWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude), complition: { [weak self] result in
-            guard let self = self else { return }
+        networkManager.fetchWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude)) { [weak self] result in
+                        guard let self = self else { return }
             DispatchQueue.main.sync {
                 switch result {
                 case .success(let weather):
@@ -64,7 +64,7 @@ extension CityPresenter {
                     debugPrint(error)
                 }
             }
-        })
+        }
     }
 }
 

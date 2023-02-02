@@ -37,7 +37,7 @@ extension WeatherCodes {
         case .cloudy:
             let image =  UIImage(systemName: "cloud.fill")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.gray)
-            return image ?? UIImage()
+            return image
         case .fog:
             let image =  UIImage(systemName: "cloud.fog.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.gray)

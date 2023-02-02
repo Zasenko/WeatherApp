@@ -74,7 +74,6 @@ extension CityViewController: CityViewProtocol {
 extension CityViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.rootView.hourlyCollectionView {
-            print(presenter.getHourlyWeatherCount())
             return presenter.getHourlyWeatherCount()
         }
         return presenter.getDailyWeatherCount()

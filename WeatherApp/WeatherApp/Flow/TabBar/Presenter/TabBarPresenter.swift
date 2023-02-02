@@ -45,6 +45,6 @@ extension TabBarPresenter: TabBarPresenterProtocol {
         let tabBarItem = UITabBarItem(title: "Cities", image: UIImage(systemName: "list.bullet"), selectedImage: UIImage(systemName: "list.bullet"))
         citiesNavController.tabBarItem = tabBarItem
         
-        return [citiesNavController, weatherNavController]
+        return [weatherNavController, citiesNavController]
     }
 }
