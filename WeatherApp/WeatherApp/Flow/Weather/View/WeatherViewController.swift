@@ -9,9 +9,17 @@ import UIKit
 
 class WeatherViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    let dateFormatter = DateFormatter() /// TODO!
+    
+    // MARK: - Private properties
+
     private let presenter: WeatherPresenterProtocol
     private let rootView = CityRootView(frame: UIScreen.main.bounds)
     
+    // MARK: - Inits
+
     init(presenter: WeatherPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -22,6 +30,8 @@ class WeatherViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Life functions
     
     override func loadView() {
         super.loadView()
@@ -35,49 +45,77 @@ class WeatherViewController: UIViewController {
         rootView.dailyCollectionView.dataSource = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.gray
     }
 }
 
+// MARK: - WeatherViewProtocol
+
 extension WeatherViewController: WeatherViewProtocol {
     
     func changeLocation(place: CityModel) {
-        print(place)
         self.title = place.name
-        self.rootView.temperatureLable.text = place.country
     }
     
     func changeWeather(place: CityModel) {
         if let weather = place.weather.currentWeather?.temperature {
             self.rootView.temperatureLable.text = String(weather)
         }
-        
         self.rootView.weatherImage.image = place.weather.currentWeather?.weathercode.image
         self.rootView.hourlyCollectionView.reloadData()
         self.rootView.dailyCollectionView.reloadData()
     }
-    
-    
 }
 
-extension WeatherViewController: UICollectionViewDelegate {
-    
-}
+// MARK: - UICollectionView Delegate
+
+extension WeatherViewController: UICollectionViewDelegate {}
 
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        0
+        if collectionView == rootView.hourlyCollectionView {
+            return presenter.getHourlyWeatherCount()
+        } else if collectionView == rootView.dailyCollectionView {
+            return presenter.getDailyWeatherCount()
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        if collectionView == rootView.hourlyCollectionView {
+            guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
+                return UICollectionViewCell()
+            }
+            if let hourWeather = presenter.getHourlyWeather(cell: indexPath.row) {
+                
+                dateFormatter.dateFormat = "HH:mm"
+                myCell.setupCell(time: dateFormatter.string(from: hourWeather.time), temperature: String(hourWeather.temperature), image: hourWeather.weathercode.image)
+            }
+            return myCell
+        } else {
+            guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: DailyWeatherCell.identifier, for: indexPath) as? DailyWeatherCell else {
+                return UICollectionViewCell()
+            }
+            if let dayWeather = presenter.getDailyWeather(cell: indexPath.row) {
+                
+                dateFormatter.dateFormat = "MM-dd"
+                
+                let date = dateFormatter.string(from: dayWeather.date)
+                
+                let maxTemperatureString = String(dayWeather.temperatureMax)
+                let minTemperatureString = String(dayWeather.temperatureMin)
+                
+                dateFormatter.dateFormat = "dd:mm"
+                let sunsetString = dateFormatter.string(from: dayWeather.sunset)
+                let sunriseString = dateFormatter.string(from: dayWeather.sunrise)
+                
+                let image = dayWeather.weathercode.image
+                
+                myCell.setupCell(date: date, image: image, maxMemperature: maxTemperatureString, minTemperature: minTemperatureString, sunrise: sunriseString, sunset: sunsetString)
+            }
+            return myCell
+        }
     }
-    
-    
 }
