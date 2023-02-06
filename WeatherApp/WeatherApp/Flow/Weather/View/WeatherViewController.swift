@@ -23,8 +23,6 @@ class WeatherViewController: UIViewController {
     init(presenter: WeatherPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        
-        self.title = "Weather"
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +45,23 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.gray
+        
+        self.title = "Weather"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        navigationController?.navigationBar.tintColor = .yellow
+        
+        // DOTO если только есть локация, когда город создан
+        let button1 = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addCityButtonTaped(sender:)))
+        self.navigationItem.rightBarButtonItem  = button1
+    }
+}
+
+// MARK: - @Objc func
+
+extension WeatherViewController {
+    @objc func addCityButtonTaped(sender: UIButton) {
+//
     }
 }
 
@@ -107,7 +121,7 @@ extension WeatherViewController: UICollectionViewDataSource {
                 let maxTemperatureString = String(dayWeather.temperatureMax)
                 let minTemperatureString = String(dayWeather.temperatureMin)
                 
-                dateFormatter.dateFormat = "dd:mm"
+                dateFormatter.dateFormat = "HH:mm"
                 let sunsetString = dateFormatter.string(from: dayWeather.sunset)
                 let sunriseString = dateFormatter.string(from: dayWeather.sunrise)
                 

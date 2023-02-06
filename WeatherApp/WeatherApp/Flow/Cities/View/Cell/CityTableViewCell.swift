@@ -19,7 +19,6 @@ class CityTableViewCell: UITableViewCell {
         let stackview = UIStackView(arrangedSubviews: [])
         stackview.alignment = .center
         stackview.spacing = 20
-       // stackview.backgroundColor = .orange
         return stackview
     }()
     
@@ -28,7 +27,6 @@ class CityTableViewCell: UITableViewCell {
         lable.font = .systemFont(ofSize: 20)
         lable.numberOfLines = 0
         lable.textAlignment = .left
-       // lable.backgroundColor = .yellow
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
@@ -36,10 +34,9 @@ class CityTableViewCell: UITableViewCell {
     private let temp: UILabel = {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 30)
-        lable.textColor = .blue
+        lable.textColor = .black
         lable.numberOfLines = 1
         lable.textAlignment = .center
-        //lable.backgroundColor = .blue
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
@@ -48,11 +45,6 @@ class CityTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
-        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42)))
-        imageView.preferredSymbolConfiguration = config
-        
         return imageView
     }()
 
@@ -60,7 +52,7 @@ class CityTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .white
+        backgroundColor = .clear
         addSubViews()
         setupConstraints()
     }
@@ -96,7 +88,7 @@ extension CityTableViewCell {
         stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
         stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor,constant: -20).isActive = true
         
-        temp.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        temp.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
         
         currentWeatherImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
         currentWeatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true

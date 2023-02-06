@@ -16,8 +16,9 @@ class CitiesViewControllerRootView: UIView {
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
-        tableView.backgroundColor = .brown
+        tableView.backgroundColor = .clear
         tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
+        tableView.rowHeight = 70
         return tableView
     }()
     
@@ -25,7 +26,11 @@ class CitiesViewControllerRootView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        let gradient = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = [UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00).cgColor, UIColor(red: 0.19, green: 0.26, blue: 0.52, alpha: 1.00).cgColor]
+
+        self.layer.insertSublayer(gradient, at: 0)
         addSubViews()
         setupConstraints()
     }

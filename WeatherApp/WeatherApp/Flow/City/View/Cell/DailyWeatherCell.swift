@@ -18,11 +18,10 @@ class DailyWeatherCell: UICollectionViewCell {
     private let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .orange
         var config = UIImage.SymbolConfiguration(paletteColors: [.systemTeal, .systemGray5])
         config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30)))
         imageView.preferredSymbolConfiguration = config
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -110,7 +109,6 @@ class DailyWeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubViews()
         setupConstraints()
-        backgroundColor = .green
     }
     
     required init?(coder: NSCoder) {

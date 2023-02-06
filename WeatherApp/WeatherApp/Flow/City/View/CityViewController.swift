@@ -104,7 +104,7 @@ extension CityViewController: UICollectionViewDataSource {
                 let maxTemperatureString = String(dailyWeather.temperatureMax)
                 let minTemperatureString = String(dailyWeather.temperatureMin)
                 
-                dateFormatter.dateFormat = "dd:mm"
+                dateFormatter.dateFormat = "HH:mm"
                 let sunsetString = dateFormatter.string(from: dailyWeather.sunset)
                 let sunriseString = dateFormatter.string(from: dailyWeather.sunrise)
                 

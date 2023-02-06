@@ -40,7 +40,7 @@ final class CityRootView: UIView {
     
     let hourlyCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
-        viewLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        viewLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         viewLayout.itemSize = CGSize(width: 60, height: 100)
         viewLayout.scrollDirection = .horizontal
 
@@ -66,13 +66,14 @@ final class CityRootView: UIView {
     }()
     
     let dailyCollectionView: UICollectionView = {
+        
         let viewLayout = UICollectionViewFlowLayout()
-        viewLayout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        viewLayout.itemSize = CGSize(width: 150, height: 200)
+        viewLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        viewLayout.itemSize = CGSize(width: 150, height: 150)
         viewLayout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.register(DailyWeatherCell.self, forCellWithReuseIdentifier: DailyWeatherCell.identifier)
@@ -130,7 +131,7 @@ extension CityRootView {
         hourlyCollectionView.topAnchor.constraint(equalTo: hourlyLable.bottomAnchor).isActive = true
         hourlyCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         hourlyCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        hourlyCollectionView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        hourlyCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
         dailyLable.topAnchor.constraint(equalTo: hourlyCollectionView.bottomAnchor, constant: 20).isActive = true
         dailyLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
@@ -140,6 +141,6 @@ extension CityRootView {
         dailyCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         dailyCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         dailyCollectionView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
-        dailyCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        dailyCollectionView.heightAnchor.constraint(equalToConstant: 150).isActive = true
     }
 }

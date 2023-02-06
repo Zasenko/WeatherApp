@@ -17,14 +17,14 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     private let weatherImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private let temperatureLabel: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 20)
+        lable.font = .systemFont(ofSize: 17, weight: .light)
         lable.textColor = .white
         lable.numberOfLines = 1
         lable.textAlignment = .center
@@ -34,7 +34,7 @@ class HourlyWeatherCell: UICollectionViewCell {
     
     private let timeLable: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 14)
+        lable.font = .systemFont(ofSize: 14, weight: .thin)
         lable.numberOfLines = 0
         lable.textAlignment = .left
         lable.textColor = .white
@@ -72,6 +72,7 @@ extension HourlyWeatherCell {
         self.temperatureLabel.text = temperature
         self.timeLable.text = time
         self.weatherImage.image = image
+        self.tintColor = .white
     }
     
     // MARK: - Private Functions
@@ -88,7 +89,5 @@ extension HourlyWeatherCell {
         stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         stackview.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         stackview.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        
-        weatherImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }

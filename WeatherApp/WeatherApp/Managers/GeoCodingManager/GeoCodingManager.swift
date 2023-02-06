@@ -23,9 +23,9 @@ class GeoCodingManager {
     private let geocoder = CLGeocoder()
 }
 
-extension GeoCodingManager: GeoCodingManagerProtocol {
+// MARK: - GeoCodingManagerProtocol
 
-    // MARK: - Functions
+extension GeoCodingManager: GeoCodingManagerProtocol {
     
     func findCity(coordinate: CLLocation, complition: @escaping ((Result<CityModel, Error>) -> Void)) {
         geocoder.cancelGeocode()
@@ -44,7 +44,7 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
                 return
             }
             
-            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: Weathers())
+            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: WeathersModel())
             DispatchQueue.main.async {
                 complition(.success(city))
             }
@@ -68,7 +68,7 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
                 return
             }
 
-            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: Weathers())
+            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: WeathersModel())
             DispatchQueue.main.async {
                 complition(city)
             }
