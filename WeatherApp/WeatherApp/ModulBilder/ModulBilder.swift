@@ -21,10 +21,9 @@ class ModulBilder: ModulBilderProtocol {
     private let geoCodingManager = GeoCodingManager()
     
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController {
-        let router = router
-        let view = TabBarController()
         let presenter = TabBarPresenter(router: router)
-        view.presenter = presenter
+        let view = TabBarController(presenter: presenter)
+        presenter.view = view
         return view
     }
     
@@ -37,7 +36,6 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController {
-        let router = router
         let presenter = CitiesViewPresenter(router: router, networkManager: networkManager)
         let view = CitiesViewController(presenter: presenter)
         presenter.view = view

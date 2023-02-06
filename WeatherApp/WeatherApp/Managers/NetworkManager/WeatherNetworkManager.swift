@@ -72,7 +72,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             URLQueryItem(name: "longitude", value: longitude),
             URLQueryItem(name: "hourly", value: "temperature_2m,weathercode"),
             URLQueryItem(name: "daily", value: "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset"),
-            URLQueryItem(name: "timezone", value: "GMT")
+            URLQueryItem(name: "timezone", value: "auto")
         ]
         
         guard let url = urlComponents.url else {
@@ -106,7 +106,7 @@ class WeatherNetworkManager: WeatherNetworkManagerProtocol {
             URLQueryItem(name: "current_weather", value: "true"),
             URLQueryItem(name: "hourly", value: "temperature_2m,weathercode"),
             URLQueryItem(name: "daily", value: "weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset"),
-            URLQueryItem(name: "timezone", value: "GMT")
+            URLQueryItem(name: "timezone", value: "auto")
         ]
         
         guard let url = urlComponents.url else {

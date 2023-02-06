@@ -11,7 +11,16 @@ final class TabBarController: UITabBarController {
     
     // MARK: - Properties
     
-    var presenter: TabBarPresenterProtocol!
+    var presenter: TabBarPresenterProtocol
+    
+    init(presenter: TabBarPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life func
     
@@ -21,24 +30,25 @@ final class TabBarController: UITabBarController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.viewControllers = presenter.createTabBar()
-        self.navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
+        viewControllers = presenter.createTabBar()
     }
+}
+
+extension TabBarController: TabBarViewProtocol {
 }
 
 extension TabBarController {
     private func setupTabBar() {
         let tabBarAppearance = UITabBarAppearance()
         let tabBarItemAppearance = UITabBarItemAppearance()
-        
-        tabBarAppearance.backgroundColor = .systemTeal
+        tabBarAppearance.configureWithTransparentBackground()
         
         tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gray]
         tabBarItemAppearance.normal.iconColor = .gray
         
-        tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        tabBarItemAppearance.selected.iconColor = .white
+        tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
+        tabBarItemAppearance.selected.iconColor = .yellow
         
         tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
 

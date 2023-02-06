@@ -15,7 +15,11 @@ enum WeatherCodes {
     case fog
     case drizzle
     case rain
+    case freezingRain
+    case thunderstormSlightOrModerate
     case snow
+    case snowGrains
+    case snowShowers
     case unknown
 }
 
@@ -23,39 +27,52 @@ extension WeatherCodes {
     var image: UIImage {
         switch self {
         case .clearSky:
-            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
-            let image = UIImage(systemName: "sun.max.fill", withConfiguration: conf)
+            let image = UIImage(systemName: "sun.max.fill")?.withTintColor(.yellow, renderingMode: .alwaysOriginal)
             return image ?? UIImage()
         case .mainlyClearSky:
-            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
-            let image = UIImage(systemName: "sun.max.fill", withConfiguration: conf)
+            let image = UIImage(systemName: "sun.min.fill")?.withTintColor(.yellow, renderingMode: .alwaysOriginal)
             return image ?? UIImage()
         case .partlyCloudy:
-            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray5, .yellow])
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .yellow])
             let image = UIImage(systemName: "cloud.sun.fill", withConfiguration: conf)
             return image ?? UIImage()
         case .cloudy:
-            let image =  UIImage(systemName: "cloud.fill")?.withTintColor(.darkGray, renderingMode: .alwaysOriginal) ?? UIImage()
-            image.withTintColor(.gray)
+            let image =  UIImage(systemName: "cloud.fill")?.withTintColor(.systemGray4, renderingMode: .alwaysOriginal) ?? UIImage()
             return image
         case .fog:
-            let image =  UIImage(systemName: "cloud.fog.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal) ?? UIImage()
-            image.withTintColor(.gray)
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .white])
+            let image =  UIImage(systemName: "cloud.fog.fill", withConfiguration: conf) ?? UIImage()
             return image
         case .drizzle:
-            let image =  UIImage(systemName: "cloud.drizzle.fill")?.withTintColor(.orange, renderingMode: .alwaysOriginal) ?? UIImage()
-            image.withTintColor(.gray)
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .blue])
+            let image =  UIImage(systemName: "cloud.drizzle.fill", withConfiguration: conf) ?? UIImage()
             return image
         case .rain:
-            let image =  UIImage(systemName: "cloud.rain.fill")?.withTintColor(.yellow, renderingMode: .alwaysOriginal) ?? UIImage()
-            image.withTintColor(.blue)
-            return image
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .blue])
+            let image = UIImage(systemName: "cloud.rain.fill", withConfiguration: conf)
+            return image ?? UIImage()
+        case .thunderstormSlightOrModerate:
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .blue])
+            let image = UIImage(systemName: "cloud.bolt.rain.fill", withConfiguration: conf)
+            return image ?? UIImage()
         case .snow:
-            let image =  UIImage(systemName: "cloud.snow.fill")?.withTintColor(.blue, renderingMode: .alwaysOriginal) ?? UIImage()
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .white])
+            let image = UIImage(systemName: "cloud.snow.fill", withConfiguration: conf)
+            return image ?? UIImage()
+        case .snowGrains:
+            let image =  UIImage(systemName: "snowflake")?.withTintColor(.white, renderingMode: .alwaysOriginal) ?? UIImage()
             image.withTintColor(.blue)
             return image
+        case .snowShowers:
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .white])
+            let image = UIImage(systemName: "cloud.snow.fill", withConfiguration: conf)
+            return image ?? UIImage()
         case .unknown :
             return UIImage()
+        case .freezingRain:
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .white, .blue])
+            let image = UIImage(systemName: "cloud.sleet.fill", withConfiguration: conf)
+            return image ?? UIImage()
         }
     }
 }

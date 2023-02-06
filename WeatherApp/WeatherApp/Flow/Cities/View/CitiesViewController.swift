@@ -58,7 +58,7 @@ extension CitiesViewController {
     private func createNavigationBar() {
         self.title = "Cities"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.barTintColor = .systemTeal
+        navigationController?.navigationBar.tintColor = .yellow
 
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -98,6 +98,7 @@ extension CitiesViewController: UITableViewDataSource {
         let city = presenter.cities[indexPath.row]
         cell.setupCell(cityName: city.name, temp: String(city.weather.currentWeather?.temperature ?? 0) , currentWeatherImage: city.weather.currentWeather?.weathercode.image ?? UIImage())
         cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
         return cell
     }
     

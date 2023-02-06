@@ -7,7 +7,10 @@
 
 import UIKit
 
-protocol TabBarPresenterProtocol {
+protocol TabBarViewProtocol: AnyObject {
+}
+
+protocol TabBarPresenterProtocol: AnyObject {
     func createTabBar() -> [UIViewController]
 }
 
@@ -15,7 +18,8 @@ final class TabBarPresenter {
     
     // MARK: - Properties
     
-    let router: MainRouterProtocol?
+    weak var view: TabBarViewProtocol?
+    let router: MainRouterProtocol
     
     // MARK: - Inits
     
@@ -29,7 +33,7 @@ extension TabBarPresenter: TabBarPresenterProtocol {
     func createTabBar() -> [UIViewController] {
 
         let weatherNavController = UINavigationController()
-        if let builder = router?.modulBilder {
+        if let builder = router.modulBilder {
             let router = WeatherRouter(navigationController: weatherNavController, modulBilder: builder)
             router.showWeatherViewController()
         }
@@ -37,7 +41,7 @@ extension TabBarPresenter: TabBarPresenterProtocol {
         weatherNavController.tabBarItem = tabOneBarItem
 
         let citiesNavController = UINavigationController()
-        if let builder = router?.modulBilder {
+        if let builder = router.modulBilder {
             let router = CitiesRouter(navigationController: citiesNavController, modulBilder: builder)
             router.initialCitiesViewController()
         }
