@@ -19,7 +19,7 @@ protocol WeatherNetworkManagerProtocol {
                                     complition: @escaping(Result<WeatherDecodedModel, Error>) -> Void)
 }
 
-class WeatherNetworkManager: WeatherNetworkManagerProtocol {
+final class WeatherNetworkManager: WeatherNetworkManagerProtocol {
     
     enum NetworkManagerErrors: Error {
         case decoderError

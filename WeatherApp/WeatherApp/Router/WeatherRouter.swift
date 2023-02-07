@@ -11,7 +11,7 @@ protocol WeatherRouterProtocol: AbstractRouterProtocol {
     func showWeatherViewController()
 }
 
-class WeatherRouter {
+final class WeatherRouter {
     
     var navigationController: UINavigationController?
     var modulBilder: ModulBilderProtocol?

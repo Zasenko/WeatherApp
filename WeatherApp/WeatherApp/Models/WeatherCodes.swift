@@ -21,6 +21,7 @@ enum WeatherCodes {
     case snowGrains
     case snowShowers
     case unknown
+    case sunset, sunrise
 }
 
 extension WeatherCodes {
@@ -70,8 +71,16 @@ extension WeatherCodes {
         case .unknown :
             return UIImage()
         case .freezingRain:
-            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .white, .blue])
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.systemGray4, .white])
             let image = UIImage(systemName: "cloud.sleet.fill", withConfiguration: conf)
+            return image ?? UIImage()
+        case .sunset:
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.white, .yellow])
+            let image = UIImage(systemName: "sunset.fill", withConfiguration: conf)
+            return image ?? UIImage()
+        case .sunrise:
+            let conf = UIImage.SymbolConfiguration(paletteColors: [.white, .yellow])
+            let image = UIImage(systemName: "sunrise.fill", withConfiguration: conf)
             return image ?? UIImage()
         }
     }

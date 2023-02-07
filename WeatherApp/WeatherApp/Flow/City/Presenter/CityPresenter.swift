@@ -21,19 +21,19 @@ final class CityPresenter {
     weak var view: CityViewProtocol?
     var city: CityModel
     
-     private let dateFormatter = DateFormatter()
-    
     // MARK: - Private properties
     
     private let router: CitiesRouterProtocol
     private let networkManager: WeatherNetworkManagerProtocol
+    private let dateFormatter: DateFormatterManagerProtocol
     
     // MARK: - Inits
     
-    init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, city: CityModel) {
+    init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, city: CityModel, dateFormatter: DateFormatterManagerProtocol) {
         self.router = router
         self.networkManager = networkManager
         self.city = city
+        self.dateFormatter = dateFormatter
     }
 }
 
@@ -52,12 +52,12 @@ extension CityPresenter {
     // MARK: Private functions
     
     func getWeatherInfo() {
-        networkManager.fetchWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude)) { [weak self] result in
+        networkManager.fetchWeatherByLocation(latitude: String(city.latitude), longitude: String(city.longitude)) { [weak self] result in
                         guard let self = self else { return }
             DispatchQueue.main.sync {
                 switch result {
                 case .success(let weather):
-                    if self.city.weather.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
+                    if self.city.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
                         self.view?.reloadCity()
                     }
                 case .failure(let error):

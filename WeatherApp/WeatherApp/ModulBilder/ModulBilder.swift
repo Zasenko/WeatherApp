@@ -15,10 +15,11 @@ protocol ModulBilderProtocol {
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController
 }
 
-class ModulBilder: ModulBilderProtocol {
+final class ModulBilder: ModulBilderProtocol {
     
     private let networkManager = WeatherNetworkManager()
     private let geoCodingManager = GeoCodingManager()
+    private let dateFormatterManager = DateFormatterManager()
     
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController {
         let presenter = TabBarPresenter(router: router)
@@ -29,14 +30,14 @@ class ModulBilder: ModulBilderProtocol {
     
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController {
         let locationManager = LocationManager()
-        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager)
+        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager)
         let view = WeatherViewController(presenter: presenter)
         presenter.view = view
         return view
     }
     
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController {
-        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager)
+        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager, dateFormatter: dateFormatterManager)
         let view = CitiesViewController(presenter: presenter)
         presenter.view = view
         return view
@@ -50,7 +51,7 @@ class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateCityModul(router: CitiesRouterProtocol, city: CityModel) -> UIViewController {
-        let presenter = CityPresenter(router: router, networkManager: networkManager, city: city)
+        let presenter = CityPresenter(router: router, networkManager: networkManager, city: city, dateFormatter: dateFormatterManager)
         let view = CityViewController(presenter: presenter)
         presenter.view = view
         return view

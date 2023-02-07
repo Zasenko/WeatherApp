@@ -84,10 +84,10 @@ extension CityViewController: UICollectionViewDataSource {
             guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
                 return UICollectionViewCell()
             }
-            if let hourlyWeather = presenter.city.weather.hourly?.weathers[indexPath.row] {
+            if let hourWeather = presenter.city.weather.hourly?.weathers[indexPath.row] {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "HH:mm"
-                myCell.setupCell(time: dateFormatter.string(from: hourlyWeather.time), temperature: String(hourlyWeather.temperature), image: hourlyWeather.weathercode.image)
+                myCell.setupCell(time: dateFormatter.string(from: hourWeather.time), temperature: String(hourWeather.temperature), image: hourWeather.weathercode.image)
             }
             return myCell
         } else {

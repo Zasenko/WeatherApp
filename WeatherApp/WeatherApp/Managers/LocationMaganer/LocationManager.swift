@@ -13,7 +13,7 @@ protocol LocationManagerProtocol {
 }
 
 protocol LocationManagerDelegate: AnyObject {
-    func reloadUserLocation(location: CLLocation)
+    func reloadUserLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees)
 }
 
 final class LocationManager: NSObject {
@@ -62,7 +62,7 @@ extension LocationManager: CLLocationManagerDelegate {
         userLocation = location
         locationManager.stopUpdatingLocation()
         DispatchQueue.main.async {
-            self.delegate?.reloadUserLocation(location: location)
+            self.delegate?.reloadUserLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         }
     }
     
