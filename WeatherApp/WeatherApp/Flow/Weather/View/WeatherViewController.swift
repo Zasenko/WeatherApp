@@ -11,7 +11,7 @@ class WeatherViewController: UIViewController {
     
     // MARK: - Properties
     
-    let dateFormatter = DateFormatter() /// TODO!
+    let dateFormatter = DateFormatter() /// TODO! есть протокол
     
     // MARK: - Private properties
 
@@ -34,26 +34,20 @@ class WeatherViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = rootView
-        presenter.getWeather()
-        
         rootView.hourlyCollectionView.delegate = self
         rootView.hourlyCollectionView.dataSource = self
         
         rootView.dailyCollectionView.delegate = self
         rootView.dailyCollectionView.dataSource = self
+        
+        presenter.getWeather()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Weather"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
         navigationController?.navigationBar.tintColor = .yellow
-        
-        // DOTO если только есть локация, когда город создан
-        let button1 = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addCityButtonTaped(sender:)))
-        self.navigationItem.rightBarButtonItem  = button1
     }
 }
 
@@ -68,16 +62,22 @@ extension WeatherViewController {
 // MARK: - WeatherViewProtocol
 
 extension WeatherViewController: WeatherViewProtocol {
-    
-    func changeLocation(place: CityModel) {
-        self.title = place.name
+    func setSaveButton() {
+        let button1 = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addCityButtonTaped(sender:)))
+        self.navigationItem.rightBarButtonItem  = button1
+    }
+
+    func reloadLocation(name: String) {
+        self.title = name
     }
     
+    // TODO
     func changeWeather(place: CityModel) {
         if let weather = place.weather.currentWeather?.temperature {
             self.rootView.temperatureLable.text = String(weather)
         }
         self.rootView.weatherImage.image = place.weather.currentWeather?.weathercode.image
+        
         self.rootView.hourlyCollectionView.reloadData()
         self.rootView.dailyCollectionView.reloadData()
     }
@@ -103,9 +103,23 @@ extension WeatherViewController: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             if let hourWeather = presenter.getHourlyWeather(cell: indexPath.row) {
-                
-                dateFormatter.dateFormat = "HH:mm"
-                myCell.setupCell(time: dateFormatter.string(from: hourWeather.time), temperature: String(hourWeather.temperature), image: hourWeather.weathercode.image)
+                var time = ""
+                var temperature = ""
+                switch hourWeather.type {
+                case .weather:
+                    dateFormatter.dateFormat = "HH"
+                    time = dateFormatter.string(from: hourWeather.time)
+                    temperature = String(hourWeather.temperature)
+                case .sunrise:
+                    dateFormatter.dateFormat = "HH:mm"
+                    time = dateFormatter.string(from: hourWeather.time)
+                    temperature = "sunrise"
+                case .sunset:
+                    dateFormatter.dateFormat = "HH:mm"
+                    time = dateFormatter.string(from: hourWeather.time)
+                    temperature = "sunset"
+                }
+                myCell.setupCell(time: time, temperature: temperature, image: hourWeather.weathercode.image)
             }
             return myCell
         } else {

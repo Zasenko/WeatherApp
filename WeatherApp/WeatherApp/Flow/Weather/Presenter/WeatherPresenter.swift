@@ -9,8 +9,9 @@ import Foundation
 import CoreLocation
 
 protocol WeatherViewProtocol: AnyObject {
-    func changeLocation(place: CityModel)
+    func reloadLocation(name: String)
     func changeWeather(place: CityModel)
+    func setSaveButton()
 }
 
 protocol WeatherPresenterProtocol: AnyObject {
@@ -32,16 +33,17 @@ class WeatherPresenter {
     private let networkManager: WeatherNetworkManagerProtocol
     private let geoCoder: GeoCodingManagerProtocol
     private var locationManager: LocationManagerProtocol
+    private let dateFormatter: DateFormatterManagerProtocol
     
     private var place: CityModel?
-    private let dateFormatter = DateFormatter()
-    
     // MARK: - Inits
     
-    init(networkManager: WeatherNetworkManagerProtocol, geoCoder: GeoCodingManagerProtocol, locationManager: LocationManagerProtocol) {
+    init(networkManager: WeatherNetworkManagerProtocol, geoCoder: GeoCodingManagerProtocol, locationManager: LocationManagerProtocol, dateFormatter: DateFormatterManagerProtocol) {
         self.networkManager = networkManager
         self.geoCoder = geoCoder
         self.locationManager = locationManager
+        self.dateFormatter = dateFormatter
+        
         self.locationManager.delegate = self
     }
 }
@@ -50,7 +52,7 @@ class WeatherPresenter {
 
 extension WeatherPresenter: WeatherPresenterProtocol {
     func getWeather() {
-        getCoordinate()
+        getUserCoordinate()
     }
     
     func getDailyWeatherCount() -> Int {
@@ -83,7 +85,7 @@ extension WeatherPresenter: LocationManagerDelegate {
 
 extension WeatherPresenter {
     
-    private func getCoordinate() {
+    private func getUserCoordinate() {
         locationManager.getUserLocation()
     }
     
@@ -94,7 +96,7 @@ extension WeatherPresenter {
                 switch result {
                 case.success(let place):
                     self.place = place
-                    self.view?.changeLocation(place: place)
+                    self.view?.reloadLocation(name: place.name)
                     self.getWeather(coordinate: place.coordinate)
                 case.failure(let error):
                     print(error)
@@ -104,18 +106,16 @@ extension WeatherPresenter {
     }
     
     private func getWeather(coordinate: CLLocationCoordinate2D) {
-        
         let latitude = String(coordinate.latitude)
         let longitude = String(coordinate.longitude)
-        
         guard var place = self.place else { return }
-        
+        view?.setSaveButton()
         networkManager.fetchFullWeatherByLocation(latitude: latitude, longitude: longitude) { [weak self] result in
             guard let self = self else { return}
                 switch result {
                 case .success(let weather):
                     DispatchQueue.main.async {
-                        if place.weather.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
+                        if place.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
                             self.place = place
                             self.view?.changeWeather(place: place)
                         }

@@ -14,14 +14,15 @@ struct WeatherDecodedModel: Codable {
         case hourly, daily
     }
     
-    var currentWeather: WeatherModel?
+    var currentWeather: CurentWeatherModel?
     var hourly: HourlyWeatherDecodedModel?
     var daily: DailyWeatherDecidedModel?
 }
 
-struct WeatherModel: Codable {
+struct CurentWeatherModel: Codable {
     let temperature: Double
     let weathercode: Int
+    let time: String
 }
 
 struct HourlyWeatherDecodedModel: Codable {
