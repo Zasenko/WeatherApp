@@ -65,9 +65,6 @@ struct CityModel {
                         print(time)
                         weather.hourly?.weathers = w.filter({$0.time > time})
                     }
-                    
-              //      print(weather.hourly?.weathers ?? "---------------")
-                    
                     let weather = DayWeather(date: time,
                                              weathercode: weathercode,
                                              temperatureMax: maxTemperature,
