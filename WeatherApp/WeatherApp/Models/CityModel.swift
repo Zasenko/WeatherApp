@@ -77,6 +77,7 @@ struct CityModel {
             weather.daily = DailyWeather(weathers: weathers)
         }
         
+        lastUpdate = .now
         return true
     }
     
