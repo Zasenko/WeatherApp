@@ -9,10 +9,10 @@ import CoreLocation
 
 protocol GeoCodingManagerProtocol {
     func findCity(address: String, complition: @escaping(CityModel?) -> Void)
-    func findCity(coordinate: CLLocation, complition: @escaping((Result<CityModel, Error>) -> Void))
+    func findCity(latitude: CLLocationDegrees, longitude: CLLocationDegrees, complition: @escaping((Result<CityModel, Error>) -> Void))
 }
 
-class GeoCodingManager {
+final class GeoCodingManager {
     
     private enum GeoCodingError: Error {
         case nilPlacemark
@@ -27,9 +27,9 @@ class GeoCodingManager {
 
 extension GeoCodingManager: GeoCodingManagerProtocol {
     
-    func findCity(coordinate: CLLocation, complition: @escaping ((Result<CityModel, Error>) -> Void)) {
+    func findCity(latitude: CLLocationDegrees, longitude: CLLocationDegrees, complition: @escaping ((Result<CityModel, Error>) -> Void)) {
         geocoder.cancelGeocode()
-        geocoder.reverseGeocodeLocation(coordinate) { placemarks, error in
+        geocoder.reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { placemarks, error in
             if let error = error {
                 complition(.failure(error))
                 return
@@ -44,7 +44,7 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
                 return
             }
             
-            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: WeathersModel())
+            let city = CityModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: name, country: country, weather: WeathersModel())
             DispatchQueue.main.async {
                 complition(.success(city))
             }
@@ -68,7 +68,7 @@ extension GeoCodingManager: GeoCodingManagerProtocol {
                 return
             }
 
-            let city = CityModel(coordinate: coordinate, name: name, country: country, weather: WeathersModel())
+            let city = CityModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: name, country: country, weather: WeathersModel())
             DispatchQueue.main.async {
                 complition(city)
             }

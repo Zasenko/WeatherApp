@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddCityTableViewCell: UITableViewCell {
+final class AddCityTableViewCell: UITableViewCell {
 
     // MARK: - Static properties
     

@@ -48,7 +48,7 @@ extension CitiesViewPresenter {
     
     private func addedCity(city: CityModel) {
                 var city = city
-                networkManager.fetchCurrentWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude), complition: { [weak self] result in
+                networkManager.fetchCurrentWeatherByLocation(latitude: String(city.latitude), longitude: String(city.longitude), complition: { [weak self] result in
                     guard let self = self else {return}
         
                     DispatchQueue.main.async {

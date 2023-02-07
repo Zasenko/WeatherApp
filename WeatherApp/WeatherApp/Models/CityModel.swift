@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import CoreLocation
 
 struct CityModel {
-    let coordinate: CLLocationCoordinate2D
+    let latitude: Double
+    let longitude: Double
     let name: String
     let country: String
     var lastUpdate: Date?
-    
     var weather: WeathersModel
-    
+
     mutating func changeData(currentWeather: CurentWeatherModel?, hourlyWeather: HourlyWeatherDecodedModel?, dailyWeather: DailyWeatherDecidedModel?, dateFormatter: DateFormatterManagerProtocol) -> Bool {
         
         if let currentWeather = currentWeather,
@@ -62,10 +61,10 @@ struct CityModel {
 
                     weather.hourly?.weathers.append(HourWeather(time: sunset, temperature: 0, weathercode: .sunset, type: .sunset))
                     weather.hourly?.weathers.append(HourWeather(time: sunrise, temperature: 0, weathercode: .sunrise, type: .sunrise))
-                    if let w = weather.hourly?.weathers.sorted(by: { $0.time < $1.time } ) {
-                        weather.hourly?.weathers = w
+                    if let w = weather.hourly?.weathers.sorted(by: { $0.time < $1.time } ), let time = weather.currentWeather?.time {
+                        print(time)
+                        weather.hourly?.weathers = w.filter({$0.time > time})
                     }
-                    
                     
               //      print(weather.hourly?.weathers ?? "---------------")
                     

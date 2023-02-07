@@ -11,7 +11,7 @@ protocol AddCityViewControllerProtocol: AnyObject {
     func addedCity(city: CityModel)
 }
 
-class CitiesViewController: UIViewController {
+final class CitiesViewController: UIViewController {
     
     // MARK: - Properties
     

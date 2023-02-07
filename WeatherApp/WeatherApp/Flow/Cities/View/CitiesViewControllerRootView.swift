@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CitiesViewControllerRootView: UIView {
+final class CitiesViewControllerRootView: UIView {
     
     // MARK: - SubViews
     

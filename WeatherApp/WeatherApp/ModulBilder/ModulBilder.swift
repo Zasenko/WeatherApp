@@ -15,7 +15,7 @@ protocol ModulBilderProtocol {
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController
 }
 
-class ModulBilder: ModulBilderProtocol {
+final class ModulBilder: ModulBilderProtocol {
     
     private let networkManager = WeatherNetworkManager()
     private let geoCodingManager = GeoCodingManager()

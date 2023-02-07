@@ -12,7 +12,7 @@ protocol MainRouterProtocol: AbstractRouterProtocol {
     func popToRoot()
 }
 
-class MainRouter: MainRouterProtocol {
+final class MainRouter: MainRouterProtocol {
     
     var navigationController: UINavigationController?
     var modulBilder: ModulBilderProtocol?

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreLocation
 
 protocol WeatherViewProtocol: AnyObject {
     func reloadLocation(name: String)
@@ -22,7 +21,7 @@ protocol WeatherPresenterProtocol: AnyObject {
     func getDailyWeather(cell row: Int) -> DayWeather?
 }
 
-class WeatherPresenter {
+final class WeatherPresenter {
     
     // MARK: - Properties
     
@@ -76,8 +75,8 @@ extension WeatherPresenter: WeatherPresenterProtocol {
 // MARK: - LocationManagerDelegate
 
 extension WeatherPresenter: LocationManagerDelegate {
-    func reloadUserLocation(location: CLLocation) {
-        getLocationInfo(coordinate: location)
+    func reloadUserLocation(latitude: Double, longitude: Double) {
+        getLocationInfo(latitude: latitude, longitude: longitude)
     }
 }
 
@@ -89,15 +88,15 @@ extension WeatherPresenter {
         locationManager.getUserLocation()
     }
     
-    private func getLocationInfo(coordinate: CLLocation) {
-        geoCoder.findCity(coordinate: coordinate) { [weak self] result in
+    private func getLocationInfo(latitude: Double, longitude: Double) {
+        geoCoder.findCity(latitude: latitude, longitude: longitude) { [weak self] result in
             guard let self = self else { return}
             DispatchQueue.main.async {
                 switch result {
                 case.success(let place):
                     self.place = place
                     self.view?.reloadLocation(name: place.name)
-                    self.getWeather(coordinate: place.coordinate)
+                    self.getWeather(latitude: String(place.latitude), longitude: String(place.longitude))
                 case.failure(let error):
                     print(error)
                 }
@@ -105,9 +104,7 @@ extension WeatherPresenter {
         }
     }
     
-    private func getWeather(coordinate: CLLocationCoordinate2D) {
-        let latitude = String(coordinate.latitude)
-        let longitude = String(coordinate.longitude)
+    private func getWeather(latitude: String, longitude: String) {
         guard var place = self.place else { return }
         view?.setSaveButton()
         networkManager.fetchFullWeatherByLocation(latitude: latitude, longitude: longitude) { [weak self] result in

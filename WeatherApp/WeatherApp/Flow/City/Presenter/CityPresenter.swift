@@ -52,7 +52,7 @@ extension CityPresenter {
     // MARK: Private functions
     
     func getWeatherInfo() {
-        networkManager.fetchWeatherByLocation(latitude: String(city.coordinate.latitude), longitude: String(city.coordinate.longitude)) { [weak self] result in
+        networkManager.fetchWeatherByLocation(latitude: String(city.latitude), longitude: String(city.longitude)) { [weak self] result in
                         guard let self = self else { return }
             DispatchQueue.main.sync {
                 switch result {

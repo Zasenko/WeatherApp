@@ -13,7 +13,7 @@ protocol CitiesRouterProtocol: AbstractRouterProtocol {
     func showAddCityViewController(delegate: CitiesViewPresenterDelegate)
 }
 
-class CitiesRouter: CitiesRouterProtocol {
+final class CitiesRouter: CitiesRouterProtocol {
     var navigationController: UINavigationController?
     var modulBilder: ModulBilderProtocol?
     

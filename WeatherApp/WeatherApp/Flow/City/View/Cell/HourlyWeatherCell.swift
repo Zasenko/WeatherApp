@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HourlyWeatherCell: UICollectionViewCell {
+final class HourlyWeatherCell: UICollectionViewCell {
     
     // MARK: - Static Properties
     
