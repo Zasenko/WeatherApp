@@ -85,7 +85,7 @@ extension CitiesViewController: UITableViewDelegate {}
 
 extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.cities.count
+        presenter.getCitiesCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,8 +95,14 @@ extension CitiesViewController: UITableViewDataSource {
         
         // TODO - получение готовых данных
         
-        let city = presenter.cities[indexPath.row]
-        cell.setupCell(cityName: city.name, temp: String(city.weather.currentWeather?.temperature ?? 0) , currentWeatherImage: city.weather.currentWeather?.weathercode.image ?? UIImage())
+        let city = presenter.getCity(indexPath: indexPath.row)
+        
+        var tempString = ""
+        if let temp = city.weather.currentWeather?.temperature {
+            tempString = String(temp)
+        }
+        
+        cell.setupCell(cityName: city.name, temp: tempString, currentWeatherImage: city.weather.currentWeather?.weathercode.image ?? UIImage())
         cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
         return cell

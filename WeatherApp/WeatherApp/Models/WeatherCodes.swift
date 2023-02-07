@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum WeatherCodes {
+enum WeatherCodes: Int {
     case clearSky
     case mainlyClearSky
     case partlyCloudy
@@ -20,8 +20,8 @@ enum WeatherCodes {
     case snow
     case snowGrains
     case snowShowers
-    case unknown
     case sunset, sunrise
+    case unknown
 }
 
 extension WeatherCodes {

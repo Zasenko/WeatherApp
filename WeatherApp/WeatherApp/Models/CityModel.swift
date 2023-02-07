@@ -13,7 +13,7 @@ struct CityModel {
     let name: String
     let country: String
     var lastUpdate: Date?
-    var weather: WeathersModel
+    var weather: WeatherModel
 
     mutating func changeData(currentWeather: CurentWeatherModel?, hourlyWeather: HourlyWeatherDecodedModel?, dailyWeather: DailyWeatherDecidedModel?, dateFormatter: DateFormatterManagerProtocol) -> Bool {
         

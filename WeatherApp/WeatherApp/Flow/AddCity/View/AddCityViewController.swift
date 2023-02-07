@@ -63,6 +63,10 @@ extension AddCityViewController {
 // MARK: - ViewProtocol
 
 extension AddCityViewController: AddCityViewProtocol {
+    func reloadAddButton() {
+        //
+    }
+    
     func showFindedLocations() {
         rootView.citiesTableView.reloadData()
     }
@@ -83,17 +87,16 @@ extension AddCityViewController: UITableViewDelegate {}
 
 extension AddCityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        (presenter.city != nil) ? 1 : 0
+        presenter.getCityCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AddCityTableViewCell.identifier, for: indexPath) as? AddCityTableViewCell else {
             return UITableViewCell()
         }
-        guard let city = presenter.city else {
+        guard let city = presenter.getCity() else {
             return UITableViewCell()
         }
-        
         cell.setupCell(cityName: "\(city.name), \(city.country)")
         cell.callback = { [weak self] in
             guard let self = self else { return }

@@ -20,6 +20,7 @@ final class ModulBilder: ModulBilderProtocol {
     private let networkManager = WeatherNetworkManager()
     private let geoCodingManager = GeoCodingManager()
     private let dateFormatterManager = DateFormatterManager()
+    private let coreDataManager = CoreDataManager()
     
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController {
         let presenter = TabBarPresenter(router: router)
@@ -37,14 +38,14 @@ final class ModulBilder: ModulBilderProtocol {
     }
     
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController {
-        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager, dateFormatter: dateFormatterManager)
+        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
         let view = CitiesViewController(presenter: presenter)
         presenter.view = view
         return view
     }
     
     func cteateAddCityModul(router: CitiesRouterProtocol, delegate: CitiesViewPresenterDelegate) -> UIViewController {
-        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, delegate: delegate)
+        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, delegate: delegate, coreDataManager: coreDataManager)
         let view = AddCityViewController(presenter: presenter)
         presenter.view = view
         return view
