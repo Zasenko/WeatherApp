@@ -14,9 +14,13 @@ protocol AddCityViewProtocol: AnyObject {
 
 protocol AddCityPresenterProtocol: AnyObject {
     func searchLocationByName(name: String)
-    func addCityButtonTapped(city: CityModel)
+    func addCityButtonTapped(city model: CityModel)
     func getCityCount() -> Int
     func getCity() -> CityModel?
+}
+
+protocol AddCityPresenterDelegate: AnyObject {
+    func addedCity(city: CityModel)
 }
 
 final class AddCityPresenter {
@@ -24,7 +28,7 @@ final class AddCityPresenter {
     // MARK: - Properties
     
     weak var view: AddCityViewProtocol?
-    weak var delegate: CitiesViewPresenterDelegate?
+    weak var delegate: AddCityPresenterDelegate?
     
     // MARK: - Private properties
     
@@ -35,7 +39,7 @@ final class AddCityPresenter {
     
     // MARK: - Inits
     
-    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, delegate: CitiesViewPresenterDelegate, coreDataManager: CoreDataManagerProtocol) {
+    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, delegate: AddCityPresenterDelegate, coreDataManager: CoreDataManagerProtocol) {
         self.router = router
         self.geoCodingManager = geoCodingManager
         self.delegate = delegate
@@ -70,16 +74,11 @@ extension AddCityPresenter: AddCityPresenterProtocol {
         }
     }
     
-//    let singer = DataManager.shared.singer(name: textfield.text ?? "")
-//    singers.append(singer)
-//    DataManager.shared.save()
-//    self.tableView.reloadData()
-    
-    func addCityButtonTapped(city: CityModel) {
-        let city = coreDataManager.makeCity(city: city)
+    func addCityButtonTapped(city model: CityModel) {
+        let city = coreDataManager.makeCity(city: model)
         coreDataManager.cities.append(city)
         coreDataManager.save()
         view?.reloadAddButton()
-        delegate?.addCity()//(city: city)
+        delegate?.addedCity(city: model)
     }
 }

@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol AddCityViewControllerProtocol: AnyObject {
-    func addedCity(city: CityModel)
-}
-
 final class CitiesViewController: UIViewController {
     
     // MARK: - Properties
@@ -62,7 +58,18 @@ extension CitiesViewController {
 
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+                
+      //  navigationController?.navigationBar.backgroundColor = .red // backgorund color with gradient
+        // or
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00)  // solid color
         
+//        let bounds = self.navigationController?.navigationBar.bounds
+//            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+//            visualEffectView.frame = bounds ?? CGRect.zero
+//            visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//            self.navigationController?.navigationBar.addSubview(visualEffectView)
+        
+    //    navigationController?.navigationBar.barTintColor = UIColor.green
         let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCityButtonTaped(sender:)))
         self.navigationItem.rightBarButtonItem  = button1
     }
@@ -70,12 +77,6 @@ extension CitiesViewController {
     private func createCitiesTableView() {
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-    }
-}
-
-extension CitiesViewController: AddCityViewControllerProtocol {
-    func addedCity(city: CityModel) {
-        presenter.addNewCity(city: city)
     }
 }
 

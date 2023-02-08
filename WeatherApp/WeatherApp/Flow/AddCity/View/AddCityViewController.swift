@@ -42,24 +42,6 @@ final class AddCityViewController: UIViewController {
     }
 }
 
-extension AddCityViewController {
-    
-    // MARK: - Private func
-    
-    private func createNavigationBar() {
-        rootView.searchBar.delegate = self
-        navigationItem.titleView = rootView.searchBar
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.barTintColor = .purple
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-    }
-    
-    private func createAddCitiesTableView() {
-        rootView.citiesTableView.delegate = self
-        rootView.citiesTableView.dataSource = self
-    }
-}
-
 // MARK: - ViewProtocol
 
 extension AddCityViewController: AddCityViewProtocol {
@@ -103,5 +85,23 @@ extension AddCityViewController: UITableViewDataSource {
             self.presenter.addCityButtonTapped(city: city)
         }
         return cell
+    }
+}
+
+// MARK: - Private func
+
+extension AddCityViewController {
+    
+    private func createNavigationBar() {
+        rootView.searchBar.delegate = self
+        navigationItem.titleView = rootView.searchBar
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barTintColor = .purple
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    }
+    
+    private func createAddCitiesTableView() {
+        rootView.citiesTableView.delegate = self
+        rootView.citiesTableView.dataSource = self
     }
 }

@@ -80,10 +80,7 @@ struct CityModel {
         lastUpdate = .now
         return true
     }
-    
-    
-    
-    
+
     private func changeCodes(weathercodes: [Int]) -> [WeatherCodes] {
         var weatherCodes: [WeatherCodes] = []
         for int in weathercodes {
