@@ -8,13 +8,12 @@
 import Foundation
 
 protocol AddCityViewProtocol: AnyObject {
-    func showFindedLocations()
-    func reloadAddButton()
+    func reloadTableView()
 }
 
 protocol AddCityPresenterProtocol: AnyObject {
     func searchLocationByName(name: String)
-    func addCityButtonTapped(city model: CityModel)
+    func addCityButtonTapped()
     func getCityCount() -> Int
     func getCity() -> CityModel?
 }
@@ -64,9 +63,13 @@ extension AddCityPresenter: AddCityPresenterProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let city):
+                var city = city
+                if self.coreDataManager.cities.first(where: {$0.name == city.name && $0.country == city.country}) != nil {
+                    city.isSaved = true
+                }
                 DispatchQueue.main.async {
                     self.city = city
-                    self.view?.showFindedLocations()
+                    self.view?.reloadTableView()
                 }
             case .failure(let error):
                 debugPrint(error)
@@ -74,11 +77,18 @@ extension AddCityPresenter: AddCityPresenterProtocol {
         }
     }
     
-    func addCityButtonTapped(city model: CityModel) {
-        let city = coreDataManager.makeCity(city: model)
-        coreDataManager.cities.append(city)
-        coreDataManager.save()
-        view?.reloadAddButton()
-        delegate?.addedCity(city: model)
+    func addCityButtonTapped() {
+        guard let city = self.city else { return }
+        let coreDataCity = coreDataManager.makeCity(city: city)
+        coreDataManager.cities.append(coreDataCity)
+        coreDataManager.save { [weak self] result in
+            guard let self = self else { return }
+            if result {
+                self.city?.isSaved = true
+                self.view?.reloadTableView()
+                self.delegate?.addedCity(city: city)
+            }
+        }
     }
+    
 }

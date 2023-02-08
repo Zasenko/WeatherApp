@@ -45,11 +45,7 @@ final class AddCityViewController: UIViewController {
 // MARK: - ViewProtocol
 
 extension AddCityViewController: AddCityViewProtocol {
-    func reloadAddButton() {
-        //
-    }
-    
-    func showFindedLocations() {
+    func reloadTableView() {
         rootView.citiesTableView.reloadData()
     }
 }
@@ -79,10 +75,10 @@ extension AddCityViewController: UITableViewDataSource {
         guard let city = presenter.getCity() else {
             return UITableViewCell()
         }
-        cell.setupCell(cityName: "\(city.name), \(city.country)")
+        cell.setupCell(cityName: "\(city.name), \(city.country)", isSaved: city.isSaved)
         cell.callback = { [weak self] in
             guard let self = self else { return }
-            self.presenter.addCityButtonTapped(city: city)
+            self.presenter.addCityButtonTapped()
         }
         return cell
     }

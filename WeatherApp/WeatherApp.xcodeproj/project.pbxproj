@@ -60,8 +60,8 @@
 		0F7B7ADB2992520B009D1DF7 /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
 		0F7B7AEC2992A492009D1DF7 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		0F7B7B172992B05A009D1DF7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		0F7DFF452992E98B0030B766 /* City+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "City+CoreDataClass.swift"; path = "CoreData/City+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0F7DFF462992E98B0030B766 /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "City+CoreDataProperties.swift"; path = "CoreData/City+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0F7DFF452992E98B0030B766 /* City+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0F7DFF462992E98B0030B766 /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0F80F8E12982CCCF0091BD71 /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
 		0F80F8E52982D6E10091BD71 /* AddCityRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityRootView.swift; sourceTree = "<group>"; };
 		0F80F8E82982E4200091BD71 /* AddCityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityPresenter.swift; sourceTree = "<group>"; };
@@ -179,6 +179,9 @@
 		0F7B7AEE2992A73D009D1DF7 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				0F7DFF452992E98B0030B766 /* City+CoreDataClass.swift */,
+				0F7DFF462992E98B0030B766 /* City+CoreDataProperties.swift */,
+				0F7B7AEB2992A492009D1DF7 /* Model.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -246,9 +249,6 @@
 		0FAC29F3295DFCCD0074509F = {
 			isa = PBXGroup;
 			children = (
-				0F7DFF452992E98B0030B766 /* City+CoreDataClass.swift */,
-				0F7DFF462992E98B0030B766 /* City+CoreDataProperties.swift */,
-				0F7B7AEB2992A492009D1DF7 /* Model.xcdatamodeld */,
 				0F7B7AEE2992A73D009D1DF7 /* CoreData */,
 				0FAC29FE295DFCCD0074509F /* WeatherApp */,
 				0FAC29FD295DFCCD0074509F /* Products */,

@@ -14,7 +14,8 @@ struct CityModel {
     let country: String
     var lastUpdate: Date?
     var weather: WeatherModel
-
+    var isSaved: Bool = false
+    
     mutating func changeData(currentWeather: CurentWeatherModel?, hourlyWeather: HourlyWeatherDecodedModel?, dailyWeather: DailyWeatherDecidedModel?, dateFormatter: DateFormatterManagerProtocol) -> Bool {
         
         if let currentWeather = currentWeather,

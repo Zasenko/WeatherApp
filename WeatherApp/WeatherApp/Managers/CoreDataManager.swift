@@ -10,12 +10,13 @@ import CoreData
 
 protocol CoreDataManagerProtocol {
     var cities: [City] {get set}
-    func save ()
+    func save (complition: @escaping((Bool) -> Void))
     func makeCity(city model: CityModel) -> City
     func getCities() -> [City]
 }
 
 final class CoreDataManager: CoreDataManagerProtocol {
+    
 
     var cities = [City]()
     
@@ -49,16 +50,17 @@ final class CoreDataManager: CoreDataManagerProtocol {
     }
     
     // MARK: - Core Data Saving support
-
-    func save() {
+    func save(complition: @escaping ((Bool) -> Void)) {
         if managedContext.hasChanges {
             do {
                 try managedContext.save()
+                complition(true)
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                debugPrint("Unresolved error \(nserror), \(nserror.userInfo)")
+                complition(false)
             }
         }
     }
@@ -86,6 +88,8 @@ final class CoreDataManager: CoreDataManagerProtocol {
     func deleteCity(city: City) {
       let context = managedContext
       context.delete(city)
-      save()
+        save { [weak self] bool in
+            print(bool)
+        }
     }
 }
