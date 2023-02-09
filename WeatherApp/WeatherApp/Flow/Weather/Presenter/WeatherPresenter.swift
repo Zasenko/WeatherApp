@@ -85,7 +85,6 @@ extension WeatherPresenter: WeatherPresenterProtocol {
     func getHourlyWeather(cell row: Int) -> HourWeather? {
         return place?.weather.hourly?.weathers[row]
     }
-    
 }
 
 // MARK: - LocationManagerDelegate
@@ -117,7 +116,7 @@ extension WeatherPresenter {
                         self.view?.setSaveButton()
                     }
                 case.failure(let error):
-                    print(error)
+                    debugPrint(error)
                 }
             }
         }

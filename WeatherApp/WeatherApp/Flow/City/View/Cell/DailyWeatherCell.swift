@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DailyWeatherCell: UICollectionViewCell {
+final class DailyWeatherCell: UITableViewCell {
     
     // MARK: - Static Properties
     
@@ -77,16 +77,25 @@ final class DailyWeatherCell: UICollectionViewCell {
     
     private let stackview: UIStackView = {
         let stackview = UIStackView()
+        stackview.axis = .horizontal
+        stackview.alignment = .center
+        stackview.distribution = .equalSpacing
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        return stackview
+    }()
+    
+    private let weatherStack: UIStackView = {
+        let stackview = UIStackView()
         stackview.axis = .vertical
         stackview.alignment = .center
-        stackview.distribution = .fillEqually
+        stackview.distribution = .equalCentering
         stackview.translatesAutoresizingMaskIntoConstraints = false
         return stackview
     }()
     
     private let tempetateureStack: UIStackView = {
         let stackview = UIStackView()
-        stackview.axis = .vertical
+        stackview.axis = .horizontal
         stackview.alignment = .center
         stackview.distribution = .fillEqually
         stackview.translatesAutoresizingMaskIntoConstraints = false
@@ -105,15 +114,21 @@ final class DailyWeatherCell: UICollectionViewCell {
     
     // MARK: - Inits
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubViews()
         setupConstraints()
+        backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+            super.prepareForReuse()
+        //    self.accessoryType = .none
+        }
 }
 
 extension DailyWeatherCell {
@@ -132,25 +147,27 @@ extension DailyWeatherCell {
     // MARK: - Private Functions
     
     private func addSubViews() {
-       
-        tempetateureStack.addArrangedSubview(maxTemperatureLabel)
         tempetateureStack.addArrangedSubview(minTemperatureLabel)
+        tempetateureStack.addArrangedSubview(maxTemperatureLabel)
         
         sunStack.addArrangedSubview(sunriseLabel)
         sunStack.addArrangedSubview(sunsetLabel)
         
+        weatherStack.addArrangedSubview(weatherImage)
+        weatherStack.addArrangedSubview(tempetateureStack)
+        
         stackview.addArrangedSubview(dateLable)
-        stackview.addArrangedSubview(weatherImage)
-        stackview.addArrangedSubview(tempetateureStack)
+        stackview.addArrangedSubview(weatherStack)
         stackview.addArrangedSubview(sunStack)
     
         addSubview(stackview)
     }
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        stackview.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        stackview.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        stackview.topAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor).isActive = true
+        stackview.leftAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leftAnchor).isActive = true
+        stackview.rightAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.rightAnchor).isActive = true
+        stackview.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
     }
 }

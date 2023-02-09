@@ -17,7 +17,7 @@ final class HourlyWeatherCell: UICollectionViewCell {
     
     private let weatherImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
