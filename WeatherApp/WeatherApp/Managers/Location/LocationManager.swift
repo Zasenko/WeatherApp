@@ -8,7 +8,7 @@
 import CoreLocation
 
 protocol LocationManagerProtocol {
-    var delegate: LocationManagerDelegate? { get set}
+    var delegate: LocationManagerDelegate? { get set }
     func getUserLocation()
 }
 

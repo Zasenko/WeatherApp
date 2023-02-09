@@ -122,12 +122,12 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		0F04856B298ABB18004A3167 /* LocationMaganer */ = {
+		0F04856B298ABB18004A3167 /* Location */ = {
 			isa = PBXGroup;
 			children = (
 				0F04856C298ABB2D004A3167 /* LocationManager.swift */,
 			);
-			path = LocationMaganer;
+			path = Location;
 			sourceTree = "<group>";
 		};
 		0F393EC22983C0D5005D0483 /* View */ = {
@@ -143,11 +143,11 @@
 		0F393EC52983D736005D0483 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				0F7B7B172992B05A009D1DF7 /* CoreDataManager.swift */,
-				0F7B7ADB2992520B009D1DF7 /* DateFormatterManager.swift */,
-				0F04856B298ABB18004A3167 /* LocationMaganer */,
-				0F6C5B1129854379009B4A17 /* NetworkManager */,
-				0F8DD6922987B35F00612F51 /* GeoCodingManager */,
+				0FCD441E299414C80001DB68 /* CoreData */,
+				0FCD441F2994151A0001DB68 /* DateFormatter */,
+				0F04856B298ABB18004A3167 /* Location */,
+				0F6C5B1129854379009B4A17 /* Network */,
+				0F8DD6922987B35F00612F51 /* GeoCoding */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -168,12 +168,12 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		0F6C5B1129854379009B4A17 /* NetworkManager */ = {
+		0F6C5B1129854379009B4A17 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				0F6C5B1229854399009B4A17 /* WeatherNetworkManager.swift */,
 			);
-			path = NetworkManager;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		0F7B7AEE2992A73D009D1DF7 /* CoreData */ = {
@@ -221,12 +221,12 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		0F8DD6922987B35F00612F51 /* GeoCodingManager */ = {
+		0F8DD6922987B35F00612F51 /* GeoCoding */ = {
 			isa = PBXGroup;
 			children = (
 				0F393EC62983D747005D0483 /* GeoCodingManager.swift */,
 			);
-			path = GeoCodingManager;
+			path = GeoCoding;
 			sourceTree = "<group>";
 		};
 		0F8DD6932987B37E00612F51 /* Presenter */ = {
@@ -363,6 +363,22 @@
 				0FBD4E80298682F50083B605 /* WeatherViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0FCD441E299414C80001DB68 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0F7B7B172992B05A009D1DF7 /* CoreDataManager.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		0FCD441F2994151A0001DB68 /* DateFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				0F7B7ADB2992520B009D1DF7 /* DateFormatterManager.swift */,
+			);
+			path = DateFormatter;
 			sourceTree = "<group>";
 		};
 		0FD085942971CB93009F3DC7 /* TabBar */ = {

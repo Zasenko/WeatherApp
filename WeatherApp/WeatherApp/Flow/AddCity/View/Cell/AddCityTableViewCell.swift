@@ -81,7 +81,7 @@ extension AddCityTableViewCell {
     // MARK: - Objc Functions
     
     @objc func didTapButton(sender: UIButton) {
-        self.callback?()
+        callback?()
     }
 
     // MARK: - Private functions

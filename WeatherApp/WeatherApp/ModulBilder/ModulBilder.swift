@@ -10,7 +10,7 @@ import UIKit
 protocol ModulBilderProtocol {
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController
-    func cteateAddCityModul(router: CitiesRouterProtocol, delegate: AddCityPresenterDelegate) -> UIViewController
+    func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController
     func cteateCityModul(router: CitiesRouterProtocol, city: CityModel) -> UIViewController
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController
 }
@@ -31,7 +31,7 @@ final class ModulBilder: ModulBilderProtocol {
     
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController {
         let locationManager = LocationManager()
-        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager)
+        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
         let view = WeatherViewController(presenter: presenter)
         presenter.view = view
         return view
@@ -44,8 +44,8 @@ final class ModulBilder: ModulBilderProtocol {
         return view
     }
     
-    func cteateAddCityModul(router: CitiesRouterProtocol, delegate: AddCityPresenterDelegate) -> UIViewController {
-        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, delegate: delegate, coreDataManager: coreDataManager)
+    func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController {
+        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, coreDataManager: coreDataManager)
         let view = AddCityViewController(presenter: presenter)
         presenter.view = view
         return view

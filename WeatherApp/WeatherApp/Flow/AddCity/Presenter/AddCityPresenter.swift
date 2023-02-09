@@ -18,16 +18,16 @@ protocol AddCityPresenterProtocol: AnyObject {
     func getCity() -> CityModel?
 }
 
-protocol AddCityPresenterDelegate: AnyObject {
-    func addedCity(city: CityModel)
-}
+//protocol AddCityPresenterDelegate: AnyObject {
+//    func addedCity(city: CityModel)
+//}
 
 final class AddCityPresenter {
     
     // MARK: - Properties
     
     weak var view: AddCityViewProtocol?
-    weak var delegate: AddCityPresenterDelegate?
+ //   weak var delegate: AddCityPresenterDelegate?
     
     // MARK: - Private properties
     
@@ -38,10 +38,10 @@ final class AddCityPresenter {
     
     // MARK: - Inits
     
-    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, delegate: AddCityPresenterDelegate, coreDataManager: CoreDataManagerProtocol) {
+    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
         self.router = router
         self.geoCodingManager = geoCodingManager
-        self.delegate = delegate
+     //   self.delegate = delegate
         self.coreDataManager = coreDataManager
     }
 }
@@ -79,14 +79,12 @@ extension AddCityPresenter: AddCityPresenterProtocol {
     
     func addCityButtonTapped() {
         guard let city = self.city else { return }
-        let coreDataCity = coreDataManager.makeCity(city: city)
-        coreDataManager.cities.append(coreDataCity)
-        coreDataManager.save { [weak self] result in
+        coreDataManager.save(city: city) { [weak self] result in
             guard let self = self else { return }
             if result {
                 self.city?.isSaved = true
                 self.view?.reloadTableView()
-                self.delegate?.addedCity(city: city)
+               // self.delegate?.addedCity(city: city)
             }
         }
     }

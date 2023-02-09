@@ -14,14 +14,9 @@ protocol CitiesViewProtocol: AnyObject {
 protocol CitiesViewPresenterProtocol: AnyObject {
     func cellTaped(indexPath: IndexPath)
     func addButtonTapped()
- //   func addNewCity(city: CityModel)
     func getCitiesCount() -> Int
     func getCity(indexPath: Int) -> CityModel
 }
-
-//protocol CitiesViewPresenterDelegate: AnyObject {
-//    func addCity()//(city: CityModel)
-//}
 
 final class CitiesViewPresenter {
     
@@ -39,16 +34,24 @@ final class CitiesViewPresenter {
     
     // MARK: - Inits
     
-    required init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+    init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
         self.router = router
         self.networkManager = networkManager
         self.dateFormatter = dateFormatter
         self.coreDataManager = coreDataManager
+      //  self.coreDataManager.delegate = self
         
-        let coreDataCities = coreDataManager.getCities().map({ CityModel(latitude: $0.latitude, longitude: $0.longitude, name: $0.name, country: $0.country, weather: WeatherModel()) })
+        let cityModels = coreDataManager.getCities().map({ CityModel(latitude: $0.latitude, longitude: $0.longitude, name: $0.name, country: $0.country, weather: WeatherModel()) })
         
-        for city in coreDataCities {
+        for city in cityModels {
             fetchCurrentWeatherByLocation(city: city)
+        }
+        
+        self.coreDataManager.callBack = { [weak self] city in
+            guard let self = self else { return }
+            self.fetchCurrentWeatherByLocation(city: city)
+//            self.cities.append(city)
+//            self.view?.reloadTableView()
         }
     }
 }
@@ -69,20 +72,7 @@ extension CitiesViewPresenter: CitiesViewPresenterProtocol {
     }
     
     func addButtonTapped() {
-        router.showAddCityViewController(delegate: self)
-    }
-    
-//    func addNewCity(city: CityModel) {
-//        cities.append(city)
-//        view?.reloadTableView()
-//    }
-}
-
-// MARK: - CitiesViewPresenterDelegate
-
-extension CitiesViewPresenter: AddCityPresenterDelegate {
-     func addedCity(city: CityModel) {
-         fetchCurrentWeatherByLocation(city: city)
+        router.showAddCityViewController()
     }
 }
 

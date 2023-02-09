@@ -10,7 +10,7 @@ import Foundation
 protocol WeatherViewProtocol: AnyObject {
     func reloadLocation(name: String)
     func changeWeather(place: CityModel)
-    func setSaveButton()
+    func setSaveButton(seved: Bool)
 }
 
 protocol WeatherPresenterProtocol: AnyObject {
@@ -19,6 +19,7 @@ protocol WeatherPresenterProtocol: AnyObject {
     func getDailyWeatherCount() -> Int
     func getHourlyWeather(cell row: Int) -> HourWeather?
     func getDailyWeather(cell row: Int) -> DayWeather?
+    func saveButtonTouched()
 }
 
 final class WeatherPresenter {
@@ -33,16 +34,17 @@ final class WeatherPresenter {
     private let geoCoder: GeoCodingManagerProtocol
     private var locationManager: LocationManagerProtocol
     private let dateFormatter: DateFormatterManagerProtocol
-    
+    private var coreDataManager: CoreDataManagerProtocol
     private var place: CityModel?
+    
     // MARK: - Inits
     
-    init(networkManager: WeatherNetworkManagerProtocol, geoCoder: GeoCodingManagerProtocol, locationManager: LocationManagerProtocol, dateFormatter: DateFormatterManagerProtocol) {
+    init(networkManager: WeatherNetworkManagerProtocol, geoCoder: GeoCodingManagerProtocol, locationManager: LocationManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
         self.networkManager = networkManager
         self.geoCoder = geoCoder
         self.locationManager = locationManager
         self.dateFormatter = dateFormatter
-        
+        self.coreDataManager = coreDataManager
         self.locationManager.delegate = self
     }
 }
@@ -50,6 +52,19 @@ final class WeatherPresenter {
 // MARK: - WeatherPresenterProtocol
 
 extension WeatherPresenter: WeatherPresenterProtocol {
+    func saveButtonTouched() {
+        guard var place = place else { return }
+        coreDataManager.save(city: place) { [weak self] result in
+            guard let self = self else { return }
+            if result {
+                self.place?.isSaved = true
+                self.view?.setSaveButton(seved: true)
+            } else {
+                return
+            }
+        }
+    }
+    
     func getWeather() {
         getUserCoordinate()
     }
@@ -95,6 +110,11 @@ extension WeatherPresenter {
                 switch result {
                 case.success(let place):
                     self.place = place
+                    if self.coreDataManager.cities.first(where: {$0.name == place.name && $0.country == place.country}) != nil {
+                        self.view?.setSaveButton(seved: true)
+                    } else {
+                        self.view?.setSaveButton(seved: false)
+                    }
                     self.view?.reloadLocation(name: place.name)
                     self.getWeather(latitude: String(place.latitude), longitude: String(place.longitude))
                 case.failure(let error):
@@ -106,7 +126,6 @@ extension WeatherPresenter {
     
     private func getWeather(latitude: String, longitude: String) {
         guard var place = self.place else { return }
-        view?.setSaveButton()
         networkManager.fetchFullWeatherByLocation(latitude: latitude, longitude: longitude) { [weak self] result in
             guard let self = self else { return}
                 switch result {

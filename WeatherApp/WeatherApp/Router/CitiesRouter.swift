@@ -10,7 +10,7 @@ import UIKit
 protocol CitiesRouterProtocol: AbstractRouterProtocol {
     func initialCitiesViewController()
     func showCityViewController(city: CityModel)
-    func showAddCityViewController(delegate: AddCityPresenterDelegate)
+    func showAddCityViewController()
 }
 
 final class CitiesRouter: CitiesRouterProtocol {
@@ -38,9 +38,9 @@ extension CitiesRouter {
         }
     }
     
-    func showAddCityViewController(delegate: AddCityPresenterDelegate) {
+    func showAddCityViewController() {
         if let navigationController = navigationController {
-            guard let addCityCV = modulBilder?.cteateAddCityModul(router: self, delegate: delegate) else {return}
+            guard let addCityCV = modulBilder?.cteateAddCityModul(router: self) else {return}
             
             let navController = UINavigationController(rootViewController: addCityCV)
             navController.modalPresentationStyle = .formSheet

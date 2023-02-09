@@ -55,18 +55,21 @@ final class WeatherViewController: UIViewController {
 
 extension WeatherViewController {
     @objc func addCityButtonTaped(sender: UIButton) {
-//
+        presenter.saveButtonTouched()
     }
 }
 
 // MARK: - WeatherViewProtocol
 
 extension WeatherViewController: WeatherViewProtocol {
-    func setSaveButton() {
-        let button1 = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addCityButtonTaped(sender:)))
-        self.navigationItem.rightBarButtonItem  = button1
+    func setSaveButton(seved: Bool) {
+        if seved {
+            self.navigationItem.rightBarButtonItem?.isHidden = true
+        } else {
+            let button1 = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addCityButtonTaped(sender:)))
+            self.navigationItem.rightBarButtonItem  = button1
+        }
     }
-
     func reloadLocation(name: String) {
         self.title = name
     }
