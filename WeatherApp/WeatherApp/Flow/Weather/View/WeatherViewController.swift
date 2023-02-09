@@ -39,12 +39,11 @@ final class WeatherViewController: UIViewController {
         
         rootView.dailyCollectionView.delegate = self
         rootView.dailyCollectionView.dataSource = self
-        
-        presenter.getWeather()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.getWeather()
         self.title = "Weather"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.tintColor = .yellow
@@ -54,23 +53,34 @@ final class WeatherViewController: UIViewController {
 // MARK: - @Objc func
 
 extension WeatherViewController {
-    @objc func addCityButtonTaped(sender: UIButton) {
+    @objc func saveButtonTapped(sender: UIButton) {
         presenter.saveButtonTouched()
+    }
+    
+    @objc func deleteButtonTapped(sender: UIButton) {
+//
     }
 }
 
 // MARK: - WeatherViewProtocol
 
 extension WeatherViewController: WeatherViewProtocol {
-    func setSaveButton(seved: Bool) {
-        if seved {
-            self.navigationItem.rightBarButtonItem?.isHidden = true
-        } else {
-            let button1 = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(addCityButtonTaped(sender:)))
-            self.navigationItem.rightBarButtonItem  = button1
+    func setSaveButton() {
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped(sender:)))
+        self.navigationItem.rightBarButtonItem  = saveButton
+    }
+    
+    func setSavedButton() {
+        self.navigationItem.rightBarButtonItem = nil
+        let savedButton = UIBarButtonItem(title: "saved", image: nil, target: self, action: nil)
+        savedButton.isEnabled = false
+        self.navigationItem.rightBarButtonItem  = savedButton
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.navigationItem.rightBarButtonItem = nil
         }
     }
-    func reloadLocation(name: String) {
+    
+    func reloadLocationName(name: String) {
         self.title = name
     }
     

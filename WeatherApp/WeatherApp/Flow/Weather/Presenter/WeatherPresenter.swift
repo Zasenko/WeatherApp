@@ -8,9 +8,10 @@
 import Foundation
 
 protocol WeatherViewProtocol: AnyObject {
-    func reloadLocation(name: String)
+    func reloadLocationName(name: String)
     func changeWeather(place: CityModel)
-    func setSaveButton(seved: Bool)
+    func setSaveButton()
+    func setSavedButton()
 }
 
 protocol WeatherPresenterProtocol: AnyObject {
@@ -53,12 +54,12 @@ final class WeatherPresenter {
 
 extension WeatherPresenter: WeatherPresenterProtocol {
     func saveButtonTouched() {
-        guard var place = place else { return }
+        guard let place = place else { return }
         coreDataManager.save(city: place) { [weak self] result in
             guard let self = self else { return }
             if result {
                 self.place?.isSaved = true
-                self.view?.setSaveButton(seved: true)
+                self.view?.setSavedButton()
             } else {
                 return
             }
@@ -110,13 +111,11 @@ extension WeatherPresenter {
                 switch result {
                 case.success(let place):
                     self.place = place
-                    if self.coreDataManager.cities.first(where: {$0.name == place.name && $0.country == place.country}) != nil {
-                        self.view?.setSaveButton(seved: true)
-                    } else {
-                        self.view?.setSaveButton(seved: false)
-                    }
-                    self.view?.reloadLocation(name: place.name)
+                    self.view?.reloadLocationName(name: place.name)
                     self.getWeather(latitude: String(place.latitude), longitude: String(place.longitude))
+                    if self.coreDataManager.cities.first(where: {$0.name == place.name && $0.country == place.country}) == nil {
+                        self.view?.setSaveButton()
+                    }
                 case.failure(let error):
                     print(error)
                 }

@@ -8,16 +8,19 @@
 import UIKit
 
 final class CityRootView: UIView {
-
+    
     //MARK: - SubView
     
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+
     let weatherImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     var temperatureLable: UILabel = {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 100, weight: .medium)
@@ -26,7 +29,7 @@ final class CityRootView: UIView {
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
-    
+
     let hourlyLable: UILabel = {
         let lable = UILabel()
         lable.font = .boldSystemFont(ofSize: 17)
@@ -37,7 +40,7 @@ final class CityRootView: UIView {
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
-    
+
     let hourlyCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         viewLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -53,7 +56,7 @@ final class CityRootView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
+
     let dailyLable: UILabel = {
         let lable = UILabel()
         lable.font = .boldSystemFont(ofSize: 17)
@@ -64,20 +67,20 @@ final class CityRootView: UIView {
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
-    
+
     let dailyCollectionView: UICollectionView = {
-        
+
         let viewLayout = UICollectionViewFlowLayout()
         viewLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         viewLayout.itemSize = CGSize(width: 150, height: 150)
         viewLayout.scrollDirection = .horizontal
-        
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        
+
         collectionView.register(DailyWeatherCell.self, forCellWithReuseIdentifier: DailyWeatherCell.identifier)
-        
+
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -89,11 +92,16 @@ final class CityRootView: UIView {
         let gradient = CAGradientLayer()
         gradient.frame = self.bounds
         gradient.colors = [UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00).cgColor, UIColor(red: 0.19, green: 0.26, blue: 0.52, alpha: 1.00).cgColor]
-
+        
         self.layer.insertSublayer(gradient, at: 0)
         
-        addSubViews()
-        setupConstraints()
+                addSubViews()
+               setupConstraints()
+        
+
+        
+
+        
     }
     
     required init?(coder: NSCoder) {
@@ -106,41 +114,59 @@ extension CityRootView {
     //MARK: - Private Functions
     
     private func addSubViews() {
-        addSubview(weatherImage)
-        addSubview(temperatureLable)
-        addSubview(hourlyLable)
-        addSubview(hourlyCollectionView)
-        addSubview(dailyLable)
-        addSubview(dailyCollectionView)
+        contentView.addSubview(weatherImage)
+        contentView.addSubview(temperatureLable)
+        contentView.addSubview(hourlyLable)
+        contentView.addSubview(hourlyCollectionView)
+        contentView.addSubview(dailyLable)
+        contentView.addSubview(dailyCollectionView)
+        
+        scrollView.addSubview(contentView)
+        
+        addSubview(scrollView)
     }
     
     private func setupConstraints() {
         
-        weatherImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        weatherImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        
+        contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        
+
+        weatherImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        weatherImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         weatherImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         temperatureLable.topAnchor.constraint(lessThanOrEqualTo: weatherImage.bottomAnchor).isActive = true
         temperatureLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
         temperatureLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
-
+        
         hourlyLable.topAnchor.constraint(greaterThanOrEqualTo: temperatureLable.bottomAnchor, constant: 20).isActive = true
         hourlyLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
         hourlyLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
-
+        
         hourlyCollectionView.topAnchor.constraint(equalTo: hourlyLable.bottomAnchor).isActive = true
         hourlyCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         hourlyCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         hourlyCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-
+        
         dailyLable.topAnchor.constraint(equalTo: hourlyCollectionView.bottomAnchor, constant: 20).isActive = true
         dailyLable.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
         dailyLable.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
-
+        
         dailyCollectionView.topAnchor.constraint(equalTo: dailyLable.bottomAnchor).isActive = true
         dailyCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         dailyCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        dailyCollectionView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
+        dailyCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         dailyCollectionView.heightAnchor.constraint(equalToConstant: 150).isActive = true
     }
 }
