@@ -1,5 +1,5 @@
 //
-//  DateFormatter.swift
+//  DateFormatterManager.swift
 //  WeatherApp
 //
 //  Created by Dmitry Zasenko on 07.02.23.

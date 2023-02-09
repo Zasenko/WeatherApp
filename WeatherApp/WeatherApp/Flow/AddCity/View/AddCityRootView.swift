@@ -26,7 +26,7 @@ final class AddCityRootView: UIView {
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .lightGray
         tableView.separatorInset = .zero
-        tableView.backgroundColor = .purple
+        tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = true
         tableView.allowsSelection = false
         return tableView
@@ -36,6 +36,12 @@ final class AddCityRootView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        let gradient = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = [UIColor(red: 0.13, green: 0.75, blue: 0.33, alpha: 1.00).cgColor,
+                           UIColor(red: 0.00, green: 0.73, blue: 0.94, alpha: 1.00).cgColor]
+
+        self.layer.insertSublayer(gradient, at: 0)
         addSubViews()
         setupConstraints()
     }

@@ -10,7 +10,7 @@ import UIKit
 protocol ModulBilderProtocol {
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController
-    func cteateAddCityModul(router: CitiesRouterProtocol, delegate: CitiesViewPresenterDelegate) -> UIViewController
+    func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController
     func cteateCityModul(router: CitiesRouterProtocol, city: CityModel) -> UIViewController
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController
 }
@@ -20,6 +20,7 @@ final class ModulBilder: ModulBilderProtocol {
     private let networkManager = WeatherNetworkManager()
     private let geoCodingManager = GeoCodingManager()
     private let dateFormatterManager = DateFormatterManager()
+    private let coreDataManager = CoreDataManager()
     
     func cteateTabBarModul(router: MainRouterProtocol) -> UITabBarController {
         let presenter = TabBarPresenter(router: router)
@@ -30,21 +31,21 @@ final class ModulBilder: ModulBilderProtocol {
     
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController {
         let locationManager = LocationManager()
-        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager)
+        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
         let view = WeatherViewController(presenter: presenter)
         presenter.view = view
         return view
     }
     
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController {
-        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager, dateFormatter: dateFormatterManager)
+        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
         let view = CitiesViewController(presenter: presenter)
         presenter.view = view
         return view
     }
     
-    func cteateAddCityModul(router: CitiesRouterProtocol, delegate: CitiesViewPresenterDelegate) -> UIViewController {
-        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, delegate: delegate)
+    func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController {
+        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, coreDataManager: coreDataManager)
         let view = AddCityViewController(presenter: presenter)
         presenter.view = view
         return view

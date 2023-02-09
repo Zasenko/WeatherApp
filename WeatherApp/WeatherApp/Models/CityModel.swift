@@ -13,8 +13,9 @@ struct CityModel {
     let name: String
     let country: String
     var lastUpdate: Date?
-    var weather: WeathersModel
-
+    var weather: WeatherModel
+    var isSaved: Bool = false
+    
     mutating func changeData(currentWeather: CurentWeatherModel?, hourlyWeather: HourlyWeatherDecodedModel?, dailyWeather: DailyWeatherDecidedModel?, dateFormatter: DateFormatterManagerProtocol) -> Bool {
         
         if let currentWeather = currentWeather,
@@ -80,10 +81,7 @@ struct CityModel {
         lastUpdate = .now
         return true
     }
-    
-    
-    
-    
+
     private func changeCodes(weathercodes: [Int]) -> [WeatherCodes] {
         var weatherCodes: [WeatherCodes] = []
         for int in weathercodes {

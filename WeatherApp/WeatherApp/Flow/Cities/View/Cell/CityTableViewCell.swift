@@ -33,7 +33,7 @@ final class CityTableViewCell: UITableViewCell {
     
     private let temp: UILabel = {
         let lable = UILabel()
-        lable.font = .systemFont(ofSize: 30)
+        lable.font = .systemFont(ofSize: 25)
         lable.textColor = .black
         lable.numberOfLines = 1
         lable.textAlignment = .center

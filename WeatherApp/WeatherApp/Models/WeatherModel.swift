@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeathersModel {
+struct WeatherModel {
     var currentWeather: CurrentWeather?
     var hourly: HourlyWeather?
     var daily: DailyWeather?
@@ -30,8 +30,10 @@ struct HourWeather {
     let type: HourWeatherType
 }
 
-enum HourWeatherType {
-    case weather, sunrise, sunset
+enum HourWeatherType: Int {
+    case weather
+    case sunrise
+    case sunset
 }
 
 

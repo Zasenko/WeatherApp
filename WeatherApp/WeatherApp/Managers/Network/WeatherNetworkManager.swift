@@ -37,7 +37,8 @@ final class WeatherNetworkManager: WeatherNetworkManagerProtocol {
         urlComponents.queryItems = [
             URLQueryItem(name: "latitude", value: latitude),
             URLQueryItem(name: "longitude", value: longitude),
-            URLQueryItem(name: "current_weather", value: "true")
+            URLQueryItem(name: "current_weather", value: "true"),
+            URLQueryItem(name: "timezone", value: "auto")
         ]
         
         guard let url = urlComponents.url else {

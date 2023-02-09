@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol AddCityViewControllerProtocol: AnyObject {
-    func addedCity(city: CityModel)
-}
-
 final class CitiesViewController: UIViewController {
     
     // MARK: - Properties
@@ -62,20 +58,15 @@ extension CitiesViewController {
 
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
-        let button1 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCityButtonTaped(sender:)))
-        self.navigationItem.rightBarButtonItem  = button1
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00)
+
+        let addCity = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCityButtonTaped(sender:)))
+        self.navigationItem.rightBarButtonItem  = addCity
     }
     
     private func createCitiesTableView() {
         rootView.citiesTableView.delegate = self
         rootView.citiesTableView.dataSource = self
-    }
-}
-
-extension CitiesViewController: AddCityViewControllerProtocol {
-    func addedCity(city: CityModel) {
-        presenter.addNewCity(city: city)
     }
 }
 
@@ -85,7 +76,7 @@ extension CitiesViewController: UITableViewDelegate {}
 
 extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.cities.count
+        presenter.getCitiesCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,10 +84,13 @@ extension CitiesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        // TODO - получение готовых данных
+        let city = presenter.getCity(indexPath: indexPath.row)
         
-        let city = presenter.cities[indexPath.row]
-        cell.setupCell(cityName: city.name, temp: String(city.weather.currentWeather?.temperature ?? 0) , currentWeatherImage: city.weather.currentWeather?.weathercode.image ?? UIImage())
+        var tempString = ""
+        if let temp = city.weather.currentWeather?.temperature {
+            tempString = String(temp)
+        }
+        cell.setupCell(cityName: city.name, temp: tempString, currentWeatherImage: city.weather.currentWeather?.weathercode.image ?? UIImage())
         cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
         return cell
