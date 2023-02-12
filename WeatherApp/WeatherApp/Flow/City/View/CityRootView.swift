@@ -9,7 +9,7 @@ import UIKit
 
 final class CityRootView: UIView {
     
-    let cellHeight = 100
+    let cellHeight = 80.0
     var tableViewHeight: NSLayoutConstraint?
     
     //MARK: - SubView
@@ -28,6 +28,7 @@ final class CityRootView: UIView {
         let lable = UILabel()
         lable.font = .systemFont(ofSize: 100, weight: .medium)
         lable.textAlignment = .center
+        lable.textColor = .white
         lable.numberOfLines = 1
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
@@ -47,7 +48,7 @@ final class CityRootView: UIView {
     let hourlyCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         viewLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        viewLayout.itemSize = CGSize(width: 60, height: 100)
+        viewLayout.itemSize = CGSize(width: 80, height: 100)
         viewLayout.scrollDirection = .horizontal
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
@@ -104,17 +105,6 @@ final class CityRootView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    override func layoutIfNeeded() {
-//        dailyTableView.heightAnchor.constraint(equalToConstant: CGFloat(tableViewHeight)).isActive = true
-//        super.layoutIfNeeded()
-//    }
-//
-//    override func setNeedsLayout() {
-//        super.setNeedsLayout()
-//        print(tableViewHeight)
-//        dailyTableView.heightAnchor.constraint(equalToConstant: CGFloat(tableViewHeight)).isActive = true
-//    }
 }
 
 extension CityRootView {

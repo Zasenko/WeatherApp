@@ -15,7 +15,7 @@ struct WeatherModel {
 
 struct CurrentWeather {
     var temperature: Double
-    var weathercode: WeatherCodes
+    var weathercode: WeatherType
     var time: Date
 }
 
@@ -26,7 +26,7 @@ struct HourlyWeather {
 struct HourWeather {
     let time: Date
     let temperature: Double
-    let weathercode: WeatherCodes
+    let weathercode: WeatherType
     let type: HourWeatherType
 }
 
@@ -43,7 +43,7 @@ struct DailyWeather {
 
 struct DayWeather {
     let date: Date
-    var weathercode: WeatherCodes
+    var weathercode: WeatherType
     var temperatureMax: Double
     var temperatureMin: Double
     var sunrise: Date

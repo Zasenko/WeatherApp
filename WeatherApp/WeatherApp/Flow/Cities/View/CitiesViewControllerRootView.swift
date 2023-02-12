@@ -56,6 +56,6 @@ extension CitiesViewControllerRootView {
         citiesTableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         citiesTableView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         citiesTableView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        citiesTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        citiesTableView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
     }
 }

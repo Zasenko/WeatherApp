@@ -1,17 +1,17 @@
 //
-//  HourlyWeatherCell.swift
+//  WeatherHourCell.swift
 //  WeatherApp
 //
-//  Created by Dmitry Zasenko on 30.01.23.
+//  Created by Dmitry Zasenko on 12.02.23.
 //
 
 import UIKit
 
-final class HourlyWeatherCell: UICollectionViewCell {
+final class WeatherHourCell: UICollectionViewCell {
     
     // MARK: - Static Properties
     
-    static let identifier = "HourlyWeatherCell"
+    static let identifier = "WeatherHourCell"
     
     // MARK: - Private Properties
     
@@ -71,7 +71,7 @@ final class HourlyWeatherCell: UICollectionViewCell {
     }
 }
 
-extension HourlyWeatherCell {
+extension WeatherHourCell {
     
     // MARK: - Functions
 

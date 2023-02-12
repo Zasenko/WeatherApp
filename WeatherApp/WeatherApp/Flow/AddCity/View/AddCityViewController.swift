@@ -11,7 +11,7 @@ final class AddCityViewController: UIViewController {
     
     // MARK: - Properties
     
-    let presenter: AddCityPresenterProtocol
+    var presenter: AddCityPresenterProtocol!
     
     // MARK: - Provate Properties
     
@@ -19,8 +19,7 @@ final class AddCityViewController: UIViewController {
     
     //MARK: - Inits
     
-    init(presenter: AddCityPresenterProtocol) {
-        self.presenter = presenter
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     

@@ -18,16 +18,11 @@ protocol AddCityPresenterProtocol: AnyObject {
     func getCity() -> CityModel?
 }
 
-//protocol AddCityPresenterDelegate: AnyObject {
-//    func addedCity(city: CityModel)
-//}
-
 final class AddCityPresenter {
     
     // MARK: - Properties
     
     weak var view: AddCityViewProtocol?
- //   weak var delegate: AddCityPresenterDelegate?
     
     // MARK: - Private properties
     
@@ -38,7 +33,8 @@ final class AddCityPresenter {
     
     // MARK: - Inits
     
-    required init(router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+    required init(view: AddCityViewProtocol, router: CitiesRouterProtocol, geoCodingManager: GeoCodingManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+        self.view = view
         self.router = router
         self.geoCodingManager = geoCodingManager
      //   self.delegate = delegate
