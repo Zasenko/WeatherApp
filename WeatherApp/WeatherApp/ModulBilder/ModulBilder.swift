@@ -31,30 +31,30 @@ final class ModulBilder: ModulBilderProtocol {
     
     func cteateWeatherModul(router: WeatherRouterProtocol) -> UIViewController {
         let locationManager = LocationManager()
-        let presenter = WeatherPresenter(networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
-        let view = WeatherViewController(presenter: presenter)
-        presenter.view = view
+        let view = WeatherViewController()
+        let presenter = WeatherPresenter(view: view, networkManager: networkManager, geoCoder: geoCodingManager, locationManager: locationManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
+        view.presenter = presenter
         return view
     }
     
     func cteateCitiesModul(router: CitiesRouterProtocol) -> UIViewController {
-        let presenter = CitiesViewPresenter(router: router, networkManager: networkManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
-        let view = CitiesViewController(presenter: presenter)
-        presenter.view = view
+        let view = CitiesViewController()
+        let presenter = CitiesViewPresenter(view: view, router: router, networkManager: networkManager, dateFormatter: dateFormatterManager, coreDataManager: coreDataManager)
+        view.presenter = presenter
         return view
     }
     
     func cteateAddCityModul(router: CitiesRouterProtocol) -> UIViewController {
-        let presenter = AddCityPresenter(router: router, geoCodingManager: geoCodingManager, coreDataManager: coreDataManager)
-        let view = AddCityViewController(presenter: presenter)
-        presenter.view = view
+        let view = AddCityViewController()
+        let presenter = AddCityPresenter(view: view, router: router, geoCodingManager: geoCodingManager, coreDataManager: coreDataManager)
+        view.presenter = presenter
         return view
     }
     
     func cteateCityModul(router: CitiesRouterProtocol, city: CityModel) -> UIViewController {
-        let presenter = CityPresenter(router: router, networkManager: networkManager, city: city, dateFormatter: dateFormatterManager)
-        let view = CityViewController(presenter: presenter)
-        presenter.view = view
+        let view = CityViewController()
+        let presenter = CityPresenter(view: view, router: router, networkManager: networkManager, city: city, dateFormatter: dateFormatterManager)
+        view.presenter = presenter
         return view
         
     }

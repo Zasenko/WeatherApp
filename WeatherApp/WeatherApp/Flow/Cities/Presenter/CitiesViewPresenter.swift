@@ -34,7 +34,8 @@ final class CitiesViewPresenter {
     
     // MARK: - Inits
     
-    init(router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+    init(view: CitiesViewProtocol, router: CitiesRouterProtocol, networkManager: WeatherNetworkManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+        self.view = view
         self.router = router
         self.networkManager = networkManager
         self.dateFormatter = dateFormatter

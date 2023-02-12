@@ -7,19 +7,12 @@
 
 import Foundation
 
-protocol WeatherViewProtocol: AnyObject {
-    func reloadLocationName(name: String)
-    func changeWeather(place: CityModel)
-    func setSaveButton()
-    func setSavedButton()
-}
-
 protocol WeatherPresenterProtocol: AnyObject {
     func getWeather()
     func getHourlyWeatherCount() -> Int
     func getDailyWeatherCount() -> Int
-    func getHourlyWeather(cell row: Int) -> HourWeather?
-    func getDailyWeather(cell row: Int) -> DayWeather?
+    func getHourlyWeather(cell row: Int) -> HourCellModel?
+    func getDailyWeather(cell row: Int) -> DayCellModel?
     func saveButtonTouched()
 }
 
@@ -40,7 +33,8 @@ final class WeatherPresenter {
     
     // MARK: - Inits
     
-    init(networkManager: WeatherNetworkManagerProtocol, geoCoder: GeoCodingManagerProtocol, locationManager: LocationManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+    init(view: WeatherViewProtocol, networkManager: WeatherNetworkManagerProtocol, geoCoder: GeoCodingManagerProtocol, locationManager: LocationManagerProtocol, dateFormatter: DateFormatterManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+        self.view = view
         self.networkManager = networkManager
         self.geoCoder = geoCoder
         self.locationManager = locationManager
@@ -78,12 +72,34 @@ extension WeatherPresenter: WeatherPresenterProtocol {
         return place?.weather.hourly?.weathers.count ?? 0
     }
     
-    func getDailyWeather(cell row: Int) -> DayWeather? {
-        return place?.weather.daily?.weathers[row]
+    func getHourlyWeather(cell row: Int) -> HourCellModel? {
+        guard let hourWeather = place?.weather.hourly?.weathers[row] else { return nil }
+        var time = ""
+        var temperature = ""
+        switch hourWeather.type {
+        case .weather:
+            time = dateFormatter.hourFormat.string(from: hourWeather.time)
+            temperature = "\(hourWeather.temperature > 0 ? "+" : "")\(hourWeather.temperature)°"
+        case .sunrise:
+            time = dateFormatter.hourAndMinFormat.string(from: hourWeather.time)
+            temperature = "sunrise"
+        case .sunset:
+            time = dateFormatter.hourAndMinFormat.string(from: hourWeather.time)
+            temperature = "sunset"
+        }
+        return HourCellModel(hour: time, img: hourWeather.weathercode.image, temp: temperature)
     }
     
-    func getHourlyWeather(cell row: Int) -> HourWeather? {
-        return place?.weather.hourly?.weathers[row]
+    func getDailyWeather(cell row: Int) -> DayCellModel? {
+        guard let dayWeather = place?.weather.daily?.weathers[row] else { return nil }
+        
+        
+        let date = dateFormatter.dayCellFormat.string(from: dayWeather.date)
+        let tempMin = "\(dayWeather.temperatureMin > 0 ? "+" : "")\(dayWeather.temperatureMin)° ... "
+        let tempMax = "\(dayWeather.temperatureMax > 0 ? "+" : "")\(dayWeather.temperatureMax)°"
+        let sunsetString = dateFormatter.hourAndMinFormat.string(from: dayWeather.sunset)
+        let sunriseString = dateFormatter.hourAndMinFormat.string(from: dayWeather.sunrise)
+        return DayCellModel(date: date, img: dayWeather.weathercode.image, tempMin: tempMin, tempMax: tempMax, sunrise: sunriseString, sunset: sunsetString)
     }
 }
 
@@ -131,7 +147,8 @@ extension WeatherPresenter {
                     DispatchQueue.main.async {
                         if place.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
                             self.place = place
-                            self.view?.changeWeather(place: place)
+                            guard let currentWeather = place.weather.currentWeather else {return}
+                            self.view?.changeWeather(img: currentWeather.weathercode.image , temp: "\(currentWeather.temperature > 0 ? "+" : "")\(currentWeather.temperature)°")
                         }
                     }
                 case .failure(let error):

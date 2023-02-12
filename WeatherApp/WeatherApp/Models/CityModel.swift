@@ -20,7 +20,6 @@ struct CityModel {
         
         if let currentWeather = currentWeather,
            let time = dateFormatter.fullFormat.date(from: currentWeather.time) {
-            print(time)
             weather.currentWeather = CurrentWeather(temperature: currentWeather.temperature,
                                                     weathercode: changeCode(weathercode: currentWeather.weathercode),
                                                     time: time)
@@ -40,8 +39,7 @@ struct CityModel {
             }
             
             if let time = weather.currentWeather?.time {
-                print(time)
-                weather.hourly = HourlyWeather(weathers: weathers.filter({$0.time > time}))
+                weather.hourly = HourlyWeather(weathers: weathers.filter({$0.time >= time}))
             }
         }
         
@@ -82,8 +80,8 @@ struct CityModel {
         return true
     }
 
-    private func changeCodes(weathercodes: [Int]) -> [WeatherCodes] {
-        var weatherCodes: [WeatherCodes] = []
+    private func changeCodes(weathercodes: [Int]) -> [WeatherType] {
+        var weatherCodes: [WeatherType] = []
         for int in weathercodes {
             let code = changeCode(weathercode: int)
             weatherCodes.append(code)
@@ -91,7 +89,7 @@ struct CityModel {
         return weatherCodes
     }
     
-    private func changeCode(weathercode: Int) -> WeatherCodes {
+    private func changeCode(weathercode: Int) -> WeatherType {
         switch weathercode {
         case 0:
             return .clearSky

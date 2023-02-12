@@ -8,20 +8,22 @@
 import UIKit
 
 protocol CityViewProtocol: AnyObject {
-    func reloadCity()
+    func reloadCity(img: UIImage, temp: String)
 }
 
 final class CityViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    var presenter: CityPresenterProtocol!
+    
     // MARK: - Private properties
     
     private let rootView = CityRootView(frame: UIScreen.main.bounds)
-    private let presenter: CityPresenterProtocol
     
     // MARK: - Inits
     
-    init(presenter: CityPresenterProtocol){
-        self.presenter = presenter
+    init(){
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,33 +45,25 @@ final class CityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = presenter.city.name
-        
+    
         navigationController?.navigationBar.prefersLargeTitles = false
-        //     navigationController?.navigationBar.barTintColor = .systemTeal
+        navigationController?.navigationBar.tintColor = .yellow
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00)
+
         rootView.hourlyCollectionView.delegate = self
         rootView.hourlyCollectionView.dataSource = self
         
         rootView.dailyTableView.delegate = self
         rootView.dailyTableView.dataSource = self
     }
-    
-    private let cellHeight = 100
-    private var tableViewHeight = 0
-    
 }
 
 extension CityViewController: CityViewProtocol {
-    func reloadCity() {
-        if let weather = presenter.city.weather.currentWeather {
-            rootView.weatherImage.image = weather.weathercode.image
-        }
-        if let temperatur = presenter.city.weather.currentWeather?.temperature {
-            rootView.temperatureLable.text = "\(temperatur)"
-        }
+    func reloadCity(img: UIImage, temp: String) {
+        rootView.weatherImage.image = img
+        rootView.temperatureLable.text = temp
         rootView.dailyTableView.reloadData()
         rootView.hourlyCollectionView.reloadData()
     }
@@ -88,10 +82,8 @@ extension CityViewController: UICollectionViewDataSource {
         guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCell.identifier, for: indexPath) as? HourlyWeatherCell else {
             return UICollectionViewCell()
         }
-        if let hourWeather = presenter.city.weather.hourly?.weathers[indexPath.row] {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm"
-            myCell.setupCell(time: dateFormatter.string(from: hourWeather.time), temperature: String(hourWeather.temperature), image: hourWeather.weathercode.image)
+        if let hourWeather = presenter.getHourlyWeather(cell: indexPath.row) {
+            myCell.setupCell(model: hourWeather)
         }
         return myCell
     }
@@ -104,7 +96,7 @@ extension CityViewController: UITableViewDelegate {}
 extension CityViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let dailyWeatherCount = presenter.getDailyWeatherCount()
-        self.rootView.tableViewHeight?.constant = CGFloat((dailyWeatherCount * self.rootView.cellHeight))
+        self.rootView.tableViewHeight?.constant = Double(dailyWeatherCount) * self.rootView.cellHeight
         self.rootView.layoutIfNeeded()
         return dailyWeatherCount
     }
@@ -113,28 +105,13 @@ extension CityViewController: UITableViewDataSource {
         guard let myCell = tableView.dequeueReusableCell(withIdentifier: DailyWeatherCell.identifier, for: indexPath) as? DailyWeatherCell else {
             return UITableViewCell()
         }
-        if let dailyWeather = presenter.city.weather.daily?.weathers[indexPath.row] {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM-dd"
-            
-            let date = dateFormatter.string(from: dailyWeather.date)
-            
-            let maxTemperatureString = String(dailyWeather.temperatureMax)
-            let minTemperatureString = String(dailyWeather.temperatureMin)
-            
-            dateFormatter.dateFormat = "HH:mm"
-            let sunsetString = dateFormatter.string(from: dailyWeather.sunset)
-            let sunriseString = dateFormatter.string(from: dailyWeather.sunrise)
-            
-            let image = dailyWeather.weathercode.image
-            
-            myCell.setupCell(date: date, image: image, maxMemperature: maxTemperatureString, minTemperature: minTemperatureString, sunrise: sunriseString, sunset: sunsetString)
+        if let dayWeather = presenter.getDailyWeather(cell: indexPath.row) {
+            myCell.setupCell(madel: dayWeather)
         }
         return myCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        CGFloat(rootView.cellHeight)
+        rootView.cellHeight
     }
 }

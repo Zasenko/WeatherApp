@@ -11,7 +11,7 @@ final class CitiesViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let presenter: CitiesViewPresenterProtocol
+    var presenter: CitiesViewPresenterProtocol!
     
     // MARK: - Private properties
     
@@ -19,8 +19,7 @@ final class CitiesViewController: UIViewController {
 
     // MARK: - Inits
     
-    init(presenter: CitiesViewPresenterProtocol) {
-        self.presenter = presenter
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,7 +54,6 @@ extension CitiesViewController {
         self.title = "Cities"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .yellow
-
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.barTintColor = UIColor(red: 0.18, green: 0.77, blue: 0.79, alpha: 1.00)

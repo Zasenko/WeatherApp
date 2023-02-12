@@ -1,17 +1,17 @@
 //
-//  DailyWeatherCell.swift
+//  WeatherDayCell.swift
 //  WeatherApp
 //
-//  Created by Dmitry Zasenko on 31.01.23.
+//  Created by Dmitry Zasenko on 12.02.23.
 //
 
 import UIKit
 
-final class DailyWeatherCell: UITableViewCell {
+final class WeatherDayCell: UITableViewCell {
     
     // MARK: - Static Properties
     
-    static let identifier = "DailyWeatherCell"
+    static let identifier = "WeatherDayCell"
     
     // MARK: - Private Properties
     
@@ -171,8 +171,8 @@ final class DailyWeatherCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         weatherImage.image = nil
-   //     sunsetImage.image = nil
-   //     sunriseImage.image = nil
+        sunsetImage.image = nil
+        sunriseImage.image = nil
         maxTemperatureLabel.text = nil
         minTemperatureLabel.text = nil
         sunriseLabel.text = nil
@@ -181,7 +181,7 @@ final class DailyWeatherCell: UITableViewCell {
     }
 }
 
-extension DailyWeatherCell {
+extension WeatherDayCell {
     
     // MARK: - Functions
 
