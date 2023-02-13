@@ -37,6 +37,7 @@ final class CityPresenter {
         self.networkManager = networkManager
         self.city = city
         self.dateFormatter = dateFormatter
+        self.view?.reloadTitle(title: city.name)
     }
 }
 
@@ -80,6 +81,7 @@ extension CityPresenter: CityPresenterProtocol {
         return DayCellModel(date: date, img: dayWeather.weathercode.image, tempMin: tempMin, tempMax: tempMax, sunrise: sunriseString, sunset: sunsetString)
     }
     func getWeatherInfo() {
+        
         networkManager.fetchWeatherByLocation(latitude: String(city.latitude), longitude: String(city.longitude)) { [weak self] result in
                         guard let self = self else { return }
             DispatchQueue.main.sync {
