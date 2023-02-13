@@ -97,6 +97,26 @@ extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter.cellTaped(indexPath: indexPath)
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            presenter.deleteButtonTapped(indexPath: indexPath.row) { bool in
+                if bool {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+            }
+            
+           
+        }
+    }
 }
 
 extension CitiesViewController: CitiesViewProtocol {

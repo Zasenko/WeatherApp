@@ -16,6 +16,7 @@ protocol CitiesViewPresenterProtocol: AnyObject {
     func addButtonTapped()
     func getCitiesCount() -> Int
     func getCity(indexPath: Int) -> CityModel
+    func deleteButtonTapped(indexPath: Int, complition: @escaping((Bool) -> Void))
 }
 
 final class CitiesViewPresenter {
@@ -40,7 +41,6 @@ final class CitiesViewPresenter {
         self.networkManager = networkManager
         self.dateFormatter = dateFormatter
         self.coreDataManager = coreDataManager
-      //  self.coreDataManager.delegate = self
         
         let cityModels = coreDataManager.getCities().map({ CityModel(latitude: $0.latitude, longitude: $0.longitude, name: $0.name, country: $0.country, weather: WeatherModel()) })
         
@@ -48,11 +48,9 @@ final class CitiesViewPresenter {
             fetchCurrentWeatherByLocation(city: city)
         }
         
-        self.coreDataManager.callBack = { [weak self] city in
+        self.coreDataManager.cityAdded = { [weak self] city in
             guard let self = self else { return }
             self.fetchCurrentWeatherByLocation(city: city)
-//            self.cities.append(city)
-//            self.view?.reloadTableView()
         }
     }
 }
@@ -60,8 +58,17 @@ final class CitiesViewPresenter {
 // MARK: - CitiesViewPresenterProtocol
 
 extension CitiesViewPresenter: CitiesViewPresenterProtocol {
+    func deleteButtonTapped(indexPath: Int, complition: @escaping ((Bool) -> Void)) {
+        coreDataManager.deleteCity(indexPath: indexPath) { [weak self] result in
+            if result {
+                self?.cities.remove(at: indexPath)
+                complition(true)
+            }
+        }
+    }
+    
     func getCitiesCount() -> Int {
-        return coreDataManager.cities.count
+        return cities.count
     }
     
     func getCity(indexPath: Int) -> CityModel {

@@ -167,6 +167,11 @@ final class DailyWeatherCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func awakeFromNib() {
+            super.awakeFromNib()
+        addSubViews()
+        setupConstraints()
+        }
 
     override func prepareForReuse() {
         super.prepareForReuse()

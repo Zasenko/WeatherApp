@@ -9,6 +9,7 @@ import UIKit
 
 protocol CityViewProtocol: AnyObject {
     func reloadCity(img: UIImage, temp: String)
+    func reloadTitle(title: String)
 }
 
 final class CityViewController: UIViewController {
@@ -38,14 +39,8 @@ final class CityViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter.getWeatherInfo()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.tintColor = .yellow
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -57,10 +52,16 @@ final class CityViewController: UIViewController {
         
         rootView.dailyTableView.delegate = self
         rootView.dailyTableView.dataSource = self
+        
+        presenter.getWeatherInfo()
     }
 }
 
 extension CityViewController: CityViewProtocol {
+    func reloadTitle(title: String) {
+        self.title = title
+    }
+    
     func reloadCity(img: UIImage, temp: String) {
         rootView.weatherImage.image = img
         rootView.temperatureLable.text = temp
