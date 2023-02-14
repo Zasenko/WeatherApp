@@ -203,7 +203,7 @@ extension DailyWeatherCell {
     
     private func addSubViews() {
 
-        addSubview(stackview)
+        contentView.addSubview(stackview)
         
         stackview.addArrangedSubview(dateLable)
         stackview.addArrangedSubview(weatherStack)
@@ -228,10 +228,10 @@ extension DailyWeatherCell {
     }
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
-        stackview.leftAnchor.constraint(equalTo: self.layoutMarginsGuide.leftAnchor).isActive = true
-        stackview.rightAnchor.constraint(equalTo: self.layoutMarginsGuide.rightAnchor).isActive = true
-        weatherStack.heightAnchor.constraint(equalTo: self.layoutMarginsGuide.heightAnchor).isActive = true
+        stackview.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
+        stackview.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor).isActive = true
+        stackview.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
+        weatherStack.heightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.heightAnchor).isActive = true
     }
 }

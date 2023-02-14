@@ -88,13 +88,13 @@ extension HourlyWeatherCell {
         stackview.addArrangedSubview(timeLable)
         stackview.addArrangedSubview(weatherImage)
         stackview.addArrangedSubview(temperatureLabel)
-        addSubview(stackview)
+        contentView.addSubview(stackview)
     }
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        stackview.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        stackview.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        stackview.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        stackview.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        stackview.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
 }

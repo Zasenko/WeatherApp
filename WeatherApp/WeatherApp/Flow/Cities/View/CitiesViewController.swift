@@ -113,8 +113,6 @@ extension CitiesViewController: UITableViewDataSource {
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
             }
-            
-           
         }
     }
 }

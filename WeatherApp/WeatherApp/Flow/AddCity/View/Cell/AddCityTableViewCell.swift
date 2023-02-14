@@ -19,7 +19,7 @@ final class AddCityTableViewCell: UITableViewCell {
     
     // MARK: - Private properties
     
-    private let addButton: UIButton = {
+    let addButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add", for: .normal)
         button.setTitleColor(.yellow, for: .normal)
