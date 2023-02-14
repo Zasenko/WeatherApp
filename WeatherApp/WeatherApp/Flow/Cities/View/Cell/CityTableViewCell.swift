@@ -60,6 +60,13 @@ final class CityTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        currentWeatherImage.image = nil
+        cityName.text = nil
+        temp.text = nil
+    }
 }
 
 extension CityTableViewCell {
@@ -79,14 +86,14 @@ extension CityTableViewCell {
         stackview.addArrangedSubview(cityName)
         stackview.addArrangedSubview(temp)
         stackview.addArrangedSubview(currentWeatherImage)
-        addSubview(stackview)
+        contentView.addSubview(stackview)
     }
     
     private func setupConstraints() {
-        stackview.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        stackview.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        stackview.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor).isActive = true
-        stackview.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor,constant: -20).isActive = true
+        stackview.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        stackview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        stackview.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor).isActive = true
+        stackview.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor).isActive = true
         
         temp.widthAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
         

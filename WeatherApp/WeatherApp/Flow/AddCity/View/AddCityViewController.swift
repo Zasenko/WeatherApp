@@ -76,8 +76,27 @@ extension AddCityViewController: UITableViewDataSource {
         }
         cell.setupCell(cityName: "\(city.name), \(city.country)", isSaved: city.isSaved)
         cell.callback = { [weak self] in
-            guard let self = self else { return }
-            self.presenter.addCityButtonTapped()
+            cell.addButton.isUserInteractionEnabled = false
+            UIView.animate(withDuration: 0.1,
+                                   delay: 0,
+                                   options: .curveLinear,
+                                   animations: { [weak self] in
+                                        cell.addButton.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
+                    }) {  (done) in
+                        UIView.animate(withDuration: 0.1,
+                                       delay: 0,
+                                       options: .curveLinear,
+                                       animations: { [weak self] in
+                            cell.addButton.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                        }) { [weak self] (_) in
+                            cell.addButton.isUserInteractionEnabled = true
+                        }
+                    }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.presenter.addCityButtonTapped()
+            }
+
+
         }
         return cell
     }
