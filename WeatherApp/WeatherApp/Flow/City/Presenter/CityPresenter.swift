@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CityPresenterProtocol: AnyObject {
+protocol CityPresenterProtocol {
     // var city: CityModel { get set }
     func getHourlyWeatherCount() -> Int
     func getDailyWeatherCount() -> Int
