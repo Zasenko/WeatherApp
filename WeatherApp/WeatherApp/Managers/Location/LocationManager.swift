@@ -36,14 +36,15 @@ extension LocationManager: LocationManagerProtocol {
 // MARK: - Private Functions
 extension LocationManager {
     private func configureLocationManager() {
-       
-        //locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = false
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        
-        locationManager.delegate = self
-        checkLocationAutorization()
+        DispatchQueue.global().async {
+            //locationManager.allowsBackgroundLocationUpdates = true
+            self.locationManager.pausesLocationUpdatesAutomatically = false
+            self.locationManager.startMonitoringSignificantLocationChanges()
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            
+            self.locationManager.delegate = self
+            self.checkLocationAutorization()
+        }
     }
 }
 
@@ -52,17 +53,21 @@ extension LocationManager {
 extension LocationManager: CLLocationManagerDelegate {
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAutorization()
+        DispatchQueue.global().async {
+            self.checkLocationAutorization()
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            return
-        }
-        userLocation = location
-        locationManager.stopUpdatingLocation()
-        DispatchQueue.main.async {
-            self.delegate?.reloadUserLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        DispatchQueue.global().async {
+            guard let location = locations.last else {
+                return
+            }
+            self.userLocation = location
+            self.locationManager.stopUpdatingLocation()
+            DispatchQueue.main.async {
+                self.delegate?.reloadUserLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            }
         }
     }
     

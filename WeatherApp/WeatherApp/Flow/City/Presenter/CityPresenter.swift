@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CityPresenterProtocol: AnyObject {
-   // var city: CityModel { get set }
+    // var city: CityModel { get set }
     func getHourlyWeatherCount() -> Int
     func getDailyWeatherCount() -> Int
     func getHourlyWeather(cell row: Int) -> HourCellModel?
@@ -80,20 +80,19 @@ extension CityPresenter: CityPresenterProtocol {
         let sunriseString = dateFormatter.hourAndMinFormat.string(from: dayWeather.sunrise)
         return DayCellModel(date: date, img: dayWeather.weathercode.image, tempMin: tempMin, tempMax: tempMax, sunrise: sunriseString, sunset: sunsetString)
     }
+    
     func getWeatherInfo() {
-        
-        networkManager.fetchWeatherByLocation(latitude: String(city.latitude), longitude: String(city.longitude)) { [weak self] result in
-                        guard let self = self else { return }
-            DispatchQueue.main.sync {
-                switch result {
-                case .success(let weather):
-                    if self.city.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
-                        guard let currentWeather = self.city.weather.currentWeather else { return }
-                        self.view?.reloadCity(img: currentWeather.weathercode.image, temp: "\(currentWeather.temperature > 0 ? "+" : "")\(currentWeather.temperature)°")
-                    }
-                case .failure(let error):
-                    debugPrint(error)
+        networkManager.fetchWeatherByLocation(latitude: String(city.latitude),
+                                              longitude: String(city.longitude)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let weather):
+                if self.city.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
+                    guard let currentWeather = self.city.weather.currentWeather else { return }
+                    self.view?.reloadCity(img: currentWeather.weathercode.image, temp: "\(currentWeather.temperature > 0 ? "+" : "")\(currentWeather.temperature)°")
                 }
+            case .failure(let error):
+                debugPrint(error)
             }
         }
     }
