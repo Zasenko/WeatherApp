@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-protocol CoreDataManagerProtocol: AnyObject {
+protocol CoreDataManagerProtocol {
     var cities: [City] {get set}
     var cityAdded: ((CityModel) -> Void)? { get set }
     

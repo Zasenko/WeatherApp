@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WeatherPresenterProtocol: AnyObject {
+protocol WeatherPresenterProtocol {
     func getWeather()
     func getHourlyWeatherCount() -> Int
     func getDailyWeatherCount() -> Int

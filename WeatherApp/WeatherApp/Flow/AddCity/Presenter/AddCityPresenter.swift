@@ -11,7 +11,7 @@ protocol AddCityViewProtocol: AnyObject {
     func reloadTableView()
 }
 
-protocol AddCityPresenterProtocol: AnyObject {
+protocol AddCityPresenterProtocol {
     func searchLocationByName(name: String)
     func addCityButtonTapped()
     func getCityCount() -> Int

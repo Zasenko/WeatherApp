@@ -11,7 +11,7 @@ protocol CitiesViewProtocol: AnyObject {
     func reloadTableView()
 }
 
-protocol CitiesViewPresenterProtocol: AnyObject {
+protocol CitiesViewPresenterProtocol  {
     func cellTaped(indexPath: IndexPath)
     func addButtonTapped()
     func getCitiesCount() -> Int
@@ -31,7 +31,7 @@ final class CitiesViewPresenter {
     private let networkManager: WeatherNetworkManagerProtocol
     private let router: CitiesRouterProtocol
     private let dateFormatter: DateFormatterManagerProtocol
-    private let coreDataManager: CoreDataManagerProtocol
+    private var coreDataManager: CoreDataManagerProtocol
     
     // MARK: - Inits
     

@@ -81,14 +81,18 @@ extension AddCityViewController: UITableViewDataSource {
                                    delay: 0,
                                    options: .curveLinear,
                                    animations: { [weak self] in
-                                        cell.addButton.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
-                    }) {  (done) in
+                guard self == self else { return }
+                cell.addButton.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
+                    }) {  [weak self] _ in
+                        guard self == self else { return }
                         UIView.animate(withDuration: 0.1,
                                        delay: 0,
                                        options: .curveLinear,
                                        animations: { [weak self] in
+                            guard self == self else { return }
                             cell.addButton.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-                        }) { [weak self] (_) in
+                        }) { [weak self] _ in
+                            guard self == self else { return }
                             cell.addButton.isUserInteractionEnabled = true
                         }
                     }
