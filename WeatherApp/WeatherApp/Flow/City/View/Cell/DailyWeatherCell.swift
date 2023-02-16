@@ -176,8 +176,8 @@ final class DailyWeatherCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         weatherImage.image = nil
-   //     sunsetImage.image = nil
-   //     sunriseImage.image = nil
+        sunsetImage.image = nil
+        sunriseImage.image = nil
         maxTemperatureLabel.text = nil
         minTemperatureLabel.text = nil
         sunriseLabel.text = nil

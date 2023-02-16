@@ -122,18 +122,17 @@ extension WeatherPresenter {
     private func getLocationInfo(latitude: Double, longitude: Double) {
         geoCoder.findCity(latitude: latitude, longitude: longitude) { [weak self] result in
             guard let self = self else { return}
-            DispatchQueue.main.async {
-                switch result {
-                case.success(let place):
-                    self.place = place
-                    self.view?.reloadLocationName(name: place.name)
-                    self.getWeather(latitude: String(place.latitude), longitude: String(place.longitude))
-                    if self.coreDataManager.cities.first(where: {$0.name == place.name && $0.country == place.country}) == nil {
-                        self.view?.setSaveButton()
-                    }
-                case.failure(let error):
-                    debugPrint(error)
+            switch result {
+            case.success(let place):
+                self.place = place
+                self.view?.reloadLocationName(name: place.name)
+                self.getWeather(latitude: String(place.latitude), longitude: String(place.longitude))
+                
+                if self.coreDataManager.cities.first(where: {$0.name == place.name && $0.country == place.country}) == nil {
+                    self.view?.setSaveButton()
                 }
+            case.failure(let error):
+                debugPrint(error)
             }
         }
     }
@@ -142,18 +141,17 @@ extension WeatherPresenter {
         guard var place = self.place else { return }
         networkManager.fetchFullWeatherByLocation(latitude: latitude, longitude: longitude) { [weak self] result in
             guard let self = self else { return}
-                switch result {
-                case .success(let weather):
-                    DispatchQueue.main.async {
-                        if place.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
-                            self.place = place
-                            guard let currentWeather = place.weather.currentWeather else {return}
-                            self.view?.changeWeather(img: currentWeather.weathercode.image , temp: "\(currentWeather.temperature > 0 ? "+" : "")\(currentWeather.temperature)°")
-                        }
-                    }
-                case .failure(let error):
-                    debugPrint(error)
+            switch result {
+            case .success(let weather):
+                if place.changeData(currentWeather: weather.currentWeather, hourlyWeather: weather.hourly, dailyWeather: weather.daily, dateFormatter: self.dateFormatter) {
+                    self.place = place
+                    guard let currentWeather = place.weather.currentWeather else {return}
+                    self.view?.changeWeather(img: currentWeather.weathercode.image , temp: "\(currentWeather.temperature > 0 ? "+" : "")\(currentWeather.temperature)°")
+                }
+            case .failure(let error):
+                debugPrint(error)
             }
         }
     }
+    
 }

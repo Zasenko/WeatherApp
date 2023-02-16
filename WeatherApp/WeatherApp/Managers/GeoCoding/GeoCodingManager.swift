@@ -28,49 +28,59 @@ final class GeoCodingManager {
 extension GeoCodingManager: GeoCodingManagerProtocol {
     
     func findCity(latitude: CLLocationDegrees, longitude: CLLocationDegrees, complition: @escaping ((Result<CityModel, Error>) -> Void)) {
-        geocoder.cancelGeocode()
-        geocoder.reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { placemarks, error in
-            if let error = error {
-                complition(.failure(error))
-                return
+        DispatchQueue.global().async {
+            self.geocoder.cancelGeocode()
+            self.geocoder.reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { placemarks, error in
+                if let error = error {
+                    complition(.failure(error))
+                    return
+                }
+                
+                guard let placemark = placemarks?.first,
+                      let coordinate = placemark.location?.coordinate,
+                      let name = placemark.locality,
+                      let country = placemark.country
+                else {
+                    complition(.failure(GeoCodingError.nilPlacemark))
+                    return
+                }
+                
+                let city = CityModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: name, country: country, weather: WeatherModel())
+                DispatchQueue.main.async {
+                    complition(.success(city))
+                }
             }
-            
-            guard let placemark = placemarks?.first,
-                  let coordinate = placemark.location?.coordinate,
-                  let name = placemark.locality,
-                  let country = placemark.country
-            else {
-                complition(.failure(GeoCodingError.nilPlacemark))
-                return
-            }
-            
-            let city = CityModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: name, country: country, weather: WeatherModel())
-            DispatchQueue.main.async {
-                complition(.success(city))
-            }
+
         }
     }
     
     func findCity(address: String, complition: @escaping ((Result<CityModel, Error>) -> Void)) {
-        geocoder.cancelGeocode()
-        geocoder.geocodeAddressString(address, completionHandler: { placemarks, error in
-            if let error = error {
-                complition(.failure(error))
-                return
-            }
-            guard let placemark = placemarks?.first,
-                  let coordinate = placemark.location?.coordinate,
-                  let name = placemark.locality,
-                  let country = placemark.country
-            else {
-                complition(.failure(GeoCodingError.nilPlacemark))
-                return
-            }
+        DispatchQueue.global().async {
+            self.geocoder.cancelGeocode()
+            self.geocoder.geocodeAddressString(address, completionHandler: { placemarks, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        complition(.failure(error))
+                    }
+                    return
+                }
+                guard let placemark = placemarks?.first,
+                      let coordinate = placemark.location?.coordinate,
+                      let name = placemark.locality,
+                      let country = placemark.country
+                else {
+                    DispatchQueue.main.async {
+                        complition(.failure(GeoCodingError.nilPlacemark))
+                    }
+                    return
+                }
+                
+                let city = CityModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: name, country: country, weather: WeatherModel())
+                DispatchQueue.main.async {
+                    complition(.success(city))
+                }
+            })
             
-            let city = CityModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: name, country: country, weather: WeatherModel())
-            DispatchQueue.main.async {
-                complition(.success(city))
-            }
-        })
+        }
     }
 }
