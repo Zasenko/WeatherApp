@@ -80,7 +80,6 @@ extension AddCityPresenter: AddCityPresenterProtocol {
             if result {
                 self.city?.isSaved = true
                 self.view?.reloadTableView()
-               // self.delegate?.addedCity(city: city)
             }
         }
     }
