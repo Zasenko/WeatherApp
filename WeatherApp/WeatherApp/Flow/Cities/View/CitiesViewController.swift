@@ -87,9 +87,11 @@ extension CitiesViewController: UITableViewDataSource {
         var tempString = ""
         if let temp = city.weather.currentWeather?.temperature {
             tempString = String(temp)
+            cell.accessoryType = .disclosureIndicator
         }
+        
         cell.setupCell(cityName: city.name, temp: tempString, currentWeatherImage: city.weather.currentWeather?.weathercode.image ?? UIImage())
-        cell.accessoryType = .disclosureIndicator
+        
         cell.selectionStyle = .none
         return cell
     }

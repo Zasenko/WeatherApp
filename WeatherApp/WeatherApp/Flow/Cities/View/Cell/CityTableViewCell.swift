@@ -66,6 +66,7 @@ final class CityTableViewCell: UITableViewCell {
         currentWeatherImage.image = nil
         cityName.text = nil
         temp.text = nil
+        self.accessoryType = .none
     }
 }
 

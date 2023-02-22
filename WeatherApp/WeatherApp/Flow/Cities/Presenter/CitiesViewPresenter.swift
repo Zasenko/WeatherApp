@@ -76,7 +76,9 @@ extension CitiesViewPresenter: CitiesViewPresenterProtocol {
     }
 
     func cellTaped(indexPath: IndexPath) {
-        router.showCityViewController(city: cities[indexPath.row])
+        if cities[indexPath.row].weather.currentWeather != nil {
+            router.showCityViewController(city: cities[indexPath.row])
+        }
     }
     
     func addButtonTapped() {
@@ -91,18 +93,15 @@ extension CitiesViewPresenter {
         var city = city
         networkManager.fetchCurrentWeatherByLocation(latitude: String(city.latitude), longitude: String(city.longitude), complition: { [weak self] result in
             guard let self = self else {return}
-
             DispatchQueue.main.async {
                 switch result {
                 case .success(let location):
-                    if let currentWeathe = location.currentWeather {
-                        if city.changeData(currentWeather: currentWeathe, hourlyWeather: nil, dailyWeather: nil, dateFormatter: self.dateFormatter) {
-                            self.cities.append(city)
-                        }
+                    if city.changeData(currentWeather: location.currentWeather, hourlyWeather: location.hourly, dailyWeather: location.daily, dateFormatter: self.dateFormatter) {
+                        self.cities.append(city)
+                        self.view?.reloadTableView()
                     }
-                    self.view?.reloadTableView()
                 case .failure(let error):
-                    print(error)
+                    debugPrint(error)
                 }
             }
         })
